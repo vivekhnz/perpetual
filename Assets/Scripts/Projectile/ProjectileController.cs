@@ -14,4 +14,9 @@ public class ProjectileController : MonoBehaviour {
 		transform.Translate(
 			Vector3.right * Time.deltaTime * MovementSpeed);
 	}
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+		Destroy(gameObject);
+    }
 }
