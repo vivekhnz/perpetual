@@ -61,7 +61,8 @@ public class PlayerShooting : MonoBehaviour
             + Random.Range(-ProjectileSpreadDegrees, ProjectileSpreadDegrees);
 
         // spawn projectile
-        GameObject.Instantiate(Projectile,
+        var projectile = Projectile.Fetch<ProjectileController>();
+        projectile.Initialize(
             transform.position + offset,
             Quaternion.Euler(0.0f, 0.0f, projectileDir));
     }

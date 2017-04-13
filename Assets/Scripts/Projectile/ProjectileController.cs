@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-public class ProjectileController : MonoBehaviour {
+public class ProjectileController : PooledObject {
 
 	public float MovementSpeed = 4.0f;
-
-	// Use this for initialization
-	void Start () {
-		
+	
+	public void Initialize(Vector3 position, Quaternion rotation) {
+		transform.position = position;
+		transform.rotation = rotation;
 	}
 	
 	// Update is called once per frame
@@ -17,6 +17,6 @@ public class ProjectileController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-		Destroy(gameObject);
+		Recycle();
     }
 }
