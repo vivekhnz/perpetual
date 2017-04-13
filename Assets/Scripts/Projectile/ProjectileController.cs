@@ -17,6 +17,7 @@ public class ProjectileController : PooledObject {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-		Recycle();
+		if (collider.gameObject.CompareTag("Solid"))
+			Recycle();
     }
 }
