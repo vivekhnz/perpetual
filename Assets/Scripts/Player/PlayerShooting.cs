@@ -2,6 +2,7 @@
 
 public class PlayerShooting : MonoBehaviour
 {
+    public ProjectileController Projectile;
 
     // Use this for initialization
     void Start()
@@ -25,8 +26,21 @@ public class PlayerShooting : MonoBehaviour
             float rotation = Mathf.Atan2(dirToMouse.y, dirToMouse.x)
                 * Mathf.Rad2Deg;
 
-			// set the player rotation
-			transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotation);
+            // set the player rotation
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotation);
         }
+
+        // fire weapon
+        if (Input.GetButton("Fire"))
+            Fire();
+    }
+
+    void Fire()
+    {
+        if (Projectile == null)
+            return;
+		
+        GameObject.Instantiate(Projectile,
+            transform.position, transform.rotation);
     }
 }
