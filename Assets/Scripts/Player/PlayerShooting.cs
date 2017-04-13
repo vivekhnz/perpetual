@@ -3,6 +3,7 @@
 public class PlayerShooting : MonoBehaviour
 {
     public ProjectileController Projectile;
+	public float ProjectileSpreadDegrees = 10.0f;
 
     // Use this for initialization
     void Start()
@@ -45,9 +46,14 @@ public class PlayerShooting : MonoBehaviour
 		Vector3 offset = new Vector3(
 			Mathf.Cos(zRot), Mathf.Sin(zRot), 0)
 			* (transform.localScale.x * 0.6f);
-        
+
+		// calculate projectile direction
+		float projectileDir = transform.rotation.eulerAngles.z
+			+ Random.Range(-ProjectileSpreadDegrees, ProjectileSpreadDegrees);
+
 		// spawn projectile
 		GameObject.Instantiate(Projectile,
-            transform.position + offset, transform.rotation);
+            transform.position + offset,
+			Quaternion.Euler(0.0f, 0.0f, projectileDir));
     }
 }
