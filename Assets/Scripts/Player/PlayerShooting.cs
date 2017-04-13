@@ -3,7 +3,10 @@
 public class PlayerShooting : MonoBehaviour
 {
     public ProjectileController Projectile;
-	public float ProjectileSpreadDegrees = 10.0f;
+    public float ProjectileSpreadDegrees = 10.0f;
+    public float BulletsPerMinute = 60.0f;
+
+    private float projectileFiredTime = 0.0f;
 
     // Use this for initialization
     void Start()
@@ -40,20 +43,26 @@ public class PlayerShooting : MonoBehaviour
     {
         if (Projectile == null)
             return;
-		
-		// calculate position of new projectile
-		float zRot = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-		Vector3 offset = new Vector3(
-			Mathf.Cos(zRot), Mathf.Sin(zRot), 0)
-			* (transform.localScale.x * 0.6f);
 
-		// calculate projectile direction
-		float projectileDir = transform.rotation.eulerAngles.z
-			+ Random.Range(-ProjectileSpreadDegrees, ProjectileSpreadDegrees);
+        // can I fire again?
+        float timeBetweenProjectiles = 60.0f / BulletsPerMinute;
+        if (Time.time - projectileFiredTime < timeBetweenProjectiles)
+            return;
+        projectileFiredTime = Time.time;
 
-		// spawn projectile
-		GameObject.Instantiate(Projectile,
+        // calculate position of new projectile
+        float zRot = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+        Vector3 offset = new Vector3(
+            Mathf.Cos(zRot), Mathf.Sin(zRot), 0)
+            * (transform.localScale.x * 0.6f);
+
+        // calculate projectile direction
+        float projectileDir = transform.rotation.eulerAngles.z
+            + Random.Range(-ProjectileSpreadDegrees, ProjectileSpreadDegrees);
+
+        // spawn projectile
+        GameObject.Instantiate(Projectile,
             transform.position + offset,
-			Quaternion.Euler(0.0f, 0.0f, projectileDir));
+            Quaternion.Euler(0.0f, 0.0f, projectileDir));
     }
 }
