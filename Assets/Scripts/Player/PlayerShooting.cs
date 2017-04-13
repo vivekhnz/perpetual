@@ -40,7 +40,14 @@ public class PlayerShooting : MonoBehaviour
         if (Projectile == null)
             return;
 		
-        GameObject.Instantiate(Projectile,
-            transform.position, transform.rotation);
+		// calculate position of new projectile
+		float zRot = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+		Vector3 offset = new Vector3(
+			Mathf.Cos(zRot), Mathf.Sin(zRot), 0)
+			* (transform.localScale.x * 0.6f);
+        
+		// spawn projectile
+		GameObject.Instantiate(Projectile,
+            transform.position + offset, transform.rotation);
     }
 }
