@@ -302,66 +302,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114816410274600234, guid: 2121cc37f9fb49b4cbebd4672b0a818d, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2121cc37f9fb49b4cbebd4672b0a818d, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &668841475
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 668841476}
-  - component: {fileID: 668841477}
-  - component: {fileID: 668841478}
-  m_Layer: 0
-  m_Name: PlayerCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &668841476
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 668841475}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 543704368}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &668841477
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 668841475}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: -0.2, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.35
---- !u!114 &668841478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 668841475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e9c2c9a55994a54f8733eb9410cc3e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Parent: {fileID: 2089691411}
 --- !u!1 &1453399866
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,12 +507,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2089691411 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114493100372726622, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
-    type: 2}
-  m_PrefabInternal: {fileID: 548129153}
-  m_Script: {fileID: 11500000, guid: b58c235e756e5304f87d637ab2354fc1, type: 3}
 --- !u!1001 &2106851900
 Prefab:
   m_ObjectHideFlags: 0
