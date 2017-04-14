@@ -12,9 +12,14 @@ public class SeekerEnemyMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // rotate to face player
         Vector2 direction = Player.position - transform.position;
         direction.Normalize();
-        Vector2 movement = direction * MovementSpeed * Time.deltaTime;
-        transform.Translate(movement.x, movement.y, 0);
+        transform.rotation = Quaternion.Euler(0, 0,
+            Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+        
+        // move forward
+        transform.Translate(
+            Vector3.right * MovementSpeed * Time.deltaTime);
 	}
 }
