@@ -4,9 +4,11 @@ public class PlayerHealth : MonoBehaviour {
 
     public PlayerMovement Parent;
 
+    private HUDController hudController;
+
 	// Use this for initialization
 	void Start () {
-		
+		hudController = Object.FindObjectOfType<HUDController>();
 	}
 	
 	// Update is called once per frame
@@ -23,6 +25,9 @@ public class PlayerHealth : MonoBehaviour {
         {
             Destroy(other.gameObject);
             Destroy(Parent.gameObject);
+
+            if (hudController != null)
+                hudController.GameOver();
         }
     }
 }
