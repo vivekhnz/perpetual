@@ -6,11 +6,14 @@ public class SeekerEnemyHealth : MonoBehaviour {
 
     public float maxHealth;
     public SeekerEnemyMovement Parent;
+    public float ScoreValue;
 
     private float currentHealth;
+    private HUDController hudController;
 
 	// Use this for initialization
 	void Start () {
+        hudController = Object.FindObjectOfType<HUDController>();
         currentHealth = maxHealth;
 	}
 	
@@ -41,10 +44,10 @@ public class SeekerEnemyHealth : MonoBehaviour {
         }
 
         currentHealth -= damage;
+        hudController.AddScore(ScoreValue);
 
         if (currentHealth <= 0)
         {
-            Debug.Log(damage);
             Destroy(Parent.gameObject);
         }
     }
