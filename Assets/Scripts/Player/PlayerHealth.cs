@@ -3,8 +3,7 @@
 public class PlayerHealth : MonoBehaviour {
 
     public PlayerMovement Parent;
-    public float maxHealth;
-    public float enemyDamage;
+    public float InitialHealth;
 
     private HUDController hudController;
     private float currentHealth;
@@ -12,7 +11,7 @@ public class PlayerHealth : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		hudController = Object.FindObjectOfType<HUDController>();
-        currentHealth = maxHealth;
+        currentHealth = InitialHealth;
         hudController.UpdateHealth(currentHealth);
 	}
 	
@@ -21,24 +20,25 @@ public class PlayerHealth : MonoBehaviour {
 		
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void TakeDamage(float damage)
     {
-        if (Parent == null)
-            return;
+        // reduce health
+        currentHealth -= damage;
         
-        if (other.gameObject.tag == "Enemy")
-        {
-            Destroy(other.gameObject);
-            currentHealth -= enemyDamage;
+        if (hudController != null) {
+            // update HUD
             hudController.UpdateHealth(currentHealth);
 
-            if (hudController != null && currentHealth <= 0)
-            {
+            // am I dead?
+            if (currentHealth <= 0) {
+                // game over
                 hudController.UpdateHealth(0);
-                Destroy(Parent.gameObject);
                 hudController.GameOver();
+
+                // remove player object
+                if (Parent != null)
+                    Destroy(Parent.gameObject);
             }
         }
     }
-    
 }

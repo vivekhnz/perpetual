@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class DamageableObject : MonoBehaviour
 {
     public float InitialHealth = 100;
     public float ScoreValue = 5;

@@ -1,25 +1,38 @@
 ﻿using UnityEngine;
 
-public class SeekerEnemyMovement : MonoBehaviour {
-
+public class SeekerEnemyMovement : MonoBehaviour
+{
     public float MovementSpeed;
-    public Transform Player;
+    public PlayerHealth Player;
+    public float CollisionDamage = 40.0f;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Update()
+    {
+        if (Player == null)
+            return;
+
         // rotate to face player
-        Vector2 direction = Player.position - transform.position;
+        Vector2 direction = Player.transform.position - transform.position;
         direction.Normalize();
         transform.rotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-        
+
         // move forward
         transform.Translate(
             Vector3.right * MovementSpeed * Time.deltaTime);
-	}
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // did I crash into the player?
+        if (other.gameObject.Equals(Player.gameObject))
+        {
+            // damage player
+            if (Player != null)
+                Player.TakeDamage(CollisionDamage);
+
+            // self-destruct
+            Destroy(gameObject);
+        }
+    }
 }
