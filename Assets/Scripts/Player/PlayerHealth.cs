@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour {
+
+    public PlayerMovement Parent;
 
 	// Use this for initialization
 	void Start () {
@@ -16,11 +16,13 @@ public class PlayerHealth : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.tag);
+        if (Parent == null)
+            return;
+        
         if (other.gameObject.tag == "Enemy")
         {
             Destroy(other.gameObject);
-            Destroy(gameObject);
+            Destroy(Parent.gameObject);
         }
     }
 }
