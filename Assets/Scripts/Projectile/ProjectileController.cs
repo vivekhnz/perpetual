@@ -3,7 +3,7 @@
 public class ProjectileController : PooledObject {
 
 	public float MovementSpeed = 4.0f;
-    public float Damage;
+    public float Damage = 10.0f;
 	
 	public void Initialize(Vector3 position, Quaternion rotation) {
 		transform.position = position;
