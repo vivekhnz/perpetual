@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class HUDController : MonoBehaviour {
 
 	public Text GameOverText;
+    public Text HealthText;
 
 	// Use this for initialization
 	void Start () {
@@ -21,4 +22,9 @@ public class HUDController : MonoBehaviour {
 			return;
 		GameOverText.text = "Game Over";
 	}
+
+    public void UpdateHealth(float health)
+    {
+        HealthText.text = "Health: " + health;
+    }
 }
