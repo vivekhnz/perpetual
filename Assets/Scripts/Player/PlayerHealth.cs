@@ -3,12 +3,16 @@
 public class PlayerHealth : MonoBehaviour {
 
     public PlayerMovement Parent;
+    public float InitialHealth;
 
     private HUDController hudController;
+    private float currentHealth;
 
 	// Use this for initialization
 	void Start () {
 		hudController = Object.FindObjectOfType<HUDController>();
+        currentHealth = InitialHealth;
+        hudController.UpdateHealth(currentHealth);
 	}
 	
 	// Update is called once per frame
@@ -16,18 +20,25 @@ public class PlayerHealth : MonoBehaviour {
 		
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void TakeDamage(float damage)
     {
-        if (Parent == null)
-            return;
+        // reduce health
+        currentHealth -= damage;
         
-        if (other.gameObject.tag == "Enemy")
-        {
-            Destroy(other.gameObject);
-            Destroy(Parent.gameObject);
+        if (hudController != null) {
+            // update HUD
+            hudController.UpdateHealth(currentHealth);
 
-            if (hudController != null)
+            // am I dead?
+            if (currentHealth <= 0) {
+                // game over
+                hudController.UpdateHealth(0);
                 hudController.GameOver();
+
+                // remove player object
+                if (Parent != null)
+                    Destroy(Parent.gameObject);
+            }
         }
     }
 }
