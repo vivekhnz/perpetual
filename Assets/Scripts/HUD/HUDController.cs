@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class HUDController : MonoBehaviour {
 
 	public Text GameOverText;
-    public Text HealthText;
+    public Slider HealthText;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +25,6 @@ public class HUDController : MonoBehaviour {
 
     public void UpdateHealth(float health)
     {
-        HealthText.text = "Health: " + health;
+        HealthText.value = health;
     }
 }
