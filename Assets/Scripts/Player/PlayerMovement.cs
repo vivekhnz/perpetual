@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		Vector2 movement = new Vector2(
 			Input.GetAxis("Horizontal"),
 			Input.GetAxis("Vertical"))

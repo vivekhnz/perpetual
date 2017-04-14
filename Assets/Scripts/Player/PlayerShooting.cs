@@ -8,14 +8,7 @@ public class PlayerShooting : MonoBehaviour
 
     private float projectileFiredTime = 0.0f;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // calculate world position of mouse cursor
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);

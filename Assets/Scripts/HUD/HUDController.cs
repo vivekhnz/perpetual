@@ -9,7 +9,6 @@ public class HUDController : MonoBehaviour {
 
     private float PlayerScore;
 
-	// Use this for initialization
 	void Start () {
         PlayerScore = 0;
 		if (GameOverText == null)
@@ -18,10 +17,6 @@ public class HUDController : MonoBehaviour {
         ScoreText.text = "Score: " + PlayerScore;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	}
-
 	public void GameOver() {
 		if (GameOverText == null)
 			return;

@@ -10,9 +10,8 @@ public class ProjectileController : PooledObject
         transform.position = position;
         transform.rotation = rotation;
     }
-
-    // Update is called once per frame
-    void Update()
+	
+    void FixedUpdate()
     {
         transform.Translate(
             Vector3.right * Time.deltaTime * MovementSpeed);

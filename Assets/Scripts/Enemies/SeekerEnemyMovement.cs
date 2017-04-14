@@ -6,7 +6,7 @@ public class SeekerEnemyMovement : MonoBehaviour
     public PlayerHealth Player;
     public float CollisionDamage = 40.0f;
 
-    void Update()
+    void FixedUpdate()
     {
         if (Player == null)
             return;
