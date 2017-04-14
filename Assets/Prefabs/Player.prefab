@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114677491730002394}
   - component: {fileID: 58270066615730010}
   - component: {fileID: 50392157022359794}
+  - component: {fileID: 114816410274600234}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -105,6 +106,17 @@ MonoBehaviour:
     type: 2}
   ProjectileSpreadDegrees: 5
   BulletsPerMinute: 1000
+--- !u!114 &114816410274600234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288057475374176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e9c2c9a55994a54f8733eb9410cc3e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212824994238841868
 SpriteRenderer:
   m_ObjectHideFlags: 1
