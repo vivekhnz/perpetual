@@ -16,6 +16,6 @@ public class PlayerMovement : MonoBehaviour {
 			Input.GetAxis("Vertical"))
 			* Time.deltaTime * MovementSpeed;
 		transform.Translate(
-			movement.x, movement.y, 0);
+			movement.x, movement.y, 0, Space.World);
 	}
 }
