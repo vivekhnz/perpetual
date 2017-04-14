@@ -162,6 +162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Parent: {fileID: 114493100372726622}
+  maxHealth: 0
+  enemyDamage: 0
 --- !u!212 &212824994238841868
 SpriteRenderer:
   m_ObjectHideFlags: 1
