@@ -12,30 +12,24 @@ public class DamageableObject : MonoBehaviour
     {
         hudController = Object.FindObjectOfType<HUDController>();
         currentHealth = InitialHealth;
-    }
 
-    void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.CompareTag("Projectile"))
-        {
-            ProjectileController projectile =
-                collider.GetComponent<ProjectileController>();
-            if (projectile != null)
-                TakeDamage(projectile.Damage);
-
-            Destroy(collider.gameObject);
-        }
+        if (!gameObject.CompareTag("Damageable"))
+            Debug.LogWarning("This object does not have the 'Damageable' tag. Objects may be unable to damage it.");
     }
 
     public void TakeDamage(float damage)
     {
+        // reduce health
         currentHealth -= damage;
 
+        // am I dead?
         if (currentHealth <= 0)
         {
+            // increase score
             if (hudController != null)
                 hudController.AddScore(ScoreValue);
 
+            // self-destruct
             Destroy(gameObject);
         }
     }

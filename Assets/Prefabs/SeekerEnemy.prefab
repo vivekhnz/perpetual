@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114152353647674258}
   m_Layer: 0
   m_Name: SeekerEnemy
-  m_TagString: Enemy
+  m_TagString: Damageable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 2
   Player: {fileID: 0}
+  CollisionDamage: 40
 --- !u!212 &212229862091881538
 SpriteRenderer:
   m_ObjectHideFlags: 1
