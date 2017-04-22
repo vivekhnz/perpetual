@@ -9,12 +9,18 @@ public class EnemySpawner : MonoBehaviour {
     public int enemiesToSpawn;
 
     private float spawnTime;
+    private EnemySpawnManager Manager;
 
 	// Use this for initialization
 	void Start () {
         spawnTime = 0;
         SpawnEnemy();
 	}
+
+    public void Initialize(EnemySpawnManager spawnManager)
+    {
+        Manager = spawnManager;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -44,6 +50,8 @@ public class EnemySpawner : MonoBehaviour {
 
     void DeleteSpawn()
     {
+        Debug.Log("Removing");
+        Manager.RemoveSpawnPoint(gameObject);
         Destroy(gameObject);
     }
 }
