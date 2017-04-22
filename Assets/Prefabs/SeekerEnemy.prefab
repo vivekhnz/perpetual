@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114991667652785342}
   - component: {fileID: 58060776143180016}
   - component: {fileID: 50152923258903398}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SeekerEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
