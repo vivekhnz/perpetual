@@ -31,7 +31,8 @@ public class ProjectileController : PooledObject
                 // damage the object
                 var damageable = collider.GetComponent<DamageableObject>();
                 if (damageable != null)
-                    damageable.TakeDamage(Damage);
+                    damageable.TakeDamage(Damage,
+                        transform.rotation.eulerAngles.z);
 
                 // destroy this projectile
                 Recycle();
