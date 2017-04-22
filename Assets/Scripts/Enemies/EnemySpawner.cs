@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour {
 
     public GameObject enemy;
     public float spawnInterval = 3f;
+    public int enemiesToSpawn;
 
     private float spawnTime;
 
@@ -25,11 +26,24 @@ public class EnemySpawner : MonoBehaviour {
 
     void SpawnEnemy()
     {
-        GameObject EnemyToSpawn =
-        Instantiate(enemy, transform.position, Quaternion.identity) as GameObject;
-        SeekerEnemyMovement enemyController = EnemyToSpawn.GetComponent<SeekerEnemyMovement>();
-        enemyController.SetTarget();
-        EnemyToSpawn.SetActive(true);
-        spawnTime = Time.time;
+        if (enemiesToSpawn <= 0)
+        {
+            DeleteSpawn();
+        }
+        else
+        {
+            GameObject EnemyToSpawn =
+            Instantiate(enemy, transform.position, Quaternion.identity) as GameObject;
+            SeekerEnemyMovement enemyController = EnemyToSpawn.GetComponent<SeekerEnemyMovement>();
+            enemyController.SetTarget();
+            EnemyToSpawn.SetActive(true);
+            enemiesToSpawn--;
+            spawnTime = Time.time;
+        }
+    }
+
+    void DeleteSpawn()
+    {
+        Destroy(gameObject);
     }
 }
