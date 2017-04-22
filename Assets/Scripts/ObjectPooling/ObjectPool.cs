@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor;
 
 // object pooling implementation based on http://catlikecoding.com/unity/tutorials/object-pools/
 public class ObjectPool : MonoBehaviour
@@ -37,7 +38,9 @@ public class ObjectPool : MonoBehaviour
     public void Recycle(PooledObject obj)
     {
         // deactivate the game object associated with the component
-        obj.gameObject.SetActive(false);
+        // if it is not a prefab
+        if (PrefabUtility.GetPrefabType(gameObject) == PrefabType.None)
+            obj.gameObject.SetActive(false);
         // add it to the list of available instances
         availableObjects.Add(obj);
     }
