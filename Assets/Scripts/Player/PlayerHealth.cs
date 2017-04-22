@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour {
 
@@ -34,11 +35,18 @@ public class PlayerHealth : MonoBehaviour {
                 // game over
                 hudController.UpdateHealth(0);
                 hudController.GameOver();
+                Invoke("ReturnToStartMenu", 3);
 
                 // remove player object
                 if (Parent != null)
                     Destroy(Parent.gameObject);
             }
         }
+    }
+
+    private void ReturnToStartMenu()
+    {
+        //SceneManager.LoadScene(0);
+        Debug.Log("Reload");
     }
 }

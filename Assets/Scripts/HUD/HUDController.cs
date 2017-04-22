@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HUDController : MonoBehaviour {
 
@@ -21,6 +22,7 @@ public class HUDController : MonoBehaviour {
 		if (GameOverText == null)
 			return;
 		GameOverText.text = "Game Over";
+        Invoke("ReturnToStartMenu", 2);
 	}
 
     public void UpdateHealth(float health)
@@ -32,5 +34,10 @@ public class HUDController : MonoBehaviour {
     {
         PlayerScore += score;
         ScoreText.text = "Score: " + PlayerScore;
+    }
+
+    private void ReturnToStartMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
