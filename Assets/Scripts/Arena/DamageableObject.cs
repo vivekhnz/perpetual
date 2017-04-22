@@ -12,8 +12,6 @@ public class DamageableObject : MonoBehaviour
     void Start()
     {
         Parent = Parent ?? gameObject;
-
-        hudController = Object.FindObjectOfType<HUDController>();
         currentHealth = InitialHealth;
 
         if (!gameObject.CompareTag("Damageable"))
@@ -29,6 +27,8 @@ public class DamageableObject : MonoBehaviour
         if (currentHealth <= 0)
         {
             // increase score
+            if (hudController == null)
+                hudController = Object.FindObjectOfType<HUDController>();
             if (hudController != null)
                 hudController.AddScore(ScoreValue);
 

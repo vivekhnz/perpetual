@@ -9,8 +9,6 @@ public class EnemyController : PooledObject
 
     void Start()
     {
-        Player = Object.FindObjectOfType<PlayerHealth>();
-
 		if (DamageableObject == null)
 			Debug.LogError("Enemy does not have a damageable object.");
     }
@@ -18,6 +16,7 @@ public class EnemyController : PooledObject
     public void Initialize(Vector3 position)
     {
         this.transform.position = position;
+		Player = Object.FindObjectOfType<PlayerHealth>();
 		DamageableObject.ResetHealth();
     }
 
