@@ -35,4 +35,26 @@ public class SeekerEnemyMovement : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void SetTarget()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            PlayerHealth playerTarget = playerObject.GetComponentInChildren<PlayerHealth>();
+            if (playerTarget != null)
+            {
+                Player = playerTarget;
+            }
+            else
+            {
+                Debug.Log("PlayerHealth not found");
+            }
+        }
+        else
+        {
+            Debug.Log("Player not found");
+        }
+        Debug.Log("Player Set");
+    }
 }
