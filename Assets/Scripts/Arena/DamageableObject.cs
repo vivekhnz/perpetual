@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class DamageableObject : MonoBehaviour
 {
     public float InitialHealth = 100;
     public int ScoreValue = 5;
     public GameObject Parent;
+    public UnityEvent OnDamaged;
 
     private float currentHealth;
     private HUDController hudController;
@@ -22,6 +24,10 @@ public class DamageableObject : MonoBehaviour
     {
         // reduce health
         currentHealth -= damage;
+
+        // raise damaged event
+        if (OnDamaged != null)
+            OnDamaged.Invoke();
 
         // am I dead?
         if (currentHealth <= 0)
