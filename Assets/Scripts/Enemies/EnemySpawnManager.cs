@@ -19,7 +19,6 @@ public class EnemySpawnManager : MonoBehaviour {
         hudController = Object.FindObjectOfType<HUDController>();
         EnemySpawners = new List<GameObject>();
         spawnPointNumber = 1;
-        Debug.Log("Spawning");
         wave = 0;
         SpawnPoints();
 	}

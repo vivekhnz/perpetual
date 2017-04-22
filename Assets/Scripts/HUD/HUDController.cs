@@ -16,12 +16,19 @@ public class HUDController : MonoBehaviour {
 
 	void Start () {
         PlayerScore = 0;
-		if (GameOverText == null)
-			return;
-		GameOverText.text = string.Empty;
-        ScoreText.text = "Score: " + PlayerScore;
-        WaveText.text = "Wave 1";
-        HUDWaveText.text = "Wave 1";
+		
+        if (GameOverText != null)
+			GameOverText.text = string.Empty;
+        
+        if (ScoreText != null)
+            ScoreText.text = "Score: " + PlayerScore;
+        
+        if (WaveText != null)
+            WaveText.text = "Wave 1";
+        
+        if (HUDWaveText != null)
+            HUDWaveText.text = "Wave 1";
+        
         waveTime = 0;
         doShowWave = true;
 	}
@@ -54,9 +61,12 @@ public class HUDController : MonoBehaviour {
 
     public void ShowWave(int wave)
     {
-        Debug.Log("Showing");
-        WaveText.text = "Wave " + wave;
-        HUDWaveText.text = "Wave " + wave;
+        if (WaveText != null)
+            WaveText.text = "Wave " + wave;
+        
+        if (HUDWaveText != null)
+            HUDWaveText.text = "Wave " + wave;
+        
         doShowWave = true;
         waveTime = Time.time;
     }

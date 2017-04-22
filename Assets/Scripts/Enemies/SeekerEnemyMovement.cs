@@ -24,6 +24,9 @@ public class SeekerEnemyMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (Player == null)
+            return;
+
         // did I crash into the player?
         if (other.gameObject.Equals(Player.gameObject))
         {
@@ -46,15 +49,6 @@ public class SeekerEnemyMovement : MonoBehaviour
             {
                 Player = playerTarget;
             }
-            else
-            {
-                Debug.Log("PlayerHealth not found");
-            }
         }
-        else
-        {
-            Debug.Log("Player not found");
-        }
-        Debug.Log("Player Set");
     }
 }

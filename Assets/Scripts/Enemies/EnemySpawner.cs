@@ -50,7 +50,6 @@ public class EnemySpawner : MonoBehaviour {
 
     void DeleteSpawn()
     {
-        Debug.Log("Removing");
         Manager.RemoveSpawnPoint(gameObject);
         Destroy(gameObject);
     }
