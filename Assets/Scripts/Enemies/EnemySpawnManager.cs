@@ -7,20 +7,22 @@ public class EnemySpawnManager : MonoBehaviour {
     public GameObject spawnPoint;
     public float xBounds = 7;
     public float yBounds = 5;
-
+    
     [HideInInspector]public List<GameObject> EnemySpawners;
 
-	// Use this for initialization
-	void Start () {
+    private int spawnPointNumber;
+
+    // Use this for initialization
+    void Start () {
         EnemySpawners = new List<GameObject>();
+        spawnPointNumber = 1;
+        Debug.Log("Spawning");
+        SpawnPoints();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (EnemySpawners.Count == 0)
-        {
-            CreateSpawn();
-        }
+		
 	}
 
     void CreateSpawn()
@@ -40,5 +42,18 @@ public class EnemySpawnManager : MonoBehaviour {
     public void RemoveSpawnPoint(GameObject spawnToRemove)
     {
         EnemySpawners.Remove(spawnToRemove);
+        if (EnemySpawners.Count == 0)
+        {
+            spawnPointNumber++;
+            SpawnPoints();
+        }
+    }
+
+    void SpawnPoints()
+    {
+        for (int i = 0; i < spawnPointNumber; i++)
+        {
+            CreateSpawn();
+        }
     }
 }
