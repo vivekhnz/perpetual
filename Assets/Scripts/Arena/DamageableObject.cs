@@ -4,12 +4,15 @@ public class DamageableObject : MonoBehaviour
 {
     public float InitialHealth = 100;
     public float ScoreValue = 5;
+    public GameObject Parent;
 
     private float currentHealth;
     private HUDController hudController;
 
     void Start()
     {
+        Parent = Parent ?? gameObject;
+
         hudController = Object.FindObjectOfType<HUDController>();
         currentHealth = InitialHealth;
 
@@ -30,7 +33,7 @@ public class DamageableObject : MonoBehaviour
                 hudController.AddScore(ScoreValue);
 
             // self-destruct
-            Destroy(gameObject);
+            Destroy(Parent);
         }
     }
 }
