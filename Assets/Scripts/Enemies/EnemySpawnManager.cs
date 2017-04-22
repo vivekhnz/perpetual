@@ -52,11 +52,11 @@ public class EnemySpawnManager : MonoBehaviour
             Random.Range(-yBounds, yBounds), 0);
 
         // create spawner
-        var spawner = Instantiate(
-            Spawner, spawnPos, Quaternion.identity);
+        var spawner = Spawner.Fetch<EnemySpawner>();
+        spawner.Initialize(spawnPos);
 
         // track when the spawner is destroyed
-        spawner.Destroyed += OnSpawnerDestroyed;
+        spawner.InstanceRecycled += OnSpawnerDestroyed;
         activeSpawners.Add(spawner);
     }
 
@@ -64,7 +64,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         // stop tracking the spawner
         var spawner = sender as EnemySpawner;
-        spawner.Destroyed -= OnSpawnerDestroyed;
+        spawner.InstanceRecycled -= OnSpawnerDestroyed;
         activeSpawners.Remove(spawner);
     }
 
@@ -75,7 +75,7 @@ public class EnemySpawnManager : MonoBehaviour
         {
             var spawner = activeSpawners[i];
             activeSpawners.Remove(spawner);
-            Destroy(spawner.gameObject);
+            spawner.Recycle();
             i--;
         }
     }

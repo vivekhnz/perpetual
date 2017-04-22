@@ -2,42 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : PooledObject
 {
     public EnemyController Enemy;
     public float SpawnInterval = 3f;
     public int EnemiesToSpawn = 5;
 
     private float spawnTime;
-    private EnemySpawnManager manager;
     private int enemiesSpawned;
-    private List<EnemyController> children;
+    private List<EnemyController> children
+        = new List<EnemyController>();
 
-    public event EventHandler Destroyed;
-
-    void Start()
+    public void Initialize(Vector3 position)
     {
-        manager = GameObject.FindObjectOfType<EnemySpawnManager>();
-        if (manager == null)
-            Debug.LogError("No spawn manager found!");
-
+        transform.position = position;
         spawnTime = 0;
         enemiesSpawned = 0;
-        children = new List<EnemyController>();
+        children.Clear();
 
         // spawn the first enemy
         SpawnEnemy();
     }
 
+    public override void CleanupInstance()
+    {
+        // kill any children enemies
+        for (int i = 0; i < children.Count; i++)
+        {
+            var enemy = children[i];
+            children.Remove(enemy);
+            enemy.Recycle();
+            i--;
+        }
+    }
+
     void FixedUpdate()
     {
         // do I still have enemies to spawn?
-        if (enemiesSpawned >= EnemiesToSpawn)
-            return;
-
-        // can I spawn another enemy?
-        if (Time.time - spawnTime > SpawnInterval)
-            SpawnEnemy();
+        if (enemiesSpawned < EnemiesToSpawn)
+        {
+            // can I spawn another enemy?
+            if (Time.time - spawnTime > SpawnInterval)
+                SpawnEnemy();
+        }
+        else if (enemiesSpawned >= EnemiesToSpawn
+            && children.Count < 1)
+        {
+            // kill spawner once all enemies have been spawned and all
+            // children enemies are destroyed
+            Recycle();
+        }
     }
 
     void SpawnEnemy()
@@ -61,27 +75,5 @@ public class EnemySpawner : MonoBehaviour
         var enemy = sender as EnemyController;
         enemy.InstanceRecycled -= OnEnemyDestroyed;
         children.Remove(enemy);
-
-        // kill spawner once all enemies have been spawned and all
-        // children enemies were destroyed
-        if (enemiesSpawned >= EnemiesToSpawn
-            && children.Count < 1)
-            Destroy(gameObject);
-    }
-
-    void OnDestroy()
-    {
-        // kill any children enemies
-        for (int i = 0; i < children.Count; i++)
-        {
-            var enemy = children[i];
-            children.Remove(enemy);
-            enemy.Recycle();
-            i--;
-        }
-
-        // notify any subscribers that I've been destroyed
-        if (Destroyed != null)
-            Destroyed(this, EventArgs.Empty);
     }
 }
