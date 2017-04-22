@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HUDController : MonoBehaviour
 {
@@ -57,6 +58,9 @@ public class HUDController : MonoBehaviour
         // destroy all enemies and spawners
         var enemyManager = Object.FindObjectOfType<EnemySpawnManager>();
         Destroy(enemyManager);
+
+        // go to start screen
+        Invoke("ReturnToStartMenu", 2);
     }
 
     public void UpdateHealth(float health)
@@ -80,5 +84,10 @@ public class HUDController : MonoBehaviour
 
         doShowWave = true;
         waveTime = Time.time;
+    }
+
+    private void ReturnToStartMenu()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
 }
