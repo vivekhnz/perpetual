@@ -11,12 +11,16 @@ public class EnemySpawnManager : MonoBehaviour {
     [HideInInspector]public List<GameObject> EnemySpawners;
 
     private int spawnPointNumber;
+    private int wave;
+    private HUDController hudController;
 
     // Use this for initialization
     void Start () {
+        hudController = Object.FindObjectOfType<HUDController>();
         EnemySpawners = new List<GameObject>();
         spawnPointNumber = 1;
         Debug.Log("Spawning");
+        wave = 0;
         SpawnPoints();
 	}
 	
@@ -51,6 +55,8 @@ public class EnemySpawnManager : MonoBehaviour {
 
     void SpawnPoints()
     {
+        wave++;
+        hudController.ShowWave(wave);
         for (int i = 0; i < spawnPointNumber; i++)
         {
             CreateSpawn();
