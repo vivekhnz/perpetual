@@ -56,7 +56,7 @@ public class HUDController : MonoBehaviour
             Destroy(spawner.gameObject);
 
         // destroy all enemies
-        var enemies = Object.FindObjectsOfType<SeekerEnemyMovement>();
+        var enemies = Object.FindObjectsOfType<EnemyController>();
         foreach (var enemy in enemies)
             Destroy(enemy.gameObject);
     }

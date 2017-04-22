@@ -37,9 +37,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4574171249462434}
   - component: {fileID: 212229862091881538}
-  - component: {fileID: 114991667652785342}
   - component: {fileID: 58060776143180016}
   - component: {fileID: 50152923258903398}
+  - component: {fileID: 114000609005742900}
+  - component: {fileID: 114795217862693978}
   m_Layer: 10
   m_Name: SeekerEnemy
   m_TagString: Untagged
@@ -122,6 +123,19 @@ CircleCollider2D:
   m_Offset: {x: -0.2, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114000609005742900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1541339381053536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a9b70e153162984d83f449e74d48a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionDamage: 40
+  Player: {fileID: 0}
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,7 +150,7 @@ MonoBehaviour:
   InitialHealth: 100
   ScoreValue: 5
   Parent: {fileID: 1541339381053536}
---- !u!114 &114991667652785342
+--- !u!114 &114795217862693978
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -148,8 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 2
-  Player: {fileID: 0}
-  CollisionDamage: 40
 --- !u!212 &212229862091881538
 SpriteRenderer:
   m_ObjectHideFlags: 1

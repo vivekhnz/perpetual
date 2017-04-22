@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4033983686115914}
-  - component: {fileID: 114730087012294438}
+  - component: {fileID: 114999065554894730}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114730087012294438
+--- !u!114 &114999065554894730
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -51,6 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8bf46c69d5b4b449ae9743c0e375fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1541339381053536, guid: 8f4b081ba0e0abb4bb16d3b104bf963f, type: 2}
-  spawnInterval: 3
-  enemiesToSpawn: 5
+  Enemy: {fileID: 114000609005742900, guid: 8f4b081ba0e0abb4bb16d3b104bf963f, type: 2}
+  SpawnInterval: 3
+  EnemiesToSpawn: 5
