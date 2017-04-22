@@ -1,15 +1,25 @@
 ﻿using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : PooledObject
 {
+	public DamageableObject DamageableObject;
     public float CollisionDamage = 40.0f;
-    
-	[HideInInspector]
-	public PlayerHealth Player;
 
-	void Start() {
-		Player = Object.FindObjectOfType<PlayerHealth>();
-	}
+    public PlayerHealth Player { get; private set; }
+
+    void Start()
+    {
+        Player = Object.FindObjectOfType<PlayerHealth>();
+
+		if (DamageableObject == null)
+			Debug.LogError("Enemy does not have a damageable object.");
+    }
+
+    public void Initialize(Vector3 position)
+    {
+        this.transform.position = position;
+		DamageableObject.ResetHealth();
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {

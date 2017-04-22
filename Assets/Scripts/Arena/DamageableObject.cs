@@ -32,8 +32,21 @@ public class DamageableObject : MonoBehaviour
             if (hudController != null)
                 hudController.AddScore(ScoreValue);
 
-            // self-destruct
-            Destroy(Parent);
+            // recycle the object if it is poolable, destroy it otherwise
+            var poolable = Parent.GetComponent<PooledObject>();
+            if (poolable == null)
+            {
+                Destroy(Parent);
+            }
+            else
+            {
+                poolable.Recycle();
+            }
         }
+    }
+
+    public void ResetHealth()
+    {
+        currentHealth = InitialHealth;
     }
 }

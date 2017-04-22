@@ -58,7 +58,7 @@ public class HUDController : MonoBehaviour
         // destroy all enemies
         var enemies = Object.FindObjectsOfType<EnemyController>();
         foreach (var enemy in enemies)
-            Destroy(enemy.gameObject);
+            enemy.Recycle();
     }
 
     public void UpdateHealth(float health)

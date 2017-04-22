@@ -32,16 +32,17 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
+        // spawn enemy
+        var enemy = Enemy.Fetch<EnemyController>();
+        enemy.Initialize(transform.position);
+
+        // reset spawn cooldown
+        EnemiesToSpawn--;
+        spawnTime = Time.time;
+
+        // kill spawner if no more enemies need to be spawned
         if (EnemiesToSpawn <= 0)
-        {
             DeleteSpawn();
-        }
-        else
-        {
-            Instantiate(Enemy, transform.position, Quaternion.identity);
-            EnemiesToSpawn--;
-            spawnTime = Time.time;
-        }
     }
 
     void DeleteSpawn()
