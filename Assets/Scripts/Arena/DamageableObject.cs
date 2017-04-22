@@ -3,7 +3,7 @@
 public class DamageableObject : MonoBehaviour
 {
     public float InitialHealth = 100;
-    public float ScoreValue = 5;
+    public int ScoreValue = 5;
     public GameObject Parent;
 
     private float currentHealth;

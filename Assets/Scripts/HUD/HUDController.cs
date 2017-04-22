@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
-
     public Text GameOverText;
     public Slider HealthText;
     public Text ScoreText;
@@ -11,19 +10,22 @@ public class HUDController : MonoBehaviour
     public float showWaveTime;
     public Text HUDWaveText;
 
-    private float PlayerScore;
+    public bool IsGameOver { get; private set; }
+
+    private int score;
     private bool doShowWave;
     private float waveTime;
 
     void Start()
     {
-        PlayerScore = 0;
+        score = 0;
+        IsGameOver = false;
 
         if (GameOverText != null)
             GameOverText.text = string.Empty;
 
         if (ScoreText != null)
-            ScoreText.text = "Score: " + PlayerScore;
+            ScoreText.text = "Score: " + score;
 
         if (WaveText != null)
             WaveText.text = "Wave 1";
@@ -46,19 +48,15 @@ public class HUDController : MonoBehaviour
 
     public void GameOver()
     {
+        IsGameOver = true;
+
         // show game over text
         if (GameOverText != null)
             GameOverText.text = "Game Over";
 
-        // destroy all enemy spawners
-        var spawners = Object.FindObjectsOfType<EnemySpawner>();
-        foreach (var spawner in spawners)
-            Destroy(spawner.gameObject);
-
-        // destroy all enemies
-        var enemies = Object.FindObjectsOfType<EnemyController>();
-        foreach (var enemy in enemies)
-            enemy.Recycle();
+        // destroy all enemies and spawners
+        var enemyManager = Object.FindObjectOfType<EnemySpawnManager>();
+        Destroy(enemyManager);
     }
 
     public void UpdateHealth(float health)
@@ -66,10 +64,10 @@ public class HUDController : MonoBehaviour
         HealthText.value = health;
     }
 
-    public void AddScore(float score)
+    public void AddScore(int score)
     {
-        PlayerScore += score;
-        ScoreText.text = "Score: " + PlayerScore;
+        this.score += score;
+        ScoreText.text = "Score: " + this.score;
     }
 
     public void ShowWave(int wave)

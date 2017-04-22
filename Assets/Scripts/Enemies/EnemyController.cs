@@ -34,7 +34,7 @@ public class EnemyController : PooledObject
                 Player.TakeDamage(CollisionDamage);
 
             // self-destruct
-            Destroy(gameObject);
+            DamageableObject.TakeDamage(float.MaxValue);
         }
     }
 }
