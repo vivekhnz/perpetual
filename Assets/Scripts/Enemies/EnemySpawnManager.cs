@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using Random = UnityEngine.Random;
@@ -7,21 +8,26 @@ using Random = UnityEngine.Random;
 public class EnemySpawnManager : MonoBehaviour
 {
     public EnemySpawner Spawner;
-    public float xBounds = 7;
-    public float yBounds = 5;
 
+    private List<Vector3> spawnLocations;
     private List<EnemySpawner> activeSpawners;
     private int wave;
-    private HUDController hudController;
+    private HUDController hud;
 
     void Start()
     {
         if (Spawner == null)
             Debug.LogError("No enemy spawner specified!");
 
-        hudController = GameObject.FindObjectOfType<HUDController>();
+        hud = GameObject.FindObjectOfType<HUDController>();
         activeSpawners = new List<EnemySpawner>();
         wave = 0;
+
+        // find spawn points
+        spawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint")
+            .Select(obj => obj.transform.position).ToList();
+        if (spawnLocations.Count == 0)
+            Debug.LogError("No spawn points defined!");
     }
 
     void FixedUpdate()
@@ -29,7 +35,7 @@ public class EnemySpawnManager : MonoBehaviour
         // start a new wave if no spawners are active and the
         // game has not ended
         if (activeSpawners.Count == 0
-            && !hudController.IsGameOver)
+            && !hud.IsGameOver)
             StartNewWave();
     }
 
@@ -37,7 +43,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         // increment current wave
         wave++;
-        hudController.ShowWave(wave);
+        hud.ShowWave(wave);
 
         // the number of spawners created is equal to the wave number
         for (int i = 0; i < wave; i++)
@@ -46,14 +52,10 @@ public class EnemySpawnManager : MonoBehaviour
 
     void CreateSpawner()
     {
-        // determine spawner location
-        var spawnPos = new Vector3(
-            Random.Range(-xBounds, xBounds),
-            Random.Range(-yBounds, yBounds), 0);
-
         // create spawner
         var spawner = Spawner.Fetch<EnemySpawner>();
-        spawner.Initialize(spawnPos);
+        spawner.Initialize(
+            spawnLocations[Random.Range(0, spawnLocations.Count)]);
 
         // track when the spawner is destroyed
         spawner.InstanceRecycled += OnSpawnerDestroyed;

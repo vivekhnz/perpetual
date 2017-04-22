@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Solid
   - Damageable
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
