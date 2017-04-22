@@ -21,9 +21,16 @@ public class EnemySpawnManager : MonoBehaviour
 
         hudController = GameObject.FindObjectOfType<HUDController>();
         activeSpawners = new List<EnemySpawner>();
-
         wave = 0;
-        StartNewWave();
+    }
+
+    void FixedUpdate()
+    {
+        // start a new wave if no spawners are active and the
+        // game has not ended
+        if (activeSpawners.Count == 0
+            && !hudController.IsGameOver)
+            StartNewWave();
     }
 
     void StartNewWave()
@@ -59,11 +66,6 @@ public class EnemySpawnManager : MonoBehaviour
         var spawner = sender as EnemySpawner;
         spawner.Destroyed -= OnSpawnerDestroyed;
         activeSpawners.Remove(spawner);
-
-        // start a new wave if no more spawners are active and the a game has not ended
-        if (activeSpawners.Count == 0
-            && !hudController.IsGameOver)
-            StartNewWave();
     }
 
     void OnDestroy()
@@ -73,7 +75,7 @@ public class EnemySpawnManager : MonoBehaviour
         {
             var spawner = activeSpawners[i];
             activeSpawners.Remove(spawner);
-            Destroy(spawner);
+            Destroy(spawner.gameObject);
             i--;
         }
     }
