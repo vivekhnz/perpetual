@@ -38,9 +38,7 @@ public class ObjectPool : MonoBehaviour
     public void Recycle(PooledObject obj)
     {
         // deactivate the game object associated with the component
-        // if it is not a prefab
-        if (PrefabUtility.GetPrefabType(gameObject) == PrefabType.None)
-            obj.gameObject.SetActive(false);
+        obj.gameObject.SetActive(false);
         // add it to the list of available instances
         availableObjects.Add(obj);
     }

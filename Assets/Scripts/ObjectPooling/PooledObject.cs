@@ -24,11 +24,13 @@ public class PooledObject : MonoBehaviour
 
     public void Recycle()
     {
+        // ensure the object is not a prefab
+        if (PrefabUtility.GetPrefabType(gameObject) != PrefabType.None)
+            return;
+        
         if (Pool == null)
         {
-            // ensure the object is not a prefab
-            if (PrefabUtility.GetPrefabType(gameObject) == PrefabType.None)
-                Destroy(gameObject);
+            Destroy(gameObject);
         }
         else
         {
