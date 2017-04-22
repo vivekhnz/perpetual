@@ -3,13 +3,16 @@
 public class DamageableObject : MonoBehaviour
 {
     public float InitialHealth = 100;
-    public float ScoreValue = 5;
+    public int ScoreValue = 5;
+    public GameObject Parent;
 
     private float currentHealth;
     private HUDController hudController;
 
     void Start()
     {
+        Parent = Parent ?? gameObject;
+
         hudController = Object.FindObjectOfType<HUDController>();
         currentHealth = InitialHealth;
 
@@ -29,8 +32,21 @@ public class DamageableObject : MonoBehaviour
             if (hudController != null)
                 hudController.AddScore(ScoreValue);
 
-            // self-destruct
-            Destroy(gameObject);
+            // recycle the object if it is poolable, destroy it otherwise
+            var poolable = Parent.GetComponent<PooledObject>();
+            if (poolable == null)
+            {
+                Destroy(Parent);
+            }
+            else
+            {
+                poolable.Recycle();
+            }
         }
+    }
+
+    public void ResetHealth()
+    {
+        currentHealth = InitialHealth;
     }
 }

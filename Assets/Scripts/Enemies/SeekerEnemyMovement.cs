@@ -1,18 +1,24 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(EnemyController))]
 public class SeekerEnemyMovement : MonoBehaviour
 {
-    public float MovementSpeed;
-    public PlayerHealth Player;
-    public float CollisionDamage = 40.0f;
+    public float MovementSpeed = 2.0f;
+
+    private EnemyController controller;
+
+    void Start()
+    {
+        controller = GetComponent<EnemyController>();
+    }
 
     void FixedUpdate()
     {
-        if (Player == null)
+        if (controller.Player == null)
             return;
 
         // rotate to face player
-        Vector2 direction = Player.transform.position - transform.position;
+        Vector2 direction = controller.Player.transform.position - transform.position;
         direction.Normalize();
         transform.rotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
@@ -20,19 +26,5 @@ public class SeekerEnemyMovement : MonoBehaviour
         // move forward
         transform.Translate(
             Vector3.right * MovementSpeed * Time.deltaTime);
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        // did I crash into the player?
-        if (other.gameObject.Equals(Player.gameObject))
-        {
-            // damage player
-            if (Player != null)
-                Player.TakeDamage(CollisionDamage);
-
-            // self-destruct
-            Destroy(gameObject);
-        }
     }
 }
