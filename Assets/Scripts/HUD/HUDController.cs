@@ -15,17 +15,15 @@ public class HUDController : MonoBehaviour
     public bool IsGameOver { get; private set; }
 
     private int score;
-    private int hiScore;
+    private int highscore;
     private bool doShowWave;
     private float waveTime;
 
     void Start()
     {
-        //collect hiScore
+        // retrieve the highscore
         if (PlayerPrefs.HasKey("HighScore"))
-        {
-            hiScore = PlayerPrefs.GetInt("HighScore");
-        }
+            highscore = PlayerPrefs.GetInt("HighScore");
 
         score = 0;
         IsGameOver = false;
@@ -43,7 +41,7 @@ public class HUDController : MonoBehaviour
             HUDWaveText.text = "Wave 1";
 
         if (HighScoreText != null)
-            HighScoreText.text = "High Score: " + hiScore;
+            HighScoreText.text = "High Score: " + highscore;
 
         waveTime = 0;
         doShowWave = true;
@@ -62,11 +60,11 @@ public class HUDController : MonoBehaviour
     {
         IsGameOver = true;
 
-        //if high score, save score
-        if (score > hiScore)
+        // did the player beat the highscore?
+        if (score > highscore)
         {
-            hiScore = score;
-            PlayerPrefs.SetInt("HighScore", hiScore);
+            highscore = score;
+            PlayerPrefs.SetInt("HighScore", highscore);
         }
 
         // show game over text
@@ -91,7 +89,7 @@ public class HUDController : MonoBehaviour
         this.score += score;
 
         // change high score if beaten
-        if (this.score > hiScore)
+        if (this.score > highscore)
         {
             HighScoreText.text = "High Score: " + this.score;
         }
