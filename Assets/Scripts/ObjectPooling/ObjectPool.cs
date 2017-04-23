@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor;
 
 // object pooling implementation based on http://catlikecoding.com/unity/tutorials/object-pools/
 public class ObjectPool : MonoBehaviour
