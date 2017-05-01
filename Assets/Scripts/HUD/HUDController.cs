@@ -108,6 +108,19 @@ public class HUDController : MonoBehaviour
         waveTime = Time.time;
     }
 
+    public void ShowWave(string bossWave)
+    {
+        // Overloaded function to display the boss wave as string and not int.
+        if (WaveText != null)
+            WaveText.text = "BOSS";
+
+        if (HUDWaveText != null)
+            HUDWaveText.text = "BOSS";
+
+        doShowWave = true;
+        waveTime = Time.time;
+    }
+
     private void ReturnToStartMenu()
     {
         SceneManager.LoadScene("TitleScene");

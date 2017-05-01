@@ -12,6 +12,7 @@ public class EnemySpawnManager : MonoBehaviour
     private List<Vector3> spawnLocations;
     private List<EnemySpawner> activeSpawners;
     private int wave;
+    private int wavesTilBoss = 5; // A countdown til the player faces the boss.
     private HUDController hud;
 
     void Start()
@@ -32,9 +33,15 @@ public class EnemySpawnManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        // First check if a boss needs to spawn. If not, proceed to spawn normally.
+        if (wavesTilBoss == 0)
+        {
+            SpawnBoss();
+        }
+
         // start a new wave if no spawners are active and the
         // game has not ended
-        if (activeSpawners.Count == 0
+        else if (activeSpawners.Count == 0
             && !hud.IsGameOver)
             StartNewWave();
     }
@@ -43,6 +50,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         // increment current wave
         wave++;
+        wavesTilBoss--;
         hud.ShowWave(wave);
 
         // the number of spawners created is equal to the wave number
@@ -68,6 +76,12 @@ public class EnemySpawnManager : MonoBehaviour
         var spawner = sender as EnemySpawner;
         spawner.InstanceRecycled -= OnSpawnerDestroyed;
         activeSpawners.Remove(spawner);
+    }
+
+    void SpawnBoss()
+    {
+        // Spawns a boss after every 5 waves.
+        hud.ShowWave("BOSS! BOSS!");
     }
 
     void OnDestroy()
