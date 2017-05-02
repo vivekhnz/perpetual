@@ -7,12 +7,14 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnManager : MonoBehaviour
 {
+    private const int WAVES_TO_BOSS = 2; // Constant that determines the number of waves between boss fights.
+
     public EnemySpawner Spawner;
 
     private List<Vector3> spawnLocations;
     private List<EnemySpawner> activeSpawners;
     private int wave;
-    private int wavesTilBoss = 5; // A countdown til the player faces the boss.
+    private int wavesTilBoss = WAVES_TO_BOSS; // A countdown til the player faces the boss.
     private HUDController hud;
 
     void Start()
@@ -33,29 +35,36 @@ public class EnemySpawnManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        // First check if a boss needs to spawn. If not, proceed to spawn normally.
-        if (wavesTilBoss == 0)
-        {
-            SpawnBoss();
-        }
-
         // start a new wave if no spawners are active and the
         // game has not ended
-        else if (activeSpawners.Count == 0
-            && !hud.IsGameOver)
+        if (activeSpawners.Count == 0 && !hud.IsGameOver)
+        {
             StartNewWave();
+            Debug.Log("Starting New Wave");
+        }
     }
 
     void StartNewWave()
     {
-        // increment current wave
+        // increment current wave and subtract the countdown to the boss fight.
         wave++;
         wavesTilBoss--;
-        hud.ShowWave(wave);
 
-        // the number of spawners created is equal to the wave number
-        for (int i = 0; i < wave; i++)
-            CreateSpawner();
+        // Spawn a boss if the countdown is done. Otherwise spawn regular wave.
+        if (wavesTilBoss == 0)
+        {
+            // Reset countdown back to default.
+            wavesTilBoss = WAVES_TO_BOSS;
+
+            SpawnBoss();
+        }
+        else
+        {
+            hud.ShowWave(wave);
+            // the number of spawners created is equal to the wave number
+            for (int i = 0; i < wave; i++)
+                CreateSpawner();
+        }
     }
 
     void CreateSpawner()
