@@ -45,9 +45,10 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
+    // Starts a new wave consisted of normal enemies or a boss.
     void StartNewWave()
     {
-        // increment current wave and subtract the countdown to the boss fight.
+        // Increment current wave and subtract the countdown to the boss fight.
         wave++;
         wavesTilBoss--;
 
@@ -57,15 +58,37 @@ public class EnemySpawnManager : MonoBehaviour
             // Reset countdown back to default.
             wavesTilBoss = WAVES_TO_BOSS;
 
+            // Subtract a wave since a boss wave is unique. Ie: wave 5 -> boss -> wave 6.
+            // Not wave 5 -> boss (6) -> wave 7.
+            wave--;
+
             SpawnBoss();
         }
         else
         {
-            hud.ShowWave(wave);
-            // the number of spawners created is equal to the wave number
-            for (int i = 0; i < wave; i++)
-                CreateSpawner(seekerEnemySpawner);
+            SpawnNormalWaves();
         }
+    }
+
+    // Spawns a boss by creating an EnemySpawner after updating HUD.
+    void SpawnBoss()
+    {
+        // Update HUD to show the current wave. Flash the BOSS wave text.
+        hud.StartFlashingWaveText("BOSS! BOSS!");
+
+        // Create a reusable EnemySpawner that spawns Boss1s.
+        CreateSpawner(boss1Spawner);
+    }
+
+    // Spawns a wave of normal enemies by creating an EnemySpawner after updating HUD.
+    void SpawnNormalWaves()
+    {
+        // Update HUD to show the current wave.
+        hud.ShowWave(wave);
+
+        // the number of spawners created is equal to the wave number
+        for (int i = 0; i < wave; i++)
+            CreateSpawner(seekerEnemySpawner);
     }
 
     void CreateSpawner(EnemySpawner typeOfEnemySpawner)
@@ -86,14 +109,6 @@ public class EnemySpawnManager : MonoBehaviour
         var spawner = sender as EnemySpawner;
         spawner.InstanceRecycled -= OnSpawnerDestroyed;
         activeSpawners.Remove(spawner);
-    }
-
-    void SpawnBoss()
-    {
-        // Spawns a boss after every 5 waves.
-        hud.ShowWave("BOSS! BOSS!");
-
-        CreateSpawner(boss1Spawner);
     }
 
     void OnDestroy()
