@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    public EnemySpawner Spawner;
+    public List<EnemySpawner> Spawners;
 
     private List<Vector3> spawnLocations;
     private List<EnemySpawner> activeSpawners;
@@ -16,7 +16,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     void Start()
     {
-        if (Spawner == null)
+        if (Spawners == null)
             Debug.LogError("No enemy spawner specified!");
 
         hud = GameObject.FindObjectOfType<HUDController>();
@@ -52,8 +52,11 @@ public class EnemySpawnManager : MonoBehaviour
 
     void CreateSpawner()
     {
+        // pick a random spawner type
+        var spawnerType = Spawners[Random.Range(0, Spawners.Count)];
+        
         // create spawner
-        var spawner = Spawner.Fetch<EnemySpawner>();
+        var spawner = spawnerType.Fetch<EnemySpawner>();
         spawner.Initialize(
             spawnLocations[Random.Range(0, spawnLocations.Count)]);
 
