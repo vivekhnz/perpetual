@@ -82,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blastDamage: 200
   playerDamageModifier: 0.1
-  blastForce: 10
+  blastForce: 5
 --- !u!198 &198433298794925042
 ParticleSystem:
   m_ObjectHideFlags: 1
