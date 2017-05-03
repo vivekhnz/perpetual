@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 198433298794925042}
   - component: {fileID: 199988989615994342}
   - component: {fileID: 114546208615000262}
+  - component: {fileID: 58929563766077100}
+  - component: {fileID: 114976107417908588}
   m_Layer: 0
   m_Name: ExploderEnemyExplosion
   m_TagString: Untagged
@@ -36,12 +38,26 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1986335406338884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.792804, y: -0.6152819, z: 0}
+  m_LocalPosition: {x: 3.0942888, y: 0.49393427, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &58929563766077100
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986335406338884}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.7008886
 --- !u!114 &114546208615000262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53,6 +69,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6526a92ec45af52488b336fe18354a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114976107417908588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986335406338884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a039361d4f0ea8042b6dafeb094896ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blastDamage: 200
+  playerDamageModifier: 0.1
 --- !u!198 &198433298794925042
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -108,7 +137,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1697534631
+  randomSeed: 693819182
   InitialModule:
     serializedVersion: 3
     enabled: 1
