@@ -194,7 +194,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff11a02e62c7f54e9e67c076ad4a157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Spawner: {fileID: 114999065554894730, guid: 4b6f2d5de7272de4fa60f4f202afc980, type: 2}
+  seekerEnemySpawner: {fileID: 114999065554894730, guid: 4b6f2d5de7272de4fa60f4f202afc980,
+    type: 2}
+  boss1Spawner: {fileID: 114999065554894730, guid: e8d8f6f8b1445014c95376b3cf833ef3,
+    type: 2}
 --- !u!4 &173740076
 Transform:
   m_ObjectHideFlags: 0

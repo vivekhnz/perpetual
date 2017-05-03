@@ -9,7 +9,8 @@ public class EnemySpawnManager : MonoBehaviour
 {
     private const int WAVES_TO_BOSS = 2; // Constant that determines the number of waves between boss fights.
 
-    public EnemySpawner Spawner;
+    public EnemySpawner seekerEnemySpawner;
+    public EnemySpawner boss1Spawner;
 
     private List<Vector3> spawnLocations;
     private List<EnemySpawner> activeSpawners;
@@ -19,7 +20,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     void Start()
     {
-        if (Spawner == null)
+        if (seekerEnemySpawner == null)
             Debug.LogError("No enemy spawner specified!");
 
         hud = GameObject.FindObjectOfType<HUDController>();
@@ -63,14 +64,14 @@ public class EnemySpawnManager : MonoBehaviour
             hud.ShowWave(wave);
             // the number of spawners created is equal to the wave number
             for (int i = 0; i < wave; i++)
-                CreateSpawner();
+                CreateSpawner(seekerEnemySpawner);
         }
     }
 
-    void CreateSpawner()
+    void CreateSpawner(EnemySpawner typeOfEnemySpawner)
     {
         // create spawner
-        var spawner = Spawner.Fetch<EnemySpawner>();
+        var spawner = typeOfEnemySpawner.Fetch<EnemySpawner>();
         spawner.Initialize(
             spawnLocations[Random.Range(0, spawnLocations.Count)]);
 
@@ -91,6 +92,8 @@ public class EnemySpawnManager : MonoBehaviour
     {
         // Spawns a boss after every 5 waves.
         hud.ShowWave("BOSS! BOSS!");
+
+        CreateSpawner(boss1Spawner);
     }
 
     void OnDestroy()
