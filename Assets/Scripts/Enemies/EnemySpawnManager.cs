@@ -19,6 +19,7 @@ public class EnemySpawnManager : MonoBehaviour
     public int WavesPerRound = 2;
 
     private HUDController hud;
+    private PlayerHealth player;
 
     private List<Vector3> spawnLocations;
     private List<EnemySpawner> activeSpawners;
@@ -29,11 +30,15 @@ public class EnemySpawnManager : MonoBehaviour
     {
         if (Spawners == null || Spawners.Count < 1)
             Debug.LogError("No enemy spawner specified!");
-
         if (BossSpawner == null)
             Debug.LogError("No boss spawner specified!");
-
         hud = GameObject.FindObjectOfType<HUDController>();
+        if (hud == null)
+            Debug.LogError("No HUD controller found.");
+        player = GameObject.FindObjectOfType<PlayerHealth>();
+        if (player == null)
+            Debug.LogError("No player found.");
+
         activeSpawners = new List<EnemySpawner>();
         round = 0;
         StartNewRound();
@@ -57,6 +62,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         round++;
         wave = 0;
+        player.ResetHealth();
     }
 
     void StartNewWave()
