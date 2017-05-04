@@ -14,18 +14,16 @@ public class EnemySpawnManager : MonoBehaviour
         public int Weight;
     }
 
-    // Constant that determines the number of waves between boss fights.
-    const int WAVES_TO_BOSS = 2;
-
     public List<EnemySpawn> Spawners;
     public EnemySpawner BossSpawner;
+    public int WavesPerRound = 2;
+
+    private HUDController hud;
 
     private List<Vector3> spawnLocations;
     private List<EnemySpawner> activeSpawners;
     private int wave;
-    // A countdown til the player faces the boss.
-    private int wavesTilBoss = WAVES_TO_BOSS;
-    private HUDController hud;
+    private int round;
 
     void Start()
     {
@@ -37,7 +35,8 @@ public class EnemySpawnManager : MonoBehaviour
 
         hud = GameObject.FindObjectOfType<HUDController>();
         activeSpawners = new List<EnemySpawner>();
-        wave = 0;
+        round = 0;
+        StartNewRound();
 
         // find spawn points
         spawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint")
@@ -51,56 +50,39 @@ public class EnemySpawnManager : MonoBehaviour
         // start a new wave if no spawners are active and the
         // game has not ended
         if (activeSpawners.Count == 0 && !hud.IsGameOver)
-        {
             StartNewWave();
-            Debug.Log("Starting New Wave");
-        }
     }
 
-    // Starts a new wave consisted of normal enemies or a boss.
+    void StartNewRound()
+    {
+        round++;
+        wave = 0;
+    }
+
     void StartNewWave()
     {
-        // Increment current wave and subtract the countdown to the boss fight.
+        // start a new round if we defeated the boss
+        if (wave > WavesPerRound)
+            StartNewRound();
+
+        // increment current wave and update HUD
         wave++;
-        wavesTilBoss--;
+        hud.ShowWave(wave);
 
-        // Spawn a boss if the countdown is done. Otherwise spawn regular wave.
-        if (wavesTilBoss == 0)
+        // have we reached a boss fight?
+        if (wave == WavesPerRound + 1)
         {
-            // Reset countdown back to default.
-            wavesTilBoss = WAVES_TO_BOSS;
-
-            // Subtract a wave since a boss wave is unique. Ie: wave 5 -> boss -> wave 6.
-            // Not wave 5 -> boss (6) -> wave 7.
-            wave--;
-
-            SpawnBoss();
+            // flash the boss wave text and create the boss spawner
+            hud.StartFlashingWaveText("BOSS! BOSS!");
+            CreateSpawner(BossSpawner);
         }
         else
         {
-            SpawnNormalWaves();
+            // the number of spawners created is incremented each wave
+            var count = (WavesPerRound * (round - 1)) + wave;
+            for (int i = 0; i < count; i++)
+                CreateSpawner(PickRandomSpawner());
         }
-    }
-
-    // Spawns a boss by creating an EnemySpawner after updating HUD.
-    void SpawnBoss()
-    {
-        // Update HUD to show the current wave. Flash the BOSS wave text.
-        hud.StartFlashingWaveText("BOSS! BOSS!");
-
-        // Create a reusable EnemySpawner that spawns Boss1s.
-        CreateSpawner(BossSpawner);
-    }
-
-    // Spawns a wave of normal enemies by creating an EnemySpawner after updating HUD.
-    void SpawnNormalWaves()
-    {
-        // Update HUD to show the current wave.
-        hud.ShowWave(wave);
-
-        // the number of spawners created is equal to the wave number
-        for (int i = 0; i < wave; i++)
-            CreateSpawner(PickRandomSpawner());
     }
 
     EnemySpawner PickRandomSpawner()
