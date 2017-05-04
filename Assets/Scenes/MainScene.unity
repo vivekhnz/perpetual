@@ -775,7 +775,7 @@ GameObject:
   - component: {fileID: 807584707}
   - component: {fileID: 807584706}
   m_Layer: 5
-  m_Name: WaveText
+  m_Name: MessageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -831,7 +831,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Wave Text
+  m_Text: Message Text
 --- !u!222 &807584707
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -849,7 +849,7 @@ GameObject:
   - component: {fileID: 910987638}
   - component: {fileID: 910987639}
   m_Layer: 5
-  m_Name: HUDWaveText
+  m_Name: WaveText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1326,10 +1326,10 @@ MonoBehaviour:
   GameOverText: {fileID: 1820750606}
   HealthText: {fileID: 1091354193}
   ScoreText: {fileID: 1668241444}
-  WaveText: {fileID: 807584706}
-  showWaveTime: 3
-  HUDWaveText: {fileID: 910987639}
-  HUDRoundText: {fileID: 1823300251}
+  MessageText: {fileID: 807584706}
+  ShowWaveTime: 3
+  WaveText: {fileID: 910987639}
+  RoundText: {fileID: 1823300251}
   HighScoreText: {fileID: 399068022}
 --- !u!1 &1164706665
 GameObject:
@@ -2026,7 +2026,7 @@ GameObject:
   - component: {fileID: 1823300252}
   - component: {fileID: 1823300251}
   m_Layer: 5
-  m_Name: HUDRoundText
+  m_Name: RoundText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

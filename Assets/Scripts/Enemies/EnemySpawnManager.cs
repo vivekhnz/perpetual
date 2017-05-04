@@ -72,8 +72,8 @@ public class EnemySpawnManager : MonoBehaviour
         // have we reached a boss fight?
         if (wave == WavesPerRound + 1)
         {
-            // flash the boss wave text and create the boss spawner
-            hud.StartFlashingWaveText("BOSS! BOSS!");
+            // signal the boss fight and create the boss spawner
+            hud.SignalBossFight();
             CreateSpawner(BossSpawner);
         }
         else
