@@ -67,7 +67,7 @@ public class EnemySpawnManager : MonoBehaviour
 
         // increment current wave and update HUD
         wave++;
-        hud.ShowWave(wave);
+        hud.ShowRoundAndWave(round, wave);
 
         // have we reached a boss fight?
         if (wave == WavesPerRound + 1)

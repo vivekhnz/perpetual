@@ -11,6 +11,7 @@ public class HUDController : MonoBehaviour
     public Text WaveText;
     public float showWaveTime;
     public Text HUDWaveText;
+    public Text HUDRoundText;
     public Text HighScoreText;
 
     public bool IsGameOver { get; private set; }
@@ -41,6 +42,9 @@ public class HUDController : MonoBehaviour
 
         if (HUDWaveText != null)
             HUDWaveText.text = "Wave 1";
+
+        if (HUDRoundText != null)
+            HUDRoundText.text = "Round 1";
 
         if (HighScoreText != null)
             HighScoreText.text = "High Score: " + highscore;
@@ -100,7 +104,7 @@ public class HUDController : MonoBehaviour
         ScoreText.text = "Score: " + this.score;
     }
 
-    public void ShowWave(int wave)
+    public void ShowRoundAndWave(int round, int wave)
     {
         if (WaveText != null)
             WaveText.text = "Wave " + wave;
@@ -108,19 +112,8 @@ public class HUDController : MonoBehaviour
         if (HUDWaveText != null)
             HUDWaveText.text = "Wave " + wave;
 
-        doShowWave = true;
-        waveTime = Time.time;
-    }
-
-    // Overloaded function to display the boss wave as string and not int.
-    // Superseeded by the FlashingWaveText function.
-    public void ShowWave(string waveString)
-    {
-        if (WaveText != null)
-            WaveText.text = waveString;
-
-        if (HUDWaveText != null)
-            HUDWaveText.text = waveString;
+        if (HUDRoundText != null)
+            HUDRoundText.text = "Round " + round;
 
         doShowWave = true;
         waveTime = Time.time;
