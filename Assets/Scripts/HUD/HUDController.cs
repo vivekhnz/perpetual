@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class HUDController : MonoBehaviour
 {
     public Text GameOverText;
     public Slider HealthText;
     public Text ScoreText;
+    public Text MessageText;
+    public float ShowWaveTime;
     public Text WaveText;
-    public float showWaveTime;
-    public Text HUDWaveText;
+    public Text RoundText;
     public Text HighScoreText;
 
     public bool IsGameOver { get; private set; }
@@ -17,6 +19,7 @@ public class HUDController : MonoBehaviour
     private int score;
     private int highscore;
     private bool doShowWave;
+    private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
 
     void Start()
@@ -34,11 +37,14 @@ public class HUDController : MonoBehaviour
         if (ScoreText != null)
             ScoreText.text = "Score: " + score;
 
+        if (MessageText != null)
+            MessageText.text = "Wave 1";
+
         if (WaveText != null)
             WaveText.text = "Wave 1";
 
-        if (HUDWaveText != null)
-            HUDWaveText.text = "Wave 1";
+        if (RoundText != null)
+            RoundText.text = "Round 1";
 
         if (HighScoreText != null)
             HighScoreText.text = "High Score: " + highscore;
@@ -49,10 +55,12 @@ public class HUDController : MonoBehaviour
 
     void Update()
     {
-        if (doShowWave && (Time.time - waveTime) > showWaveTime)
+        // Clear wave text after showWaveTime(s) if there is a WaveText on screen.
+        // Does not deal with the blinking WaveText effect.
+        if (doShowWave && (Time.time - waveTime) > ShowWaveTime)
         {
             doShowWave = false;
-            WaveText.text = string.Empty;
+            MessageText.text = string.Empty;
         }
     }
 
@@ -96,16 +104,47 @@ public class HUDController : MonoBehaviour
         ScoreText.text = "Score: " + this.score;
     }
 
-    public void ShowWave(int wave)
+    public void ShowRoundAndWave(int round, int wave)
     {
+        if (MessageText != null)
+            MessageText.text = "Wave " + wave;
+
         if (WaveText != null)
             WaveText.text = "Wave " + wave;
 
-        if (HUDWaveText != null)
-            HUDWaveText.text = "Wave " + wave;
+        if (RoundText != null)
+            RoundText.text = "Round " + round;
 
         doShowWave = true;
         waveTime = Time.time;
+    }
+
+    public void SignalBossFight()
+    {
+        if (WaveText != null)
+            WaveText.text = "Boss Fight";
+
+        StartCoroutine(FlashWaveText("BOSS FIGHT!"));
+        StartCoroutine(StopBlinking(ShowWaveTime));
+    }
+
+    public IEnumerator FlashWaveText(string text)
+    {
+        isFlashing = true;
+        while (isFlashing)
+        {
+            MessageText.text = text;
+            yield return new WaitForSeconds(.5f);
+            MessageText.text = string.Empty;
+            yield return new WaitForSeconds(.5f);
+        }
+    }
+
+    private IEnumerator StopBlinking(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isFlashing = false;
+        MessageText.text = string.Empty;
     }
 
     private void ReturnToStartMenu()
