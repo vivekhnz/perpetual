@@ -197,8 +197,11 @@ MonoBehaviour:
   Spawners:
   - Spawner: {fileID: 114999065554894730, guid: 4b6f2d5de7272de4fa60f4f202afc980,
       type: 2}
-    Weight: 2
+    Weight: 0
   - Spawner: {fileID: 114999065554894730, guid: e3a864ff4aef249459b6af30028232be,
+      type: 2}
+    Weight: 0
+  - Spawner: {fileID: 114999065554894730, guid: 441102ed04d529d45a403b4d8d13ee0d,
       type: 2}
     Weight: 1
   BossSpawner: {fileID: 114999065554894730, guid: e8d8f6f8b1445014c95376b3cf833ef3,
@@ -690,6 +693,11 @@ Prefab:
     - target: {fileID: 4367130147249410, guid: 2121cc37f9fb49b4cbebd4672b0a818d, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50392157022359794, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
+        type: 2}
+      propertyPath: m_LinearDrag
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2121cc37f9fb49b4cbebd4672b0a818d, type: 2}
