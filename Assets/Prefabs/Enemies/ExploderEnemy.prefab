@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 114795217862693978}
   - component: {fileID: 95125455190508830}
   m_Layer: 10
-  m_Name: SlowExplodingEnemy
+  m_Name: ExploderEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.6626856, y: -0.021216543, z: 0}
+  m_LocalPosition: {x: 4.3056083, y: -0.37320167, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4647578873214484}
@@ -109,7 +109,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.56
+  m_Radius: 0.71
 --- !u!58 &58367732161014586
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -121,9 +121,9 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -0.14, y: 0}
+  m_Offset: {x: -0.05, y: 0}
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.55
 --- !u!95 &95125455190508830
 Animator:
   serializedVersion: 3
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e464cb1f7400dc640b996742f7c32b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 1
+  MovementSpeed: 1.5
 --- !u!212 &212229862091881538
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -229,7 +229,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: dce0828e6d827bc4986cbca3e0b28634, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06f033c6c2413e841839bd4a55d3d401, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
