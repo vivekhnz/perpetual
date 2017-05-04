@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class HUDController : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class HUDController : MonoBehaviour
     private int score;
     private int highscore;
     private bool doShowWave;
+    private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
 
     void Start()
@@ -49,6 +51,8 @@ public class HUDController : MonoBehaviour
 
     void Update()
     {
+        // Clear wave text after showWaveTime(s) if there is a WaveText on screen.
+        // Does not deal with the blinking WaveText effect.
         if (doShowWave && (Time.time - waveTime) > showWaveTime)
         {
             doShowWave = false;
@@ -106,6 +110,48 @@ public class HUDController : MonoBehaviour
 
         doShowWave = true;
         waveTime = Time.time;
+    }
+
+    // Overloaded function to display the boss wave as string and not int.
+    // Superseeded by the FlashingWaveText function.
+    public void ShowWave(string waveString)
+    {
+        if (WaveText != null)
+            WaveText.text = waveString;
+
+        if (HUDWaveText != null)
+            HUDWaveText.text = waveString;
+
+        doShowWave = true;
+        waveTime = Time.time;
+    }
+
+    // Flashes the WaveText.
+    public void StartFlashingWaveText(string text)
+    {
+        isFlashing = true;
+        StartCoroutine(FlashWaveText(text));
+        StartCoroutine(StopBlinking());
+    }
+
+    // Actually performs the flashing effect.
+    public IEnumerator FlashWaveText(string text)
+    {
+        while (isFlashing)
+        {
+            WaveText.text = text;
+            yield return new WaitForSeconds(.5f);
+            WaveText.text = string.Empty;
+            yield return new WaitForSeconds(.5f);
+        }
+    }
+
+    // Stops the effect after showWaveTime(s)
+    private IEnumerator StopBlinking()
+    {
+        yield return new WaitForSeconds(showWaveTime);
+        isFlashing = false;
+        WaveText.text = string.Empty;
     }
 
     private void ReturnToStartMenu()
