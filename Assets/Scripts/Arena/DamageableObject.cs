@@ -42,21 +42,7 @@ public class DamageableObject : MonoBehaviour
             // create explosion
             if (Explosion != null)
             {
-                var explosion = Instantiate(Explosion);
-                explosion.transform.position = transform.position;
-
-                // was the damage angle specified?
-                if (damageAngle.HasValue)
-                {
-                    // if so, apply velocity in the direction of the damage
-                    Vector2 direction = new Vector2(
-                        Mathf.Cos(damageAngle.Value * Mathf.Deg2Rad),
-                        Mathf.Sin(damageAngle.Value * Mathf.Deg2Rad));
-                    var velocity = explosion.velocityOverLifetime;
-                    velocity.enabled = true;
-                    velocity.x = new ParticleSystem.MinMaxCurve(direction.x * 3.0f);
-                    velocity.y = new ParticleSystem.MinMaxCurve(direction.y * 3.0f);
-                }
+                Explode(damageAngle);
             }
 
             // recycle the object if it is poolable, destroy it otherwise
@@ -75,5 +61,25 @@ public class DamageableObject : MonoBehaviour
     public void ResetHealth()
     {
         currentHealth = InitialHealth;
+    }
+
+    // Creates an explosion that has particles fly away from the source of the damage.
+    public void Explode(float? damageAngle)
+    {
+        var explosion = Instantiate(Explosion);
+        explosion.transform.position = transform.position;
+
+        // was the damage angle specified?
+        if (damageAngle.HasValue)
+        {
+            // if so, apply velocity in the direction of the damage
+            Vector2 direction = new Vector2(
+                Mathf.Cos(damageAngle.Value * Mathf.Deg2Rad),
+                Mathf.Sin(damageAngle.Value * Mathf.Deg2Rad));
+            var velocity = explosion.velocityOverLifetime;
+            velocity.enabled = true;
+            velocity.x = new ParticleSystem.MinMaxCurve(direction.x * 3.0f);
+            velocity.y = new ParticleSystem.MinMaxCurve(direction.y * 3.0f);
+        }
     }
 }
