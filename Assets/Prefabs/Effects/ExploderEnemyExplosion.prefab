@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1986335406338884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.0942888, y: 0.49393427, z: 0}
+  m_LocalPosition: {x: 3.0590293, y: -0.63513005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,9 +80,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a039361d4f0ea8042b6dafeb094896ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blastDamage: 200
-  playerDamageModifier: 0.1
-  blastForce: 5
+  Damage: 1
+  PlayerDamageModifier: 0.1
+  Force: 50
 --- !u!198 &198433298794925042
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -90,7 +90,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1986335406338884}
   serializedVersion: 5
-  lengthInSec: 0.5
+  lengthInSec: 0.1
   simulationSpeed: 1
   looping: 0
   prewarm: 0
@@ -138,12 +138,12 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 693819182
+  randomSeed: -440340771
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 0.6
+      scalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -161,7 +161,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.3333333
+          value: 0.1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -170,7 +170,7 @@ ParticleSystem:
         m_RotationOrder: 0
       minMaxState: 3
     startSpeed:
-      scalar: 6
+      scalar: 8
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -290,7 +290,7 @@ ParticleSystem:
       maxColor: {r: 0.7647059, g: 0.29803923, b: 0.29803923, a: 1}
       minMaxState: 2
     startSize:
-      scalar: 6
+      scalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -308,7 +308,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.5
+          value: 0.2
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -452,7 +452,7 @@ ParticleSystem:
         m_RotationOrder: 0
       minMaxState: 3
     randomizeRotationDirection: 0
-    maxNumParticles: 100
+    maxNumParticles: 300
     size3D: 0
     rotation3D: 1
     gravityModifier:
@@ -2659,8 +2659,8 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
-  m_MinParticleSize: 0.002
-  m_MaxParticleSize: 0.01
+  m_MinParticleSize: 0
+  m_MaxParticleSize: 1
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
