@@ -203,7 +203,7 @@ MonoBehaviour:
     Weight: 1
   BossSpawner: {fileID: 114999065554894730, guid: e8d8f6f8b1445014c95376b3cf833ef3,
     type: 2}
-  WavesPerRound: 3
+  WavesPerRound: 5
 --- !u!4 &173740076
 Transform:
   m_ObjectHideFlags: 0

@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4647578873214484}
-  - component: {fileID: 58367732161014586}
   - component: {fileID: 114715127447421028}
+  - component: {fileID: 60568655565446702}
   m_Layer: 0
   m_Name: EnemyCollider
   m_TagString: Damageable
@@ -56,8 +56,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.4083169, y: -3.4063292, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalPosition: {x: -3.1602442, y: -2.0110667, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 3}
   m_Children:
   - {fileID: 4647578873214484}
   m_Father: {fileID: 0}
@@ -107,11 +107,11 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.4, y: 0}
   serializedVersion: 2
-  m_Radius: 0.56
---- !u!58 &58367732161014586
-CircleCollider2D:
+  m_Radius: 2.2
+--- !u!60 &60568655565446702
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -119,11 +119,54 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: -0.14, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.35
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: -1.5535829, y: 0.17477119}
+      - {x: -1.23966, y: 0.5015702}
+      - {x: -1.0633175, y: 0.7798176}
+      - {x: -1.4366796, y: 1.0793873}
+      - {x: -1.639333, y: 1.0626256}
+      - {x: -1.4595935, y: 1.1994064}
+      - {x: -1.267606, y: 1.5315714}
+      - {x: -1.3609469, y: 1.8565991}
+      - {x: -0.59420276, y: 1.6662023}
+      - {x: -0.33553267, y: 1.4577794}
+      - {x: 0.5526886, y: 1.2368579}
+      - {x: 0.8275447, y: 0.9205053}
+      - {x: 0.29404187, y: 0.98808706}
+      - {x: 0.20930862, y: 0.76643777}
+      - {x: 1.1180086, y: 0.4296173}
+      - {x: 1.6441718, y: 0.07091212}
+      - {x: 1.4781793, y: 0.05909133}
+      - {x: -0.038707733, y: 0.052991986}
+      - {x: -0.038460255, y: -0.056446314}
+      - {x: 1.4897411, y: -0.060049057}
+      - {x: 1.6360055, y: -0.070631266}
+      - {x: 1.1146369, y: -0.4302323}
+      - {x: 0.21827197, y: -0.77353954}
+      - {x: 0.31084847, y: -0.9875879}
+      - {x: 0.8390639, y: -0.91619873}
+      - {x: 0.55913043, y: -1.2441623}
+      - {x: -0.36821175, y: -1.4839172}
+      - {x: -0.5984559, y: -1.6847746}
+      - {x: -1.3733876, y: -1.8647468}
+      - {x: -1.2740204, y: -1.5121226}
+      - {x: -1.4842727, y: -1.1564133}
+      - {x: -1.6156895, y: -1.073714}
+      - {x: -1.4317868, y: -1.0829227}
+      - {x: -1.0754225, y: -0.7713425}
+      - {x: -1.2835767, y: -0.42250562}
+      - {x: -1.5463235, y: -0.18380785}
+      - {x: -1.3730009, y: -0.23292565}
+      - {x: -1.1391146, y: 0.0048713684}
+      - {x: 0.95105654, y: 0.30901697}
+      - {x: -1.1437252, y: 0.00551033}
+      - {x: -0.58778536, y: -0.80901694}
+      - {x: -1.1312897, y: 0.0014107227}
+      - {x: -1.4035337, y: 0.22987235}
 --- !u!95 &95125455190508830
 Animator:
   serializedVersion: 3
@@ -165,8 +208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 300
-  ScoreValue: 20
+  InitialHealth: 600
+  ScoreValue: 1000
   Parent: {fileID: 1541339381053536}
   Explosion: {fileID: 198433298794925042, guid: cc41a2c5c22d4da4fabc3a220cab24e1,
     type: 2}
@@ -229,7 +272,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: dce0828e6d827bc4986cbca3e0b28634, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 90d35ec31686bdf43a5288e46e519108, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
