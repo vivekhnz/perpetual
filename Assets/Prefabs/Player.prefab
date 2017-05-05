@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 4764064567741456}
   - component: {fileID: 58741674938003426}
   - component: {fileID: 114910131314984590}
+  - component: {fileID: 114416741710553756}
   m_Layer: 0
   m_Name: PlayerCollider
   m_TagString: Untagged
@@ -123,6 +124,19 @@ CircleCollider2D:
   m_Offset: {x: -0.2, y: 0}
   serializedVersion: 2
   m_Radius: 0.35
+--- !u!114 &114416741710553756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768500079984100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2974a063b14904c832242ffbf9ed44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Friction: 0.9
+  Parent: {fileID: 1288057475374176}
 --- !u!114 &114493100372726622
 MonoBehaviour:
   m_ObjectHideFlags: 1

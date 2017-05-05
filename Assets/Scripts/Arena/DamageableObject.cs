@@ -8,6 +8,7 @@ public class DamageableObject : MonoBehaviour
     public GameObject Parent;
     public ParticleSystem Explosion;
     public UnityEvent OnDamaged;
+    public UnityEvent OnDestroyed;
 
     private float currentHealth;
     private HUDController hudController;
@@ -33,6 +34,10 @@ public class DamageableObject : MonoBehaviour
         // am I dead?
         if (currentHealth <= 0)
         {
+            // raise destroyed event
+            if (OnDestroyed != null)
+                OnDestroyed.Invoke();
+
             // increase score
             if (hudController == null)
                 hudController = Object.FindObjectOfType<HUDController>();

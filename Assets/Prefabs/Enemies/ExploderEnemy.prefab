@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4647578873214484}
   - component: {fileID: 58367732161014586}
   - component: {fileID: 114715127447421028}
-  - component: {fileID: 114054756551486688}
+  - component: {fileID: 114018307138614838}
   m_Layer: 0
   m_Name: EnemyCollider
   m_TagString: Damageable
@@ -43,8 +43,9 @@ GameObject:
   - component: {fileID: 114000609005742900}
   - component: {fileID: 114795217862693978}
   - component: {fileID: 95125455190508830}
+  - component: {fileID: 114253333160361234}
   m_Layer: 10
-  m_Name: SeekerEnemy
+  m_Name: ExploderEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +111,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 0.71
 --- !u!58 &58367732161014586
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -122,9 +123,9 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0.03, y: 0}
+  m_Offset: {x: -0.05, y: 0}
   serializedVersion: 2
-  m_Radius: 0.37
+  m_Radius: 0.55
 --- !u!95 &95125455190508830
 Animator:
   serializedVersion: 3
@@ -137,7 +138,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 8a0b33aa0dfcbec438a120fcc5022031, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -155,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageableObject: {fileID: 114715127447421028}
   CollisionDamage: 40
---- !u!114 &114054756551486688
+--- !u!114 &114018307138614838
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -168,6 +169,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Friction: 0.9
   Parent: {fileID: 1541339381053536}
+--- !u!114 &114253333160361234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1541339381053536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af33b997e1878443a65263d73c129be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Shockwave: {fileID: 114189077865079232, guid: 9f70dde805b62814eb496f383a374f1f,
+    type: 2}
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,10 +193,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 100
-  ScoreValue: 5
+  InitialHealth: 200
+  ScoreValue: 10
   Parent: {fileID: 1541339381053536}
-  Explosion: {fileID: 198433298794925042, guid: 39b611f5dbaed534b925124d1e92b814,
+  Explosion: {fileID: 198433298794925042, guid: cc41a2c5c22d4da4fabc3a220cab24e1,
     type: 2}
   OnDamaged:
     m_PersistentCalls:
@@ -202,7 +216,18 @@ MonoBehaviour:
       PublicKeyToken=null
   OnDestroyed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114253333160361234}
+        m_MethodName: CreateShockwave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &114795217862693978
@@ -216,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e464cb1f7400dc640b996742f7c32b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 2
+  MovementSpeed: 1.5
 --- !u!212 &212229862091881538
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -248,7 +273,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b4083329e95daed4a862a9e964a4bfb7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06f033c6c2413e841839bd4a55d3d401, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
