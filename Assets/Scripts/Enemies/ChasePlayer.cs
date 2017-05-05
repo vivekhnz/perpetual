@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(EnemyController))]
-public class SeekerEnemyMovement : MonoBehaviour
+public class ChasePlayer : MonoBehaviour
 {
     public float MovementSpeed = 2.0f;
 
