@@ -182,7 +182,7 @@ MonoBehaviour:
   InitialHealth: 100
   ScoreValue: 5
   Parent: {fileID: 1541339381053536}
-  Explosion: {fileID: 198433298794925042, guid: cc41a2c5c22d4da4fabc3a220cab24e1,
+  Explosion: {fileID: 198433298794925042, guid: 39b611f5dbaed534b925124d1e92b814,
     type: 2}
   OnDamaged:
     m_PersistentCalls:
@@ -198,6 +198,11 @@ MonoBehaviour:
           m_StringArgument: OnDamaged
           m_BoolArgument: 0
         m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &114795217862693978

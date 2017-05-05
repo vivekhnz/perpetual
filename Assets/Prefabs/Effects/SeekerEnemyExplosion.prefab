@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 199988989615994342}
   - component: {fileID: 114546208615000262}
   m_Layer: 0
-  m_Name: EnemyExplosion
+  m_Name: SeekerEnemyExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -440340771
+  randomSeed: -674435805
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -140,7 +140,7 @@ ParticleSystem:
         m_RotationOrder: 0
       minMaxState: 3
     startSpeed:
-      scalar: 8
+      scalar: 6
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -260,7 +260,7 @@ ParticleSystem:
       maxColor: {r: 0.7647059, g: 0.29803923, b: 0.29803923, a: 1}
       minMaxState: 2
     startSize:
-      scalar: 0.5
+      scalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -278,7 +278,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.2
+          value: 0.125
           inSlope: 0
           outSlope: 0
           tangentMode: 0
