@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4033983686115914}
   - component: {fileID: 114999065554894730}
   m_Layer: 0
-  m_Name: ExploderEnemySpawner
+  m_Name: SeekerExploderSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -51,6 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8bf46c69d5b4b449ae9743c0e375fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 114000609005742900, guid: 76d10e5d6a3fbe1438b0556aa8a91db7, type: 2}
-  SpawnInterval: 1
-  EnemiesToSpawn: 3
+  Enemies:
+  - Enemy: {fileID: 114000609005742900, guid: 8f4b081ba0e0abb4bb16d3b104bf963f, type: 2}
+    EnemiesToSpawn: 3
+    EnemiesSpawned: 0
+  - Enemy: {fileID: 114000609005742900, guid: 76d10e5d6a3fbe1438b0556aa8a91db7, type: 2}
+    EnemiesToSpawn: 1
+    EnemiesSpawned: 0
+  SpawnInterval: 0.25
