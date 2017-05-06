@@ -9,7 +9,6 @@ public class SwarmEnemyMovement : MonoBehaviour
     public PushableObject Pushable;
 
     private EnemyController controller;
-    private Vector2 velocity;
     private float dodgeTime;
 
     void Start()
@@ -25,15 +24,16 @@ public class SwarmEnemyMovement : MonoBehaviour
         if (controller.Player == null)
             return;
 
-        // rotate to face player
+        // move toward player
         Vector2 direction = controller.Player.transform.position - transform.position;
         direction.Normalize();
-        transform.rotation = Quaternion.Euler(0, 0,
-            Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-
-        // move forward
         transform.Translate(
-            Vector3.right * MovementSpeed * Time.deltaTime);
+            direction * MovementSpeed * Time.deltaTime,
+            Space.World);
+
+        // spin based on speed
+        float speed = MovementSpeed + (Pushable.Velocity.magnitude * 1.5f);
+        transform.Rotate(0.0f, 0.0f, 45.0f * speed * Time.deltaTime);
     }
 
     public void Dodge(Collider2D other)
