@@ -234,7 +234,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 2.5
-  DodgeSpeed: 3
+  DodgeSpeed: 6
+  DodgeCooldown: 1
   Pushable: {fileID: 114132557347190540}
 --- !u!114 &114132557347190540
 MonoBehaviour:

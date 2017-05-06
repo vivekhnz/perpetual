@@ -5,10 +5,12 @@ public class SwarmEnemyMovement : MonoBehaviour
 {
     public float MovementSpeed = 2.0f;
     public float DodgeSpeed = 3.0f;
+    public float DodgeCooldown = 1.0f;
     public PushableObject Pushable;
 
     private EnemyController controller;
     private Vector2 velocity;
+    private float dodgeTime;
 
     void Start()
     {
@@ -36,6 +38,10 @@ public class SwarmEnemyMovement : MonoBehaviour
 
     public void Dodge(Collider2D other)
     {
+        // can I dodge again?
+        if (Time.time - dodgeTime < DodgeCooldown)
+            return;
+
         // dodge away from projectile
         Vector2 dir = other.transform.position - transform.position;
         dir.Normalize();
@@ -43,7 +49,9 @@ public class SwarmEnemyMovement : MonoBehaviour
 
         // randomly decide whether to dodge left or right
         perpendicular *= Random.Range(0, 2) == 0 ? -1 : 1;
-
         Pushable.Push(perpendicular, DodgeSpeed);
+
+        // reset cooldown
+        dodgeTime = Time.time;
     }
 }
