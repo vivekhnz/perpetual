@@ -7,6 +7,7 @@ TagManager:
   - Solid
   - Damageable
   - SpawnPoint
+  - PlayerCollider
   layers:
   - Default
   - TransparentFX
