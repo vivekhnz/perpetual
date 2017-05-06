@@ -27,4 +27,14 @@ public class ChasePlayer : MonoBehaviour
         transform.Translate(
             Vector3.right * MovementSpeed * Time.deltaTime);
     }
+
+    public float GetDistanceToPlayer()
+    {
+        if (controller.Player == null)
+            return 0;
+
+        return Vector2.Distance(
+            controller.Player.transform.position,
+            transform.position);
+    }
 }
