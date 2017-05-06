@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider2D))]
 public class TriggerSensor : MonoBehaviour
 {
+    [Serializable]
+    public class Collider2DEvent : UnityEvent<Collider2D> { }
+
     public List<string> CollidesWithTags;
-    public UnityEvent OnDetected;
+    public Collider2DEvent OnDetected;
 
     void Start()
     {
@@ -20,6 +24,6 @@ public class TriggerSensor : MonoBehaviour
             return;
 
         if (CollidesWithTags.Contains(other.tag))
-            OnDetected.Invoke();
+            OnDetected.Invoke(other);
     }
 }

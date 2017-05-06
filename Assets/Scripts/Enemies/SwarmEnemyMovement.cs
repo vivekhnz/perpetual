@@ -34,8 +34,16 @@ public class SwarmEnemyMovement : MonoBehaviour
             Vector3.right * MovementSpeed * Time.deltaTime);
     }
 
-    public void Dodge()
+    public void Dodge(Collider2D other)
     {
-        Pushable.Push(Vector2.up, DodgeSpeed);
+        // dodge away from projectile
+        Vector2 dir = other.transform.position - transform.position;
+        dir.Normalize();
+        var perpendicular = new Vector2(dir.y, -dir.x);
+
+        // randomly decide whether to dodge left or right
+        perpendicular *= Random.Range(0, 2) == 0 ? -1 : 1;
+
+        Pushable.Push(perpendicular, DodgeSpeed);
     }
 }
