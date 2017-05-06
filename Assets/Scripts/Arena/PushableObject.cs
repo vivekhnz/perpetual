@@ -6,6 +6,7 @@ public class PushableObject : MonoBehaviour
     public GameObject Parent;
 
     private Vector2 velocity;
+    public Vector2 Velocity { get { return velocity; } }
 
     void Start()
     {

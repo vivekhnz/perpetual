@@ -275,7 +275,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+    m_TypeName: TriggerSensor+Collider2DEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &114715127447421028
 MonoBehaviour:
@@ -288,8 +288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 200
-  ScoreValue: 10
+  InitialHealth: 150
+  ScoreValue: 30
   Parent: {fileID: 1541339381053536}
   Explosion: {fileID: 198433298794925042, guid: cc41a2c5c22d4da4fabc3a220cab24e1,
     type: 2}
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e464cb1f7400dc640b996742f7c32b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 1.2
+  MovementSpeed: 1.5
 --- !u!212 &212229862091881538
 SpriteRenderer:
   m_ObjectHideFlags: 1
