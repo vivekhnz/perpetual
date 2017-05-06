@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4507019684419726}
   - component: {fileID: 68838887892976582}
-  - component: {fileID: 114598952686576298}
   - component: {fileID: 50430307364595020}
+  - component: {fileID: 114195356439846668}
   m_Layer: 0
   m_Name: ProjectileSensor
   m_TagString: Untagged
@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4647578873214484}
   - component: {fileID: 58367732161014586}
   - component: {fileID: 114715127447421028}
+  - component: {fileID: 114132557347190540}
   m_Layer: 0
   m_Name: EnemyCollider
   m_TagString: Damageable
@@ -87,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5.3860826, y: -1.4804753, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4647578873214484}
@@ -233,7 +234,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 2.5
---- !u!114 &114598952686576298
+  DodgeSpeed: 3
+  Pushable: {fileID: 114132557347190540}
+--- !u!114 &114132557347190540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1040045782742810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2974a063b14904c832242ffbf9ed44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Friction: 0.9
+  Parent: {fileID: 1541339381053536}
+--- !u!114 &114195356439846668
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -241,11 +257,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1014833555814796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac2e6efb2c4700244abe882bafe51aa4, type: 3}
+  m_Script: {fileID: 11500000, guid: b8f99202ca722134d84a5316d5cba192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 114904970035565966, guid: c43864e4af9c146419dbf55d455a1a2e,
-    type: 2}
+  CollidesWithTags:
+  - Projectile
+  OnDetected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114011605291847630}
+        m_MethodName: Dodge
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1

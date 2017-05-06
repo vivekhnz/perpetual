@@ -4,13 +4,17 @@
 public class SwarmEnemyMovement : MonoBehaviour
 {
     public float MovementSpeed = 2.0f;
+    public float DodgeSpeed = 3.0f;
+    public PushableObject Pushable;
 
-    private bool isDodging;
     private EnemyController controller;
+    private Vector2 velocity;
 
     void Start()
     {
-        isDodging = false;
+        if (Pushable == null)
+            Debug.LogError("No pushable object specified!");
+
         controller = GetComponent<EnemyController>();
     }
 
@@ -25,22 +29,13 @@ public class SwarmEnemyMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 
-        // If a projectile has been detected, commence evasive manuevers!
-        if (isDodging)
-        {
-            transform.Translate(
-                Vector3.up * MovementSpeed * Time.deltaTime);
-        }
-        else
-        {
-            // move forward
-            transform.Translate(
-                Vector3.right * MovementSpeed * Time.deltaTime);
-        }
+        // move forward
+        transform.Translate(
+            Vector3.right * MovementSpeed * Time.deltaTime);
     }
 
-    public void setIsDodging(bool isDodging)
+    public void Dodge()
     {
-        this.isDodging = isDodging;
+        Pushable.Push(Vector2.up, DodgeSpeed);
     }
 }
