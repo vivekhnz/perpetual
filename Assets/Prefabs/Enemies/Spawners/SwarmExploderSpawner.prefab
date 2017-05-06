@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4033983686115914}
   - component: {fileID: 114999065554894730}
   m_Layer: 0
-  m_Name: SwarmEnemySpawner
+  m_Name: SwarmExploderSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -53,6 +53,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies:
   - Enemy: {fileID: 114000609005742900, guid: 4e4d5b8c08190af49af0a7f9448f0175, type: 2}
-    EnemiesToSpawn: 8
+    EnemiesToSpawn: 5
+    EnemiesSpawned: 0
+  - Enemy: {fileID: 114000609005742900, guid: 76d10e5d6a3fbe1438b0556aa8a91db7, type: 2}
+    EnemiesToSpawn: 1
     EnemiesSpawned: 0
   SpawnInterval: 0.25

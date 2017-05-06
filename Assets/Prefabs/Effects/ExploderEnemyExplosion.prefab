@@ -422,7 +422,7 @@ ParticleSystem:
         m_RotationOrder: 0
       minMaxState: 3
     randomizeRotationDirection: 0
-    maxNumParticles: 300
+    maxNumParticles: 250
     size3D: 0
     rotation3D: 1
     gravityModifier:

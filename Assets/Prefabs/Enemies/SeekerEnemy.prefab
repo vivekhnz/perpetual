@@ -179,8 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 100
-  ScoreValue: 5
+  InitialHealth: 75
+  ScoreValue: 15
   Parent: {fileID: 1541339381053536}
   Explosion: {fileID: 198433298794925042, guid: 39b611f5dbaed534b925124d1e92b814,
     type: 2}

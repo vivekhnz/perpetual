@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageableObject: {fileID: 114715127447421028}
-  CollisionDamage: 20
+  CollisionDamage: 15
 --- !u!114 &114011605291847630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 40
+  InitialHealth: 30
   ScoreValue: 10
   Parent: {fileID: 1541339381053536}
   Explosion: {fileID: 198433298794925042, guid: 7a781f37d1117ba46a8d3d620b5718f4,
