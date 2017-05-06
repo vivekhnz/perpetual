@@ -33,52 +33,68 @@ public class DamageableObject : MonoBehaviour
 
         // am I dead?
         if (currentHealth <= 0)
-        {
-            // raise destroyed event
-            if (OnDestroyed != null)
-                OnDestroyed.Invoke();
-
-            // increase score
-            if (hudController == null)
-                hudController = Object.FindObjectOfType<HUDController>();
-            if (hudController != null)
-                hudController.AddScore(ScoreValue);
-
-            // create explosion
-            if (Explosion != null)
-            {
-                var explosion = Instantiate(Explosion);
-                explosion.transform.position = transform.position;
-
-                // was the damage angle specified?
-                if (damageAngle.HasValue)
-                {
-                    // if so, apply velocity in the direction of the damage
-                    Vector2 direction = new Vector2(
-                        Mathf.Cos(damageAngle.Value * Mathf.Deg2Rad),
-                        Mathf.Sin(damageAngle.Value * Mathf.Deg2Rad));
-                    var velocity = explosion.velocityOverLifetime;
-                    velocity.enabled = true;
-                    velocity.x = new ParticleSystem.MinMaxCurve(direction.x * 3.0f);
-                    velocity.y = new ParticleSystem.MinMaxCurve(direction.y * 3.0f);
-                }
-            }
-
-            // recycle the object if it is poolable, destroy it otherwise
-            var poolable = Parent.GetComponent<PooledObject>();
-            if (poolable == null)
-            {
-                Destroy(Parent);
-            }
-            else
-            {
-                poolable.Recycle();
-            }
-        }
+            Die(damageAngle);
     }
 
     public void ResetHealth()
     {
         currentHealth = InitialHealth;
+    }
+
+    private void Die(float? damageAngle)
+    {
+        // ensure we have zero health
+        currentHealth = 0;
+
+        // raise destroyed event
+        if (OnDestroyed != null)
+            OnDestroyed.Invoke();
+
+        // increase score
+        if (hudController == null)
+            hudController = Object.FindObjectOfType<HUDController>();
+        if (hudController != null)
+            hudController.AddScore(ScoreValue);
+
+        // create explosion
+        if (Explosion != null)
+        {
+            Explode(damageAngle);
+        }
+
+        // recycle the object if it is poolable, destroy it otherwise
+        var poolable = Parent.GetComponent<PooledObject>();
+        if (poolable == null)
+        {
+            Destroy(Parent);
+        }
+        else
+        {
+            poolable.Recycle();
+        }
+    }
+
+    private void Explode(float? damageAngle)
+    {
+        var explosion = Instantiate(Explosion);
+        explosion.transform.position = transform.position;
+
+        // was the damage angle specified?
+        if (damageAngle.HasValue)
+        {
+            // if so, apply velocity in the direction of the damage
+            Vector2 direction = new Vector2(
+                Mathf.Cos(damageAngle.Value * Mathf.Deg2Rad),
+                Mathf.Sin(damageAngle.Value * Mathf.Deg2Rad));
+            var velocity = explosion.velocityOverLifetime;
+            velocity.enabled = true;
+            velocity.x = new ParticleSystem.MinMaxCurve(direction.x * 3.0f);
+            velocity.y = new ParticleSystem.MinMaxCurve(direction.y * 3.0f);
+        }
+    }
+
+    public void SelfDestruct()
+    {
+        Die(null);
     }
 }

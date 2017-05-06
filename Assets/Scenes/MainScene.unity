@@ -197,7 +197,7 @@ MonoBehaviour:
   Spawners:
   - Spawner: {fileID: 114999065554894730, guid: e3a864ff4aef249459b6af30028232be,
       type: 2}
-    Weight: 2
+    Weight: 0
   - Spawner: {fileID: 114999065554894730, guid: 441102ed04d529d45a403b4d8d13ee0d,
       type: 2}
     Weight: 1
