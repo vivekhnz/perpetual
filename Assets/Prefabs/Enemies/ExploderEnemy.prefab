@@ -222,6 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageableObject: {fileID: 114715127447421028}
   CollisionDamage: 40
+  EnemyID: Exploder
 --- !u!114 &114018307138614838
 MonoBehaviour:
   m_ObjectHideFlags: 1

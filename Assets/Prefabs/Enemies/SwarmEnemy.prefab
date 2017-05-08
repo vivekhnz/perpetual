@@ -221,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageableObject: {fileID: 114715127447421028}
   CollisionDamage: 15
+  EnemyID: Swarm
 --- !u!114 &114011605291847630
 MonoBehaviour:
   m_ObjectHideFlags: 1

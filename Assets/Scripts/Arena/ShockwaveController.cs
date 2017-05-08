@@ -26,7 +26,8 @@ public class ShockwaveController : MonoBehaviour
             case "Player":
                 // damage the player
                 PlayerHealth playerHeath = collider.GetComponentInChildren<PlayerHealth>();
-                playerHeath.TakeDamage(Damage * PlayerDamageModifier);
+                playerHeath.TakeDamage(Damage * PlayerDamageModifier,
+                    "Shockwave");
                 break;
         }
 

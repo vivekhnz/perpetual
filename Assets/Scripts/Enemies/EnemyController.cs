@@ -2,22 +2,23 @@
 
 public class EnemyController : PooledObject
 {
-	public DamageableObject DamageableObject;
+    public DamageableObject DamageableObject;
     public float CollisionDamage = 40.0f;
+    public string EnemyID = "UnknownEnemy";
 
     public PlayerHealth Player { get; private set; }
 
     void Start()
     {
-		if (DamageableObject == null)
-			Debug.LogError("Enemy does not have a damageable object.");
+        if (DamageableObject == null)
+            Debug.LogError("Enemy does not have a damageable object.");
     }
 
     public void Initialize(Vector3 position)
     {
         this.transform.position = position;
-		Player = Object.FindObjectOfType<PlayerHealth>();
-		DamageableObject.ResetHealth();
+        Player = Object.FindObjectOfType<PlayerHealth>();
+        DamageableObject.ResetHealth();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -30,10 +31,10 @@ public class EnemyController : PooledObject
         {
             // damage player
             if (Player != null)
-                Player.TakeDamage(CollisionDamage);
+                Player.TakeDamage(CollisionDamage, EnemyID);
 
             // self-destruct
-			Recycle();
+            Recycle();
         }
     }
 }
