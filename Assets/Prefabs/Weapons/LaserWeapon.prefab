@@ -84,8 +84,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7392154370b8846b76e1dab4a8ea4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 10
+  Damage: 20
   MaxDamageablesToHit: 1
+  LaserDuration: 1
+  Cooldown: 3
   LaserHitEffect: {fileID: 114749502084572656, guid: a549c400636aab641b10c93716ba84d9,
     type: 2}
   LaserBeamEffect: {fileID: 198407403595574014}
