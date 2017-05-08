@@ -5,6 +5,9 @@ using System.Linq;
 public class LaserWeapon : MonoBehaviour
 {
     public float Damage = 10.0f;
+    // determines how many targets the laser beam
+    // can penetrate
+    public int MaxDamageablesToHit = 1;
 
     LineRenderer line;
     int layerMask;
@@ -32,9 +35,15 @@ public class LaserWeapon : MonoBehaviour
             var hits = Physics2D.RaycastAll(
                 transform.position, dirToMouse.normalized,
                 float.MaxValue, layerMask);
+
             Vector2 laserEnd = transform.position;
+            int targetsHit = 0;
             foreach (var hit in hits.OrderBy(h => h.distance))
             {
+                // can we penetrate through any more targets?
+                if (targetsHit >= MaxDamageablesToHit)
+                    break;
+
                 var tag = hit.collider.gameObject.tag;
 
                 // have we hit a wall?
@@ -51,8 +60,12 @@ public class LaserWeapon : MonoBehaviour
                     var damageable = hit.collider
                         .GetComponent<DamageableObject>();
                     if (damageable != null)
+                    {
                         damageable.TakeDamage(Damage,
                             transform.rotation.eulerAngles.z);
+                        laserEnd = hit.point;
+                        targetsHit++;
+                    }
                 }
             }
 
