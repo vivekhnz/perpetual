@@ -6,7 +6,7 @@ public class DamageableObject : MonoBehaviour
     public float InitialHealth = 100;
     public int ScoreValue = 5;
     public GameObject Parent;
-    public ParticleSystem Explosion;
+    public ParticleSystemAutoDestroy Explosion;
     public UnityEvent OnDamaged;
     public UnityEvent OnDestroyed;
 
@@ -58,9 +58,7 @@ public class DamageableObject : MonoBehaviour
 
         // create explosion
         if (Explosion != null)
-        {
             Explode(damageAngle);
-        }
 
         // recycle the object if it is poolable, destroy it otherwise
         var poolable = Parent.GetComponent<PooledObject>();
@@ -76,7 +74,7 @@ public class DamageableObject : MonoBehaviour
 
     private void Explode(float? damageAngle)
     {
-        var explosion = Instantiate(Explosion);
+        var explosion = Explosion.Fetch<ParticleSystemAutoDestroy>();
         explosion.transform.position = transform.position;
 
         // was the damage angle specified?
@@ -86,7 +84,7 @@ public class DamageableObject : MonoBehaviour
             Vector2 direction = new Vector2(
                 Mathf.Cos(damageAngle.Value * Mathf.Deg2Rad),
                 Mathf.Sin(damageAngle.Value * Mathf.Deg2Rad));
-            var velocity = explosion.velocityOverLifetime;
+            var velocity = explosion.ParticleSystem.velocityOverLifetime;
             velocity.enabled = true;
             velocity.x = new ParticleSystem.MinMaxCurve(direction.x * 3.0f);
             velocity.y = new ParticleSystem.MinMaxCurve(direction.y * 3.0f);

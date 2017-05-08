@@ -4,7 +4,7 @@ public class ProjectileController : PooledObject
 {
     public float MovementSpeed = 4.0f;
     public float Damage = 10.0f;
-    public ParticleSystem ProjectileExplosion;
+    public ParticleSystemAutoDestroy ProjectileExplosion;
 
     public void Initialize(Vector3 position, Quaternion rotation)
     {
@@ -43,15 +43,15 @@ public class ProjectileController : PooledObject
 
     private void CreateExplosion()
     {
-        var explosion = Instantiate(ProjectileExplosion);
+        var explosion = ProjectileExplosion.Fetch<ParticleSystemAutoDestroy>();
         explosion.transform.position = transform.position;
-        
+
         float angle = transform.rotation.eulerAngles.z + 180.0f;
         Vector2 direction = new Vector2(
             Mathf.Cos(angle * Mathf.Deg2Rad),
             Mathf.Sin(angle * Mathf.Deg2Rad));
 
-        var velocity = explosion.velocityOverLifetime;
+        var velocity = explosion.ParticleSystem.velocityOverLifetime;
         velocity.enabled = true;
         velocity.x = new ParticleSystem.MinMaxCurve(direction.x * 3.0f);
         velocity.y = new ParticleSystem.MinMaxCurve(direction.y * 3.0f);
