@@ -9,6 +9,7 @@ public class LaserWeapon : MonoBehaviour
     // can penetrate
     public int MaxDamageablesToHit = 1;
     public float LaserDuration = 1.0f;
+    public float Cooldown = 3.0f;
     public ParticleSystemAutoDestroy LaserHitEffect;
     public ParticleSystem LaserBeamEffect;
 
@@ -41,7 +42,8 @@ public class LaserWeapon : MonoBehaviour
         beamEmission.enabled = false;
 
         // is the laser being fired?
-        if (Input.GetButtonDown("FireSecondary"))
+        if (Input.GetButtonDown("FireSecondary")
+            && Time.time - startFireTime > Cooldown)
             startFireTime = Time.time;
 
         if (Input.GetButton("FireSecondary")
