@@ -182,7 +182,7 @@ MonoBehaviour:
   InitialHealth: 75
   ScoreValue: 15
   Parent: {fileID: 1541339381053536}
-  Explosion: {fileID: 198433298794925042, guid: 39b611f5dbaed534b925124d1e92b814,
+  Explosion: {fileID: 114546208615000262, guid: 39b611f5dbaed534b925124d1e92b814,
     type: 2}
   OnDamaged:
     m_PersistentCalls:

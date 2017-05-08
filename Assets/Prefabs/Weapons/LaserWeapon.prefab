@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 10
   MaxDamageablesToHit: 1
-  LaserHitEffect: {fileID: 198935790369538216, guid: a549c400636aab641b10c93716ba84d9,
+  LaserHitEffect: {fileID: 114749502084572656, guid: a549c400636aab641b10c93716ba84d9,
     type: 2}
   LaserBeamEffect: {fileID: 198407403595574014}
 --- !u!114 &114788797305617378

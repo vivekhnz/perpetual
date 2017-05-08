@@ -8,7 +8,7 @@ public class LaserWeapon : MonoBehaviour
     // determines how many targets the laser beam
     // can penetrate
     public int MaxDamageablesToHit = 1;
-    public ParticleSystem LaserHitEffect;
+    public ParticleSystemAutoDestroy LaserHitEffect;
     public ParticleSystem LaserBeamEffect;
 
     LineRenderer line;
@@ -110,7 +110,7 @@ public class LaserWeapon : MonoBehaviour
     {
         if (LaserHitEffect != null)
         {
-            var effect = Instantiate(LaserHitEffect);
+            var effect = LaserHitEffect.Fetch<ParticleSystemAutoDestroy>();
             effect.transform.position = position;
 
             float angle = transform.rotation.eulerAngles.z + 180.0f;
@@ -118,7 +118,7 @@ public class LaserWeapon : MonoBehaviour
                 Mathf.Cos(angle * Mathf.Deg2Rad),
                 Mathf.Sin(angle * Mathf.Deg2Rad));
 
-            var velocity = effect.velocityOverLifetime;
+            var velocity = effect.ParticleSystem.velocityOverLifetime;
             velocity.enabled = true;
             velocity.x = new ParticleSystem.MinMaxCurve(direction.x * 3.0f);
             velocity.y = new ParticleSystem.MinMaxCurve(direction.y * 3.0f);
