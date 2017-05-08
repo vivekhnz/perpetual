@@ -9,8 +9,13 @@ public class LaserWeapon : MonoBehaviour
     // can penetrate
     public int MaxDamageablesToHit = 1;
     public ParticleSystem LaserHitEffect;
+    public ParticleSystem LaserBeamEffect;
 
     LineRenderer line;
+    ParticleSystem.EmissionModule beamEmission;
+    ParticleSystem.ShapeModule beamShape;
+    ParticleSystem.MainModule beamMain;
+
     int layerMask;
 
     void Start()
@@ -18,69 +23,87 @@ public class LaserWeapon : MonoBehaviour
         line = GetComponent<LineRenderer>();
         if (line == null)
             Debug.LogError("No line renderer found!");
+        line.sortingLayerName = "Effects";
+
+        beamEmission = LaserBeamEffect.emission;
+        beamShape = LaserBeamEffect.shape;
+        beamMain = LaserBeamEffect.main;
 
         layerMask = LayerMask.GetMask("Default", "Obstacles");
     }
 
     void Update()
     {
+        // disable laser
         line.enabled = false;
+        beamEmission.enabled = false;
 
         // is the laser being fired?
         if (Input.GetButton("FireSecondary"))
+            FireLaser();
+    }
+
+    private void FireLaser()
+    {
+        // perform raycast
+        var mousePos = Camera.main.ScreenToWorldPoint(
+            Input.mousePosition);
+        var dirToMouse = mousePos - transform.position;
+        var hits = Physics2D.RaycastAll(
+            transform.position, dirToMouse.normalized,
+            float.MaxValue, layerMask);
+
+        Vector2 laserEnd = transform.position;
+        int targetsHit = 0;
+        foreach (var hit in hits.OrderBy(h => h.distance))
         {
-            // perform raycast
-            var mousePos = Camera.main.ScreenToWorldPoint(
-                Input.mousePosition);
-            var dirToMouse = mousePos - transform.position;
-            var hits = Physics2D.RaycastAll(
-                transform.position, dirToMouse.normalized,
-                float.MaxValue, layerMask);
+            // can we penetrate through any more targets?
+            if (targetsHit >= MaxDamageablesToHit)
+                break;
 
-            Vector2 laserEnd = transform.position;
-            int targetsHit = 0;
-            foreach (var hit in hits.OrderBy(h => h.distance))
+            var tag = hit.collider.gameObject.tag;
+
+            // have we hit a wall?
+            if (tag.Equals("Solid"))
             {
-                // can we penetrate through any more targets?
-                if (targetsHit >= MaxDamageablesToHit)
-                    break;
+                // create particle effect where laser impacts
+                CreateLaserHitEffect(hit.point);
 
-                var tag = hit.collider.gameObject.tag;
-
-                // have we hit a wall?
-                if (tag.Equals("Solid"))
-                {
-                    // create particle effect where laser impacts
-                    CreateLaserHitEffect(hit.point);
-
-                    laserEnd = hit.point;
-                    break;
-                }
-
-                // have we hit a damageable object?
-                if (tag.Equals("Damageable"))
-                {
-                    // damage the object
-                    var damageable = hit.collider
-                        .GetComponent<DamageableObject>();
-                    if (damageable != null)
-                    {
-                        damageable.TakeDamage(Damage,
-                            transform.rotation.eulerAngles.z);
-                        laserEnd = hit.point;
-                        targetsHit++;
-
-                        // create particle effect where laser impacts
-                        CreateLaserHitEffect(hit.point);
-                    }
-                }
+                laserEnd = hit.point;
+                break;
             }
 
-            // draw laser
-            line.enabled = true;
-            line.SetPosition(0, transform.position);
-            line.SetPosition(1, laserEnd);
+            // have we hit a damageable object?
+            if (tag.Equals("Damageable"))
+            {
+                // damage the object
+                var damageable = hit.collider
+                    .GetComponent<DamageableObject>();
+                if (damageable != null)
+                {
+                    damageable.TakeDamage(Damage,
+                        transform.rotation.eulerAngles.z);
+                    laserEnd = hit.point;
+                    targetsHit++;
+
+                    // create particle effect where laser impacts
+                    CreateLaserHitEffect(hit.point);
+                }
+            }
         }
+
+        // draw laser
+        float beamLength = Vector2.Distance(transform.position, laserEnd);
+        float beamScale = beamLength * 2;
+
+        line.enabled = true;
+        line.SetPosition(0, transform.position);
+        line.SetPosition(1, laserEnd);
+
+        beamEmission.enabled = true;
+        LaserBeamEffect.transform.position = Vector3.Lerp(
+            transform.position, laserEnd, 0.5f);
+        LaserBeamEffect.transform.localScale = new Vector3(beamScale, 1, 1);
     }
 
     private void CreateLaserHitEffect(Vector3 position)
