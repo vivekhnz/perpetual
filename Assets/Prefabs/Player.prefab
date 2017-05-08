@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2e7caaaf6187f4980cf90a9e494175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 114904970035565966, guid: c43864e4af9c146419dbf55d455a1a2e,
+  Projectile: {fileID: 114904970035565966, guid: e663f6ad43daf114195ff75bd6093677,
     type: 2}
   ProjectileSpreadDegrees: 5
   BulletsPerMinute: 1000

@@ -33,7 +33,7 @@ public class ExploderEnemyController : MonoBehaviour
 
     public void CreateShockwave()
     {
-        var shockwave = Instantiate(Shockwave);
+        var shockwave = Shockwave.Fetch<ShockwaveController>();
         shockwave.transform.position = transform.position;
     }
 }
