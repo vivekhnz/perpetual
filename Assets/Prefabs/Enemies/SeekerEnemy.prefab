@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageableObject: {fileID: 114715127447421028}
   CollisionDamage: 40
+  EnemyID: Seeker
 --- !u!114 &114054756551486688
 MonoBehaviour:
   m_ObjectHideFlags: 1

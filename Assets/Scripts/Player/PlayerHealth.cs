@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
@@ -16,8 +18,14 @@ public class PlayerHealth : MonoBehaviour
         hudController.UpdateHealth(currentHealth);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, string damageSource)
     {
+        var data = new Dictionary<string, object>()
+        {
+            { "DamageSource", damageSource }
+        };
+        Analytics.CustomEvent("PlayerDamaged", data);
+
         // reduce health
         currentHealth -= damage;
         UpdateHealthUI();
