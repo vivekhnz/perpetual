@@ -53,6 +53,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 10
+  MaxDamageablesToHit: 1
+  LaserHitEffect: {fileID: 198935790369538216, guid: a549c400636aab641b10c93716ba84d9,
+    type: 2}
 --- !u!120 &120625547236985376
 LineRenderer:
   m_ObjectHideFlags: 1

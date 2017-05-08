@@ -8,6 +8,7 @@ public class LaserWeapon : MonoBehaviour
     // determines how many targets the laser beam
     // can penetrate
     public int MaxDamageablesToHit = 1;
+    public ParticleSystem LaserHitEffect;
 
     LineRenderer line;
     int layerMask;
@@ -21,7 +22,7 @@ public class LaserWeapon : MonoBehaviour
         layerMask = LayerMask.GetMask("Default", "Obstacles");
     }
 
-    void FixedUpdate()
+    void Update()
     {
         line.enabled = false;
 
@@ -49,6 +50,9 @@ public class LaserWeapon : MonoBehaviour
                 // have we hit a wall?
                 if (tag.Equals("Solid"))
                 {
+                    // create particle effect where laser impacts
+                    CreateLaserHitEffect(hit.point);
+
                     laserEnd = hit.point;
                     break;
                 }
@@ -65,6 +69,9 @@ public class LaserWeapon : MonoBehaviour
                             transform.rotation.eulerAngles.z);
                         laserEnd = hit.point;
                         targetsHit++;
+
+                        // create particle effect where laser impacts
+                        CreateLaserHitEffect(hit.point);
                     }
                 }
             }
@@ -73,6 +80,25 @@ public class LaserWeapon : MonoBehaviour
             line.enabled = true;
             line.SetPosition(0, transform.position);
             line.SetPosition(1, laserEnd);
+        }
+    }
+
+    private void CreateLaserHitEffect(Vector3 position)
+    {
+        if (LaserHitEffect != null)
+        {
+            var effect = Instantiate(LaserHitEffect);
+            effect.transform.position = position;
+
+            float angle = transform.rotation.eulerAngles.z + 180.0f;
+            Vector2 direction = new Vector2(
+                Mathf.Cos(angle * Mathf.Deg2Rad),
+                Mathf.Sin(angle * Mathf.Deg2Rad));
+
+            var velocity = effect.velocityOverLifetime;
+            velocity.enabled = true;
+            velocity.x = new ParticleSystem.MinMaxCurve(direction.x * 3.0f);
+            velocity.y = new ParticleSystem.MinMaxCurve(direction.y * 3.0f);
         }
     }
 }
