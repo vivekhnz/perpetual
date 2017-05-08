@@ -8,6 +8,7 @@ public class LaserWeapon : MonoBehaviour
     // determines how many targets the laser beam
     // can penetrate
     public int MaxDamageablesToHit = 1;
+    public float LaserDuration = 1.0f;
     public ParticleSystemAutoDestroy LaserHitEffect;
     public ParticleSystem LaserBeamEffect;
 
@@ -17,6 +18,7 @@ public class LaserWeapon : MonoBehaviour
     ParticleSystem.MainModule beamMain;
 
     int layerMask;
+    float startFireTime;
 
     void Start()
     {
@@ -39,7 +41,11 @@ public class LaserWeapon : MonoBehaviour
         beamEmission.enabled = false;
 
         // is the laser being fired?
-        if (Input.GetButton("FireSecondary"))
+        if (Input.GetButtonDown("FireSecondary"))
+            startFireTime = Time.time;
+
+        if (Input.GetButton("FireSecondary")
+            && Time.time - startFireTime < LaserDuration)
             FireLaser();
     }
 
