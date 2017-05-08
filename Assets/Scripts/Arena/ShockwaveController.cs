@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
-public class ShockwaveController : MonoBehaviour
+public class ShockwaveController : PooledObject
 {
     // damage of the shockwave
     public float Damage = 200f;
@@ -42,6 +42,6 @@ public class ShockwaveController : MonoBehaviour
 
     void SelfDestruct()
     {
-        Destroy(gameObject);
+        Recycle();
     }
 }
