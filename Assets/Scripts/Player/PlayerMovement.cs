@@ -17,16 +17,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        float speed = weapons.Any(w => w.IsFiring)
-            ? MovementSpeedWhileFiring
-            : MovementSpeed;
-        Vector2 movement = new Vector2(
-            Input.GetAxis("Horizontal"),
-            Input.GetAxis("Vertical"))
-            * Time.deltaTime * speed;
-        transform.Translate(
-            movement.x, movement.y, 0, Space.World);
-
         // calculate world position of mouse cursor
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         var plane = new Plane(Vector3.forward, Vector3.zero);
@@ -43,5 +33,15 @@ public class PlayerMovement : MonoBehaviour
             // set the player rotation
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotation);
         }
+
+        float speed = weapons.Any(w => w.IsFiring)
+            ? MovementSpeedWhileFiring
+            : MovementSpeed;
+        Vector2 movement = new Vector2(
+            Input.GetAxis("Horizontal"),
+            Input.GetAxis("Vertical"))
+            * Time.deltaTime * speed;
+        transform.Translate(
+            movement.x, movement.y, 0, Space.World);
     }
 }

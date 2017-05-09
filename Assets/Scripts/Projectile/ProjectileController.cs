@@ -35,19 +35,19 @@ public class ProjectileController : PooledObject
                     damageable.TakeDamage(Damage,
                         transform.rotation.eulerAngles.z);
 
+                // knock back the object if it can be pushed
+                var pushable = collider.GetComponent<PushableObject>();
+                if (pushable != null)
+                {
+                    var direction = pushable.transform.position
+                        - transform.position;
+                    pushable.Push(direction.normalized, KnockbackForce);
+                }
+
                 // destroy this projectile
                 Recycle();
                 CreateExplosion();
                 break;
-        }
-
-        // knock back the object if it can be pushed
-        var pushable = collider.GetComponent<PushableObject>();
-        if (pushable != null)
-        {
-            var direction = pushable.transform.position
-                - transform.position;
-            pushable.Push(direction.normalized, KnockbackForce);
         }
     }
 
