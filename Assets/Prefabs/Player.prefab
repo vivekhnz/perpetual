@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 3
+  Friction: 0.9
+  DashSpeed: 2
 --- !u!114 &114677491730002394
 MonoBehaviour:
   m_ObjectHideFlags: 1
