@@ -8,9 +8,13 @@ public class PlayerMovement : MonoBehaviour {
     public float Friction = 0.9f;
     // The force of the player's dash.
     public float DashSpeed = 5;
+    // How long the player cannot dash for in seconds.
+    public float DashCooldownTimer = 3;
 
     // Determines the dash vector of the player's velocity. Stored here to eliminate getting a new Vector every update.
     private Vector2 dashVector;
+    // Stores when the dash was used to calculate cooldown.
+    private float timeOfDash = -4;
 
     // FixedUpdate is called once every set interval, 0.02s by default iirc.
     void FixedUpdate () {
@@ -22,10 +26,11 @@ public class PlayerMovement : MonoBehaviour {
         walkVector.x = Input.GetAxis("Horizontal");
         walkVector.y = Input.GetAxis("Vertical");
 
-        // Calculates the dash vector component of the player's velocity.
-        if (Input.GetKeyDown("space"))
+        // Calculates the dash vector component of the player's velocity if dash ability is off cooldown.
+        if (!IsDashStillOnCooldown() && Input.GetKeyDown("space"))
         {
             dashVector += walkVector * DashSpeed;
+            timeOfDash = Time.time;
         }
 
         // Calculate the player's final vector which is a sum of the walk and dash vectors.
@@ -49,4 +54,10 @@ public class PlayerMovement : MonoBehaviour {
 		transform.Translate(
 			movement.x, movement.y, 0, Space.World);
 	}
+
+    // Returns true if the dash ability is still on cooldown.
+    private bool IsDashStillOnCooldown()
+    {
+        return (Time.time - timeOfDash) < DashCooldownTimer;
+    }
 }
