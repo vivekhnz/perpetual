@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerShooting : MonoBehaviour
+public class PrimaryWeapon : MonoBehaviour
 {
     public ProjectileController Projectile;
     public float ProjectileSpreadDegrees = 10.0f;
