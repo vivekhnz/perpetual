@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4304638557884996}
   - component: {fileID: 114728136420781440}
   - component: {fileID: 120625547236985376}
+  - component: {fileID: 114318623625464118}
   m_Layer: 0
   m_Name: LaserWeapon
   m_TagString: Untagged
@@ -53,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1579173886463928}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4572480742268522}
@@ -73,6 +74,18 @@ Transform:
   m_Father: {fileID: 4304638557884996}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114318623625464118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1579173886463928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2502900e5d32577428ba9ef9ed9bfbc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraShakeAmount: 2
 --- !u!114 &114728136420781440
 MonoBehaviour:
   m_ObjectHideFlags: 1

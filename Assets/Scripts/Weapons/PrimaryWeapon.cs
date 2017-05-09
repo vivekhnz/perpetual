@@ -1,22 +1,33 @@
 ﻿using UnityEngine;
 
-public class PrimaryWeapon : PlayerWeapon
+[RequireComponent(typeof(PlayerWeapon))]
+public class PrimaryWeapon : MonoBehaviour
 {
     public ProjectileController Projectile;
     public float ProjectileSpreadDegrees = 10.0f;
     public float BulletsPerMinute = 60.0f;
 
     private float projectileFiredTime = 0.0f;
+    private PlayerWeapon weapon;
+
+    void Start()
+    {
+        weapon = GetComponent<PlayerWeapon>();
+        if (weapon == null)
+            Debug.LogError("Weapon not found!");
+    }
 
     void FixedUpdate()
     {
-        IsFiring = false;
-
         // fire weapon
         if (Input.GetButton("Fire"))
         {
             Fire();
-            IsFiring = true;
+            weapon.IsFiring = true;
+        }
+        else
+        {
+            weapon.IsFiring = false;
         }
     }
 

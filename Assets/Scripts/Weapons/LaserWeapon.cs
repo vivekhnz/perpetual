@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Linq;
 
+[RequireComponent(typeof(PlayerWeapon))]
 [RequireComponent(typeof(LineRenderer))]
-public class LaserWeapon : PlayerWeapon
+public class LaserWeapon : MonoBehaviour
 {
     public float Damage = 10.0f;
     // determines how many targets the laser beam
@@ -13,6 +14,7 @@ public class LaserWeapon : PlayerWeapon
     public ParticleSystemAutoDestroy LaserHitEffect;
     public ParticleSystem LaserBeamEffect;
 
+    PlayerWeapon weapon;
     LineRenderer line;
     ParticleSystem.EmissionModule beamEmission;
 
@@ -21,6 +23,10 @@ public class LaserWeapon : PlayerWeapon
 
     void Start()
     {
+        weapon = GetComponent<PlayerWeapon>();
+        if (weapon == null)
+            Debug.LogError("Weapon not found!");
+
         line = GetComponent<LineRenderer>();
         if (line == null)
             Debug.LogError("No line renderer found!");
@@ -36,7 +42,6 @@ public class LaserWeapon : PlayerWeapon
         // disable laser
         line.enabled = false;
         beamEmission.enabled = false;
-        IsFiring = false;
 
         // is the laser being fired?
         if (Input.GetButtonDown("FireSecondary")
@@ -47,7 +52,11 @@ public class LaserWeapon : PlayerWeapon
             && Time.time - startFireTime < LaserDuration)
         {
             FireLaser();
-            IsFiring = true;
+            weapon.IsFiring = true;
+        }
+        else
+        {
+            weapon.IsFiring = false;
         }
     }
 
