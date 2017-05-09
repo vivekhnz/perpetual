@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -10,6 +11,8 @@ public class PlayerMovement : MonoBehaviour {
     public float DashSpeed = 5;
     // How long the player cannot dash for in seconds.
     public float DashCooldownTimer = 3;
+    // References the DashCooldownTimer (image) on the HUD.
+    public DashCooldownTimer DashCooldownTimerHUD;
 
     // Determines the dash vector of the player's velocity. Stored here to eliminate getting a new Vector every update.
     private Vector2 dashVector;
@@ -31,6 +34,9 @@ public class PlayerMovement : MonoBehaviour {
         {
             dashVector += walkVector * DashSpeed;
             timeOfDash = Time.time;
+
+            // Reset the fill of the countdown circular slider.
+            DashCooldownTimerHUD.ResetCountdown();
         }
 
         // Calculate the player's final vector which is a sum of the walk and dash vectors.
