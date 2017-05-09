@@ -37,7 +37,7 @@ public class LaserWeapon : MonoBehaviour
         layerMask = LayerMask.GetMask("Default", "Obstacles");
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // disable laser
         line.enabled = false;
@@ -111,16 +111,14 @@ public class LaserWeapon : MonoBehaviour
 
         // draw laser
         float beamLength = Vector2.Distance(transform.position, laserEnd);
-        float beamScale = beamLength * 2;
+        float beamScale = beamLength * 4;
 
         line.enabled = true;
         line.SetPosition(0, transform.position);
         line.SetPosition(1, laserEnd);
 
         beamEmission.enabled = true;
-        LaserBeamEffect.transform.position = Vector3.Lerp(
-            transform.position, laserEnd, 0.5f);
-        LaserBeamEffect.transform.localScale = new Vector3(beamScale, 1, 1);
+        transform.localScale = new Vector3(beamScale, 1, 1);
     }
 
     private void CreateLaserHitEffect(Vector3 position)
