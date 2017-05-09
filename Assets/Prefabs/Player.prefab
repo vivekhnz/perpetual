@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1288057475374176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5665418, y: 0.71184814, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4764064567741456}
@@ -149,6 +149,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 4
   MovementSpeedWhileFiring: 2.5
+  Friction: 0.9
+  DashSpeed: 2
+  DashCooldownTimer: 2
+  DashCooldownTimerHUD: {fileID: 0}
 --- !u!114 &114910131314984590
 MonoBehaviour:
   m_ObjectHideFlags: 1
