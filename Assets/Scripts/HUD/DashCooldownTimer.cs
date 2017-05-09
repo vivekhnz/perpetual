@@ -7,7 +7,7 @@ public class DashCooldownTimer : MonoBehaviour {
 
     // The circular image that acts as a slider for the dash ability's cooldown.
     public Image DashCooldownCircularSliderHUD;
-    // Takes the player gameObject to find dash ability's countdown.
+    // Takes the player gameObject to find dash ability's cooldown.
     public PlayerMovement playerMovement;
 
     // The time it takes to fill the circular bar completely. 
@@ -15,13 +15,13 @@ public class DashCooldownTimer : MonoBehaviour {
 
     void Start()
     {
-        // Obtain the dash ability's countdown timer from the GameObject to stay consistent.
+        // Obtain the dash ability's cooldown timer from the GameObject to stay consistent.
         cooldownTimer = playerMovement.DashCooldownTimer;
     }
 
     void Update()
     {
-        // The the bar gradually as determined by the cooldown timer.
+        // The bar gradually fills as determined by the cooldown timer.
         DashCooldownCircularSliderHUD.fillAmount += Time.deltaTime / cooldownTimer;
     }
 
