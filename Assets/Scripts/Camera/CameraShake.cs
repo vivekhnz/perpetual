@@ -4,10 +4,17 @@ public class CameraShake : MonoBehaviour
 {
     public float BaseShake = 0.01f;
 
-    public void RandomShake(float amount)
+    public void DirectionalShake(Vector2 direction, float amount)
     {
         transform.Translate(
-            Mathf.Sign(Random.Range(-1, 1)) * BaseShake * amount,
-            Mathf.Sign(Random.Range(-1, 1)) * BaseShake * amount, 0);
+            direction.x * BaseShake * amount,
+            direction.y * BaseShake * amount, 0);
+    }
+
+    public void RandomShake(float amount)
+    {
+        DirectionalShake(new Vector2(
+            Mathf.Sign(Random.Range(-1, 1)),
+            Mathf.Sign(Random.Range(-1, 1))), amount);
     }
 }

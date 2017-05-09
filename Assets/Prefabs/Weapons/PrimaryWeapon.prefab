@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2502900e5d32577428ba9ef9ed9bfbc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraShakeAmount: 0.5
+  CameraShakeAmount: 0
 --- !u!114 &114853418629785288
 MonoBehaviour:
   m_ObjectHideFlags: 1

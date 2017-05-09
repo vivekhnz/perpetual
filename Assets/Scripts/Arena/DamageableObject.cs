@@ -5,6 +5,7 @@ public class DamageableObject : MonoBehaviour
 {
     public float InitialHealth = 100;
     public int ScoreValue = 5;
+    public float CameraShakeAmount = 5.0f;
     public GameObject Parent;
     public ParticleSystemAutoDestroy Explosion;
     public UnityEvent OnDamaged;
@@ -89,6 +90,11 @@ public class DamageableObject : MonoBehaviour
             velocity.x = new ParticleSystem.MinMaxCurve(direction.x * 3.0f);
             velocity.y = new ParticleSystem.MinMaxCurve(direction.y * 3.0f);
         }
+
+        // shake camera
+        var shaker = Camera.main.GetComponent<CameraShake>();
+        if (shaker != null)
+            shaker.RandomShake(CameraShakeAmount);
     }
 
     public void SelfDestruct()

@@ -4,6 +4,7 @@ public class ProjectileController : PooledObject
 {
     public float MovementSpeed = 4.0f;
     public float Damage = 10.0f;
+    public float KnockbackForce = 1.0f;
     public ParticleSystemAutoDestroy ProjectileExplosion;
 
     public void Initialize(Vector3 position, Quaternion rotation)
@@ -38,6 +39,15 @@ public class ProjectileController : PooledObject
                 Recycle();
                 CreateExplosion();
                 break;
+        }
+
+        // knock back the object if it can be pushed
+        var pushable = collider.GetComponent<PushableObject>();
+        if (pushable != null)
+        {
+            var direction = pushable.transform.position
+                - transform.position;
+            pushable.Push(direction.normalized, KnockbackForce);
         }
     }
 
