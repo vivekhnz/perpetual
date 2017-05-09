@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c235e756e5304f87d637ab2354fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 3
+  MovementSpeed: 4
 --- !u!114 &114677491730002394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -163,7 +163,7 @@ MonoBehaviour:
   Projectile: {fileID: 114904970035565966, guid: e663f6ad43daf114195ff75bd6093677,
     type: 2}
   ProjectileSpreadDegrees: 5
-  BulletsPerMinute: 1000
+  BulletsPerMinute: 1200
 --- !u!114 &114910131314984590
 MonoBehaviour:
   m_ObjectHideFlags: 1
