@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PrimaryWeapon : MonoBehaviour
+public class PrimaryWeapon : PlayerWeapon
 {
     public ProjectileController Projectile;
     public float ProjectileSpreadDegrees = 10.0f;
@@ -10,9 +10,14 @@ public class PrimaryWeapon : MonoBehaviour
 
     void FixedUpdate()
     {
+        IsFiring = false;
+
         // fire weapon
         if (Input.GetButton("Fire"))
+        {
             Fire();
+            IsFiring = true;
+        }
     }
 
     void Fire()

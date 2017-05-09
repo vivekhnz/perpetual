@@ -2,7 +2,7 @@
 using System.Linq;
 
 [RequireComponent(typeof(LineRenderer))]
-public class LaserWeapon : MonoBehaviour
+public class LaserWeapon : PlayerWeapon
 {
     public float Damage = 10.0f;
     // determines how many targets the laser beam
@@ -36,6 +36,7 @@ public class LaserWeapon : MonoBehaviour
         // disable laser
         line.enabled = false;
         beamEmission.enabled = false;
+        IsFiring = false;
 
         // is the laser being fired?
         if (Input.GetButtonDown("FireSecondary")
@@ -44,7 +45,10 @@ public class LaserWeapon : MonoBehaviour
 
         if (Input.GetButton("FireSecondary")
             && Time.time - startFireTime < LaserDuration)
+        {
             FireLaser();
+            IsFiring = true;
+        }
     }
 
     private void FireLaser()

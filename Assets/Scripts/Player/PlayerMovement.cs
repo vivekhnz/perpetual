@@ -1,15 +1,29 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float MovementSpeed = 1.0f;
+    public float MovementSpeed = 4.0f;
+    public float MovementSpeedWhileFiring = 2.5f;
+
+    private PlayerWeapon[] weapons;
+
+    void Start()
+    {
+        // retrieve all weapons
+        weapons = GetComponentsInChildren<PlayerWeapon>();
+    }
 
     void FixedUpdate()
     {
+        float speed = weapons.Any(w => w.IsFiring)
+            ? MovementSpeedWhileFiring
+            : MovementSpeed;
         Vector2 movement = new Vector2(
             Input.GetAxis("Horizontal"),
             Input.GetAxis("Vertical"))
-            * Time.deltaTime * MovementSpeed;
+            * Time.deltaTime * speed;
         transform.Translate(
             movement.x, movement.y, 0, Space.World);
 
