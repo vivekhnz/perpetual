@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4367130147249410}
   - component: {fileID: 212824994238841868}
   - component: {fileID: 114493100372726622}
-  - component: {fileID: 114677491730002394}
   - component: {fileID: 58270066615730010}
   - component: {fileID: 50392157022359794}
   m_Layer: 9
@@ -56,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1288057475374176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.5665418, y: 0.71184814, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4764064567741456}
@@ -148,22 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c235e756e5304f87d637ab2354fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 3
---- !u!114 &114677491730002394
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1288057475374176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc2e7caaaf6187f4980cf90a9e494175, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Projectile: {fileID: 114904970035565966, guid: e663f6ad43daf114195ff75bd6093677,
-    type: 2}
-  ProjectileSpreadDegrees: 5
-  BulletsPerMinute: 1000
+  MovementSpeed: 4
+  MovementSpeedWhileFiring: 2.5
 --- !u!114 &114910131314984590
 MonoBehaviour:
   m_ObjectHideFlags: 1

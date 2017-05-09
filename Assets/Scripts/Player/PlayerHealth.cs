@@ -9,11 +9,14 @@ public class PlayerHealth : MonoBehaviour
     public float InitialHealth;
 
     private HUDController hudController;
+    private CameraShake shaker;
     private float currentHealth;
 
     void Start()
     {
         hudController = Object.FindObjectOfType<HUDController>();
+        shaker = Camera.main.GetComponent<CameraShake>();
+
         currentHealth = InitialHealth;
         hudController.UpdateHealth(currentHealth);
     }
@@ -25,6 +28,10 @@ public class PlayerHealth : MonoBehaviour
             { "DamageSource", damageSource }
         };
         Analytics.CustomEvent("PlayerDamaged", data);
+
+        // shake camera
+        if (shaker != null)
+            shaker.RandomShake(damage * 0.5f);
 
         // reduce health
         currentHealth -= damage;

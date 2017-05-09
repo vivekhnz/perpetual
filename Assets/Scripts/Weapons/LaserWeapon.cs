@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
 
+[RequireComponent(typeof(PlayerWeapon))]
 [RequireComponent(typeof(LineRenderer))]
 public class LaserWeapon : MonoBehaviour
 {
@@ -13,29 +14,30 @@ public class LaserWeapon : MonoBehaviour
     public ParticleSystemAutoDestroy LaserHitEffect;
     public ParticleSystem LaserBeamEffect;
 
+    PlayerWeapon weapon;
     LineRenderer line;
     ParticleSystem.EmissionModule beamEmission;
-    ParticleSystem.ShapeModule beamShape;
-    ParticleSystem.MainModule beamMain;
 
     int layerMask;
     float startFireTime;
 
     void Start()
     {
+        weapon = GetComponent<PlayerWeapon>();
+        if (weapon == null)
+            Debug.LogError("Weapon not found!");
+
         line = GetComponent<LineRenderer>();
         if (line == null)
             Debug.LogError("No line renderer found!");
         line.sortingLayerName = "Effects";
 
         beamEmission = LaserBeamEffect.emission;
-        beamShape = LaserBeamEffect.shape;
-        beamMain = LaserBeamEffect.main;
 
         layerMask = LayerMask.GetMask("Default", "Obstacles");
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // disable laser
         line.enabled = false;
@@ -48,7 +50,14 @@ public class LaserWeapon : MonoBehaviour
 
         if (Input.GetButton("FireSecondary")
             && Time.time - startFireTime < LaserDuration)
+        {
             FireLaser();
+            weapon.IsFiring = true;
+        }
+        else
+        {
+            weapon.IsFiring = false;
+        }
     }
 
     private void FireLaser()
@@ -102,16 +111,14 @@ public class LaserWeapon : MonoBehaviour
 
         // draw laser
         float beamLength = Vector2.Distance(transform.position, laserEnd);
-        float beamScale = beamLength * 2;
+        float beamScale = beamLength * 4;
 
         line.enabled = true;
         line.SetPosition(0, transform.position);
         line.SetPosition(1, laserEnd);
 
         beamEmission.enabled = true;
-        LaserBeamEffect.transform.position = Vector3.Lerp(
-            transform.position, laserEnd, 0.5f);
-        LaserBeamEffect.transform.localScale = new Vector3(beamScale, 1, 1);
+        transform.localScale = new Vector3(beamScale, 1, 1);
     }
 
     private void CreateLaserHitEffect(Vector3 position)
