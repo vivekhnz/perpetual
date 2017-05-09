@@ -15,8 +15,6 @@ public class LaserWeapon : MonoBehaviour
 
     LineRenderer line;
     ParticleSystem.EmissionModule beamEmission;
-    ParticleSystem.ShapeModule beamShape;
-    ParticleSystem.MainModule beamMain;
 
     int layerMask;
     float startFireTime;
@@ -29,8 +27,6 @@ public class LaserWeapon : MonoBehaviour
         line.sortingLayerName = "Effects";
 
         beamEmission = LaserBeamEffect.emission;
-        beamShape = LaserBeamEffect.shape;
-        beamMain = LaserBeamEffect.main;
 
         layerMask = LayerMask.GetMask("Default", "Obstacles");
     }

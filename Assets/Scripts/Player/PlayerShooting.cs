@@ -10,23 +10,6 @@ public class PlayerShooting : MonoBehaviour
 
     void FixedUpdate()
     {
-        // calculate world position of mouse cursor
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        var plane = new Plane(Vector3.forward, Vector3.zero);
-        float distance = 0.0f;
-        if (plane.Raycast(ray, out distance))
-        {
-            Vector3 mousePos = ray.GetPoint(distance);
-
-            // calculate rotation based on direction to mouse cursor
-            Vector3 dirToMouse = mousePos - transform.position;
-            float rotation = Mathf.Atan2(dirToMouse.y, dirToMouse.x)
-                * Mathf.Rad2Deg;
-
-            // set the player rotation
-            transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotation);
-        }
-
         // fire weapon
         if (Input.GetButton("Fire"))
             Fire();
@@ -43,12 +26,6 @@ public class PlayerShooting : MonoBehaviour
             return;
         projectileFiredTime = Time.time;
 
-        // calculate position of new projectile
-        float zRot = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-        Vector3 offset = new Vector3(
-            Mathf.Cos(zRot), Mathf.Sin(zRot), 0)
-            * (transform.localScale.x * 0.6f);
-
         // calculate projectile direction
         float projectileDir = transform.rotation.eulerAngles.z
             + Random.Range(-ProjectileSpreadDegrees, ProjectileSpreadDegrees);
@@ -56,7 +33,6 @@ public class PlayerShooting : MonoBehaviour
         // spawn projectile
         var projectile = Projectile.Fetch<ProjectileController>();
         projectile.Initialize(
-            transform.position + offset,
-            Quaternion.Euler(0.0f, 0.0f, projectileDir));
+            transform.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
     }
 }
