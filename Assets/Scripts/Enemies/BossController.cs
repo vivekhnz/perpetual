@@ -11,7 +11,9 @@ public class BossController : MonoBehaviour {
     public BossProjectileController Projectile;
     public float ProjectileSpreadDegrees = 10.0f;
     public float BulletsPerMinute = 60.0f;
-    public Transform weapon;
+    public Transform LeftWeapon;
+    public Transform RightWeapon;
+    public int BurstNumber = 6;
 
     private List<Vector3> teleportLocations;
     private float teleportTime;
@@ -21,6 +23,8 @@ public class BossController : MonoBehaviour {
     private ChasePlayer movement;
     private EnemyController controller;
     private float projectileFiredTime = 0.0f;
+    private int currentBurst = 0;
+    private Transform currentWeapon;
 
     void Start () {
 
@@ -41,6 +45,9 @@ public class BossController : MonoBehaviour {
 
         // hiding spot (dont know how to temporarily disable)
         hidingSpot = new Vector3(-30, 0, 0);
+
+        // initialise weapon
+        currentWeapon = LeftWeapon;
     }
 	
 	void FixedUpdate () {
@@ -94,7 +101,24 @@ public class BossController : MonoBehaviour {
 
         // spawn projectile
         var projectile = Projectile.Fetch<BossProjectileController>();
+        if (currentBurst > BurstNumber)
+        {
+            switchWeapon();
+            currentBurst = 0;
+        }
         projectile.Initialize(
-            weapon.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
+            currentWeapon.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
+        currentBurst++;
+    }
+
+    void switchWeapon()
+    {
+        if (currentWeapon == LeftWeapon)
+        {
+            currentWeapon = RightWeapon;
+        } else
+        {
+            currentWeapon = LeftWeapon;
+        }
     }
 }
