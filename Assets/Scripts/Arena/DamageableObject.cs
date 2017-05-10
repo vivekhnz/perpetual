@@ -18,6 +18,16 @@ public class DamageableObject : MonoBehaviour
     {
         Parent = Parent ?? gameObject;
         currentHealth = InitialHealth;
+        if (Parent.tag == "Boss")
+        {
+            if (hudController == null)
+                hudController = Object.FindObjectOfType<HUDController>();
+            if (hudController != null)
+            {
+                hudController.UpdateBossHealth(currentHealth);
+            }
+
+        }
 
         if (!gameObject.CompareTag("Damageable"))
             Debug.LogWarning("This object does not have the 'Damageable' tag. Objects may be unable to damage it.");
@@ -35,6 +45,12 @@ public class DamageableObject : MonoBehaviour
         // am I dead?
         if (currentHealth <= 0)
             Die(damageAngle);
+
+        // update hud if boss
+        if (Parent.tag == "Boss")
+        {
+            hudController.UpdateBossHealth(currentHealth);
+        }
     }
 
     public void ResetHealth()
@@ -46,6 +62,12 @@ public class DamageableObject : MonoBehaviour
     {
         // ensure we have zero health
         currentHealth = 0;
+
+        //update hud if boss
+        if (Parent.tag == "Boss")
+        {
+            hudController.UpdateBossHealth(currentHealth);
+        }
 
         // raise destroyed event
         if (OnDestroyed != null)

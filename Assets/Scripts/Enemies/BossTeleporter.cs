@@ -35,6 +35,8 @@ public class BossTeleporter : MonoBehaviour {
     }
 	
 	void FixedUpdate () {
+
+        // if time to teleport, teleport boss
 		if (!hiding && (Time.time - teleportTime) > TimeToTeleport)
         {
             hiding = true;
@@ -44,6 +46,7 @@ public class BossTeleporter : MonoBehaviour {
             teleportTime = Time.time;
         } else
         {
+            // if time to re appear, teleport boss to teleport location
             if (hiding && (Time.time - teleportTime) > TimeToHide)
             {
                 hiding = false;
