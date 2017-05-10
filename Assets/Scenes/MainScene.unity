@@ -223,12 +223,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &243102965 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114493100372726622, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1326448462}
-  m_Script: {fileID: 11500000, guid: b58c235e756e5304f87d637ab2354fc1, type: 3}
 --- !u!1 &250092259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,7 +1032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DashCooldownCircularSliderHUD: {fileID: 993571468}
-  playerMovement: {fileID: 243102965}
+  playerDash: {fileID: 1326448463}
 --- !u!1 &996542974
 GameObject:
   m_ObjectHideFlags: 0
@@ -1688,9 +1682,25 @@ Prefab:
       propertyPath: DashCooldownTimerHUD
       value: 
       objectReference: {fileID: 993571470}
+    - target: {fileID: 114688183229628730, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
+        type: 2}
+      propertyPath: DashCooldownTimerHUD
+      value: 
+      objectReference: {fileID: 993571470}
+    - target: {fileID: 114688183229628730, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2121cc37f9fb49b4cbebd4672b0a818d, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1326448463 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114688183229628730, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1326448462}
+  m_Script: {fileID: 11500000, guid: 0a6258588b74de34cbde8fc002432d42, type: 3}
 --- !u!1 &1433119927
 GameObject:
   m_ObjectHideFlags: 0
