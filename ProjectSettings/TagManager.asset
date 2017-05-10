@@ -10,6 +10,7 @@ TagManager:
   - PlayerCollider
   - Projectile
   - TeleportPoint
+  - Boss
   layers:
   - Default
   - TransparentFX

@@ -45,6 +45,21 @@ GameObject:
   - component: {fileID: 114518926223000380}
   m_Layer: 10
   m_Name: Boss1
+  m_TagString: Boss
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1986825147365336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4856505277121890}
+  m_Layer: 0
+  m_Name: BossWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,10 +72,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.1602442, y: -2.0110667, z: 0}
+  m_LocalPosition: {x: -0.30041325, y: -3.2915452, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 3}
   m_Children:
   - {fileID: 4647578873214484}
+  - {fileID: 4856505277121890}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,6 +92,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4574171249462434}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4856505277121890
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986825147365336}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.2, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4574171249462434}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50152923258903398
 Rigidbody2D:
@@ -212,8 +241,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeToTeleport: 5
   TimeToHide: 3
-  TeleportImage: {fileID: 1864962009490222, guid: d49d7965e8c44864fb35b0fe5b87af2d,
+  MovementSpeed: 2
+  Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
     type: 2}
+  ProjectileSpreadDegrees: 1
+  BulletsPerMinute: 60
+  weapon: {fileID: 4856505277121890}
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,7 +291,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e464cb1f7400dc640b996742f7c32b27, type: 3}
   m_Name: 
