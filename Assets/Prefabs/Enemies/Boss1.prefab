@@ -210,7 +210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab34396e0f351445b50464291c66fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 5
+  TimeToTeleport: 5
+  TimeToHide: 3
+  TeleportImage: {fileID: 1864962009490222, guid: d49d7965e8c44864fb35b0fe5b87af2d,
+    type: 2}
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
