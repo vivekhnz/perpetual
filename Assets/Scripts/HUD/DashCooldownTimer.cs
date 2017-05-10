@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class DashCooldownTimer : MonoBehaviour
@@ -16,13 +14,14 @@ public class DashCooldownTimer : MonoBehaviour
     void Start()
     {
         // Obtain the dash ability's cooldown timer from the GameObject to stay consistent.
-        cooldownTimer = playerDash.DashCooldownTimer;
+        cooldownTimer = playerDash.Cooldown;
     }
 
     void Update()
     {
         // The bar gradually fills as determined by the cooldown timer.
-        DashCooldownCircularSliderHUD.fillAmount += Time.deltaTime / cooldownTimer;
+        DashCooldownCircularSliderHUD.fillAmount +=
+            Time.deltaTime / cooldownTimer;
     }
 
     // Resets the countdown and empties the circular slider.

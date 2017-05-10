@@ -161,9 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a6258588b74de34cbde8fc002432d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 0.3
+  Cooldown: 3
   Friction: 0.9
-  DashSpeed: 8
-  DashCooldownTimer: 3
   DashCooldownTimerHUD: {fileID: 0}
 --- !u!114 &114910131314984590
 MonoBehaviour:
