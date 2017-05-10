@@ -9,6 +9,7 @@ TagManager:
   - SpawnPoint
   - PlayerCollider
   - Projectile
+  - TeleportPoint
   layers:
   - Default
   - TransparentFX
