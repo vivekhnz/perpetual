@@ -42,8 +42,39 @@ GameObject:
   - component: {fileID: 114000609005742900}
   - component: {fileID: 114795217862693978}
   - component: {fileID: 95125455190508830}
+  - component: {fileID: 114518926223000380}
   m_Layer: 10
   m_Name: Boss1
+  m_TagString: Boss
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1961683193778062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4814097187801794}
+  m_Layer: 0
+  m_Name: LeftWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1986825147365336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4856505277121890}
+  m_Layer: 0
+  m_Name: 'RightWeapon '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,10 +87,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.1602442, y: -2.0110667, z: 0}
+  m_LocalPosition: {x: -1.9592992, y: -2.5411987, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 3}
   m_Children:
   - {fileID: 4647578873214484}
+  - {fileID: 4814097187801794}
+  - {fileID: 4856505277121890}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,6 +108,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4574171249462434}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4814097187801794
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1961683193778062}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.4, y: 1.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4574171249462434}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4856505277121890
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986825147365336}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.4, y: -1.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4574171249462434}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50152923258903398
 Rigidbody2D:
@@ -198,6 +257,27 @@ MonoBehaviour:
   DamageableObject: {fileID: 114715127447421028}
   CollisionDamage: 100000
   EnemyID: Boss1
+--- !u!114 &114518926223000380
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1541339381053536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab34396e0f351445b50464291c66fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeToTeleport: 5
+  TimeToHide: 3
+  MovementSpeed: 2
+  Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
+    type: 2}
+  ProjectileSpreadDegrees: 1
+  BulletsPerMinute: 200
+  LeftWeapon: {fileID: 4814097187801794}
+  RightWeapon: {fileID: 4856505277121890}
+  BurstNumber: 6
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitialHealth: 600
   ScoreValue: 1000
+  CameraShakeAmount: 5
   Parent: {fileID: 1541339381053536}
   Explosion: {fileID: 114546208615000262, guid: 9444f77ab196b914691ba335698ae7e1,
     type: 2}
@@ -241,7 +322,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e464cb1f7400dc640b996742f7c32b27, type: 3}
   m_Name: 

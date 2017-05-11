@@ -13,6 +13,7 @@ public class HUDController : MonoBehaviour
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
+    public Slider BossHealth;
 
     public bool IsGameOver { get; private set; }
 
@@ -51,6 +52,8 @@ public class HUDController : MonoBehaviour
 
         waveTime = 0;
         doShowWave = true;
+
+        BossHealth.gameObject.SetActive(false);
     }
 
     void Update()
@@ -150,5 +153,17 @@ public class HUDController : MonoBehaviour
     private void ReturnToStartMenu()
     {
         SceneManager.LoadScene("TitleScene");
+    }
+
+    public void UpdateBossHealth(float health)
+    {
+        if (health > 0)
+        {
+            BossHealth.gameObject.SetActive(true);
+            BossHealth.value = health;
+        } else
+        {
+            BossHealth.gameObject.SetActive(false);
+        }
     }
 }
