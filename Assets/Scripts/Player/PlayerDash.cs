@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(DataProvider))]
 public class PlayerDash : MonoBehaviour
 {
     // force of the player's dash
@@ -8,14 +9,27 @@ public class PlayerDash : MonoBehaviour
     public float Cooldown = 3;
     // multiplier to slow down a player's dash (must be < 1)
     public float Friction = 0.9f;
-    // references to the cooldown timer HUD element
-    public DashCooldownTimer DashCooldownTimerHUD;
+
+    private DataProvider data;
 
     private Vector2 velocity;
     private float dashTime;
 
+    void Start()
+    {
+        data = GetComponent<DataProvider>();
+        if (data == null)
+            Debug.LogError("No data provider found!");
+    }
+
     void FixedUpdate()
     {
+        // update ability charge
+        float abilityCharge = Mathf.Clamp(
+            (Time.time - dashTime) / Cooldown, 0, 1);
+        data.UpdateValue<float>("AbilityCharge", abilityCharge);
+
+        // can I dash?
         if (Input.GetButton("Ability")
             && Time.time - dashTime > Cooldown)
             Dash();
@@ -45,8 +59,5 @@ public class PlayerDash : MonoBehaviour
 
         // reset cooldown
         dashTime = Time.time;
-
-        // reset the fill of the countdown circular slider
-        DashCooldownTimerHUD.ResetCountdown();
     }
 }
