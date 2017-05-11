@@ -15,9 +15,9 @@ public class BossController : MonoBehaviour
     public Transform RightWeapon;
     public int BurstNumber = 6;
 
-    private List<Vector3> teleportLocations;
+    private List<Animator> teleportPoints;
     private float teleportTime;
-    private Vector3 selectedTeleport;
+    private Animator selectedTeleport;
     private Vector3 hidingSpot;
     private bool hiding;
     private EnemyController controller;
@@ -27,7 +27,6 @@ public class BossController : MonoBehaviour
 
     void Start()
     {
-
         controller = GetComponent<EnemyController>();
 
         // initialise timeholder and bool
@@ -35,9 +34,9 @@ public class BossController : MonoBehaviour
         teleportTime = Time.time;
 
         // find teleport points
-        teleportLocations = GameObject.FindGameObjectsWithTag("TeleportPoint")
-            .Select(obj => obj.transform.position).ToList();
-        if (teleportLocations.Count == 0)
+        teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
+            .Select(obj => obj.GetComponent<Animator>()).ToList();
+        if (teleportPoints.Count == 0)
             Debug.LogError("No teleport points defined!");
 
         // hiding spot (dont know how to temporarily disable)
@@ -49,7 +48,6 @@ public class BossController : MonoBehaviour
 
     void FixedUpdate()
     {
-
         if (controller.Player == null)
             return;
 
@@ -66,7 +64,8 @@ public class BossController : MonoBehaviour
         {
             hiding = true;
             transform.position = hidingSpot;
-            selectedTeleport = teleportLocations[Random.Range(0, teleportLocations.Count)];
+            selectedTeleport = teleportPoints[Random.Range(0, teleportPoints.Count)];
+            selectedTeleport.SetBool("IsActive", true);
             teleportTime = Time.time;
         }
         else
@@ -75,7 +74,8 @@ public class BossController : MonoBehaviour
             if (hiding && (Time.time - teleportTime) > TimeToHide)
             {
                 hiding = false;
-                transform.position = selectedTeleport;
+                transform.position = selectedTeleport.transform.position;
+                selectedTeleport.SetBool("IsActive", false);
                 teleportTime = Time.time;
             }
         }
