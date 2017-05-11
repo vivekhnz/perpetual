@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 114493100372726622}
   - component: {fileID: 58270066615730010}
   - component: {fileID: 50392157022359794}
+  - component: {fileID: 114688183229628730}
+  - component: {fileID: 114995451399308280}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -55,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1288057475374176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.5665418, y: 0.71184814, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4764064567741456}
@@ -149,6 +151,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 4
   MovementSpeedWhileFiring: 2.5
+--- !u!114 &114688183229628730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288057475374176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6258588b74de34cbde8fc002432d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0.25
+  Cooldown: 3
+  Friction: 0.9
+  DashCooldownTimerHUD: {fileID: 0}
 --- !u!114 &114910131314984590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,6 +179,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Parent: {fileID: 114493100372726622}
   InitialHealth: 100
+--- !u!114 &114995451399308280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288057475374176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0284b90bd52d9b14b8789c2213130e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212824994238841868
 SpriteRenderer:
   m_ObjectHideFlags: 1

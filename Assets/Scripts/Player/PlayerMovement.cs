@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotation);
         }
 
+        // move player based on current speed
         float speed = weapons.Any(w => w.IsFiring)
             ? MovementSpeedWhileFiring
             : MovementSpeed;
