@@ -7,13 +7,12 @@ public class BossController : MonoBehaviour
 {
     public float TimeToTeleport = 5;
     public float TimeToHide = 3;
-    public float MovementSpeed = 2.0f;
     public BossProjectileController Projectile;
-    public float ProjectileSpreadDegrees = 10.0f;
     public float BulletsPerMinute = 60.0f;
     public Transform LeftWeapon;
     public Transform RightWeapon;
-    public int BurstNumber = 6;
+    public int BulletsPerBurst = 6;
+    public float TimeBetweenBursts = 1f;
 
     private List<Animator> teleportPoints;
     private float teleportTime;
@@ -21,9 +20,10 @@ public class BossController : MonoBehaviour
     private Vector3 hidingSpot;
     private bool hiding;
     private EnemyController controller;
+
     private float projectileFiredTime = 0.0f;
-    private int currentBurst = 0;
-    private Transform currentWeapon;
+    private int bulletsCreated = 0;
+    private float burstFinishedTime;
 
     void Start()
     {
@@ -41,9 +41,6 @@ public class BossController : MonoBehaviour
 
         // hiding spot (dont know how to temporarily disable)
         hidingSpot = new Vector3(-30, 0, 0);
-
-        // initialise weapon
-        currentWeapon = LeftWeapon;
     }
 
     void FixedUpdate()
@@ -86,37 +83,46 @@ public class BossController : MonoBehaviour
         if (Projectile == null)
             return;
 
+        // am I hidden?
+        if (hiding)
+            return;
+
+        // can I fire any more bullets in this burst?
+        if (bulletsCreated >= BulletsPerBurst)
+        {
+            // can I start a new burst?
+            if (Time.time - burstFinishedTime >= TimeBetweenBursts)
+            {
+                bulletsCreated = 0;
+            }
+            else
+            {
+                return;
+            }
+        }
+
         // can I fire again?
         float timeBetweenProjectiles = 60.0f / BulletsPerMinute;
         if (Time.time - projectileFiredTime < timeBetweenProjectiles)
             return;
         projectileFiredTime = Time.time;
 
-        // calculate projectile direction
-        float projectileDir = transform.rotation.eulerAngles.z
-            + Random.Range(-ProjectileSpreadDegrees, ProjectileSpreadDegrees);
-
         // spawn projectile
         var projectile = Projectile.Fetch<BossProjectileController>();
-        if (currentBurst > BurstNumber)
-        {
-            switchWeapon();
-            currentBurst = 0;
-        }
+
+        // calculate projectile direction
+        var currentWeapon = bulletsCreated % 2 == 0
+            ? LeftWeapon : RightWeapon;
+        var dirToPlayer = controller.Player.transform.position
+            - currentWeapon.position;
+        float projectileDir = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x)
+            * Mathf.Rad2Deg;
+
         projectile.Initialize(
             currentWeapon.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
-        currentBurst++;
-    }
+        bulletsCreated++;
 
-    void switchWeapon()
-    {
-        if (currentWeapon == LeftWeapon)
-        {
-            currentWeapon = RightWeapon;
-        }
-        else
-        {
-            currentWeapon = LeftWeapon;
-        }
+        if (bulletsCreated >= BulletsPerBurst)
+            burstFinishedTime = Time.time;
     }
 }

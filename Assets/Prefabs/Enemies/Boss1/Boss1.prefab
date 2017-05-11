@@ -115,7 +115,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1961683193778062}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4, y: 1.1, z: 0}
+  m_LocalPosition: {x: 0.5, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 4574171249462434}
@@ -128,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1986825147365336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.4, y: -1.1, z: 0}
+  m_LocalPosition: {x: 0.5, y: -1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 4574171249462434}
@@ -268,15 +268,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimeToTeleport: 5
-  TimeToHide: 3
-  MovementSpeed: 2
+  TimeToHide: 1
   Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
     type: 2}
-  ProjectileSpreadDegrees: 1
-  BulletsPerMinute: 200
+  BulletsPerMinute: 400
   LeftWeapon: {fileID: 4814097187801794}
   RightWeapon: {fileID: 4856505277121890}
-  BurstNumber: 6
+  BulletsPerBurst: 6
+  TimeBetweenBursts: 1
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -345,7 +344,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 90d35ec31686bdf43a5288e46e519108, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
