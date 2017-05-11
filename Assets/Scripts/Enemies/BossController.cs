@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BossController : MonoBehaviour {
-
+public class BossController : MonoBehaviour
+{
     public float TimeToTeleport = 5;
     public float TimeToHide = 3;
     public float MovementSpeed = 2.0f;
@@ -20,23 +20,20 @@ public class BossController : MonoBehaviour {
     private Vector3 selectedTeleport;
     private Vector3 hidingSpot;
     private bool hiding;
-    private ChasePlayer movement;
     private EnemyController controller;
     private float projectileFiredTime = 0.0f;
     private int currentBurst = 0;
     private Transform currentWeapon;
 
-    void Start () {
+    void Start()
+    {
 
         controller = GetComponent<EnemyController>();
-
-        // get movement
-        movement = GetComponent<ChasePlayer>();
 
         // initialise timeholder and bool
         hiding = false;
         teleportTime = Time.time;
-        
+
         // find teleport points
         teleportLocations = GameObject.FindGameObjectsWithTag("TeleportPoint")
             .Select(obj => obj.transform.position).ToList();
@@ -49,8 +46,9 @@ public class BossController : MonoBehaviour {
         // initialise weapon
         currentWeapon = LeftWeapon;
     }
-	
-	void FixedUpdate () {
+
+    void FixedUpdate()
+    {
 
         if (controller.Player == null)
             return;
@@ -62,23 +60,22 @@ public class BossController : MonoBehaviour {
         direction.Normalize();
         transform.rotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-        
+
         // if time to teleport, teleport boss
         if (!hiding && (Time.time - teleportTime) > TimeToTeleport)
         {
             hiding = true;
             transform.position = hidingSpot;
             selectedTeleport = teleportLocations[Random.Range(0, teleportLocations.Count)];
-            movement.MovementSpeed = 0f;
             teleportTime = Time.time;
-        } else
+        }
+        else
         {
             // if time to re appear, teleport boss to teleport location
             if (hiding && (Time.time - teleportTime) > TimeToHide)
             {
                 hiding = false;
                 transform.position = selectedTeleport;
-                movement.MovementSpeed = 2.0f;
                 teleportTime = Time.time;
             }
         }
@@ -116,7 +113,8 @@ public class BossController : MonoBehaviour {
         if (currentWeapon == LeftWeapon)
         {
             currentWeapon = RightWeapon;
-        } else
+        }
+        else
         {
             currentWeapon = LeftWeapon;
         }

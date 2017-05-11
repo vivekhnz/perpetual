@@ -85,7 +85,7 @@ public class EnemySpawnManager : MonoBehaviour
         else
         {
             // the number of spawners created is incremented each wave
-            var count = ((WavesPerRound - 3) * (round - 1)) + wave;
+            var count = Math.Max(((WavesPerRound - 3) * (round - 1)) + wave, 1);
             for (int i = 0; i < count; i++)
                 CreateSpawner(PickRandomSpawner());
         }
