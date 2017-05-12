@@ -26,7 +26,7 @@ public class BossController : MonoBehaviour
     public float TimeBetweenBursts = 1f;
 
     private EnemyController controller;
-    private HUDController hudController;
+    private EnemySpawnManager spawnManager;
     private Animator animator;
     private List<Animator> teleportPoints;
     private Vector3 hidingSpot;
@@ -57,10 +57,12 @@ public class BossController : MonoBehaviour
 
     void Initialize()
     {
-        // retrieve HUD controller
-        hudController = GameObject.FindObjectOfType<HUDController>();
-        if (hudController == null)
-            Debug.LogError("No HUD controller found!");
+        // retrieve enemy manager
+        spawnManager = GameObject.FindObjectOfType<EnemySpawnManager>();
+        if (spawnManager == null)
+            Debug.LogError("No spawn manager found!");
+        spawnManager.StartBossEncounter(
+            controller.DamageableObject.InitialHealth);
 
         // find teleport points
         teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
@@ -204,9 +206,14 @@ public class BossController : MonoBehaviour
             burstFinishedTime = Time.time;
     }
 
-    public void UpdateHealthUI()
+    public void UpdateBossHealth()
     {
-        hudController.UpdateBossHealth(
+        spawnManager.UpdateBossHealth(
             controller.DamageableObject.CurrentHealth);
+    }
+
+    public void OnDefeated()
+    {
+        spawnManager.FinishBossEncounter();
     }
 }

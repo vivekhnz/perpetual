@@ -20,11 +20,12 @@ public class DataProvider : MonoBehaviour
         }
     }
 
-    private Dictionary<string, DataValue> values;
+    private Dictionary<string, DataValue> values
+        = new Dictionary<string, DataValue>();
 
     void Start()
     {
-        values = new Dictionary<string, DataValue>();
+        values.Clear();
     }
 
     public void UpdateValue<T>(string key, T value)

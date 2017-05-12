@@ -1,0 +1,25 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+[RequireComponent(typeof(Slider))]
+public class ProgressBar : MonoBehaviour
+{
+    public FloatBinding Value;
+    public BooleanBinding IsEnabled;
+
+    void Start()
+    {
+        var slider = GetComponent<Slider>();
+        if (slider == null)
+            Debug.LogError("No slider found!");
+
+        Value.Subscribe(
+            value => slider.value = value);
+        IsEnabled.Subscribe(
+            value =>
+            {
+                foreach (var image in GetComponentsInChildren<Image>())
+                    image.enabled = value;
+            });
+    }
+}
