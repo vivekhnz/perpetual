@@ -161,7 +161,8 @@ public class HUDController : MonoBehaviour
         {
             BossHealth.gameObject.SetActive(true);
             BossHealth.value = health;
-        } else
+        }
+        else
         {
             BossHealth.gameObject.SetActive(false);
         }

@@ -5,8 +5,17 @@ using UnityEngine;
 
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(Animator))]
 public class BossController : MonoBehaviour
 {
+    private enum BossState
+    {
+        OffScreen = 0,
+        Appearing = 1,
+        Active = 2,
+        Teleporting = 3
+    }
+
     public float TimeBetweenTeleports = 5;
     public float TimeToHide = 1;
     public BossProjectileController Projectile;
@@ -16,13 +25,15 @@ public class BossController : MonoBehaviour
     public int BulletsPerBurst = 6;
     public float TimeBetweenBursts = 1f;
 
+    private EnemyController controller;
+    private Animator animator;
     private List<Animator> teleportPoints;
+    private Vector3 hidingSpot;
+
+    private BossState currentState;
     private float hideTime;
     private float teleportTime;
     private int selectedTeleport;
-    private Vector3 hidingSpot;
-    private bool hiding;
-    private EnemyController controller;
 
     private float projectileFiredTime = 0.0f;
     private int bulletsCreated = 0;
@@ -32,6 +43,10 @@ public class BossController : MonoBehaviour
     {
         controller = GetComponent<EnemyController>();
         controller.InstanceReset += OnInitialized;
+
+        animator = GetComponent<Animator>();
+        if (animator == null)
+            Debug.LogError("No animator found!");
 
         // find teleport points
         teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
@@ -45,7 +60,15 @@ public class BossController : MonoBehaviour
 
     void OnInitialized(object sender, EventArgs e)
     {
+        // find teleport points
+        teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
+            .Select(obj => obj.GetComponent<Animator>()).ToList();
+        if (teleportPoints.Count < 2)
+            Debug.LogError("Two teleport points must be defined!");
+
+        // start off-screen
         Hide();
+        animator.SetBool("IsHiding", true);
     }
 
     void FixedUpdate()
@@ -61,19 +84,68 @@ public class BossController : MonoBehaviour
 
         Fire();
 
-        // are we hiding off-screen?
-        if (hiding)
+        switch (currentState)
         {
-            // is it time to reveal?
-            if (Time.time - hideTime > TimeToHide)
-                Reveal();
+            case BossState.OffScreen:
+                // is it time to appear?
+                if (Time.time - hideTime > TimeToHide)
+                    Appear();
+                break;
+            case BossState.Active:
+                // is it time to teleport?
+                if (Time.time - teleportTime > TimeBetweenTeleports)
+                    StartTeleport();
+                break;
         }
-        else
-        {
-            // is it time to hide?
-            if (Time.time - teleportTime > TimeBetweenTeleports)
-                Hide();
-        }
+    }
+
+    void Hide()
+    {
+        // teleport off-screen
+        currentState = BossState.OffScreen;
+        transform.position = hidingSpot;
+
+        // reset hide timer
+        hideTime = Time.time;
+    }
+
+    void Appear()
+    {
+        // teleport to destination
+        var teleport = teleportPoints[selectedTeleport];
+        transform.position = teleport.transform.position;
+
+        // play appear animation
+        currentState = BossState.Appearing;
+        animator.SetBool("IsHiding", false);
+    }
+
+    void Activate()
+    {
+        // disable our teleport point
+        var teleport = teleportPoints[selectedTeleport];
+        teleport.SetBool("IsActive", false);
+
+        // enable shooting and reset teleport timer
+        currentState = BossState.Active;
+        teleportTime = Time.time;
+    }
+
+    void StartTeleport()
+    {
+        // randomly select a teleport destination
+        var validIndices = Enumerable.Range(0, teleportPoints.Count).ToList();
+        validIndices.Remove(selectedTeleport);
+        selectedTeleport = validIndices[
+            Random.Range(0, validIndices.Count)];
+
+        // telegraph the teleport destination
+        var teleport = teleportPoints[selectedTeleport];
+        teleport.SetBool("IsActive", true);
+
+        // play hide animation
+        currentState = BossState.Teleporting;
+        animator.SetBool("IsHiding", true);
     }
 
     void Fire()
@@ -81,8 +153,8 @@ public class BossController : MonoBehaviour
         if (Projectile == null)
             return;
 
-        // am I hidden?
-        if (hiding)
+        // am I active?
+        if (currentState != BossState.Active)
             return;
 
         // can I fire any more bullets in this burst?
@@ -124,37 +196,5 @@ public class BossController : MonoBehaviour
         // was this the last bullet in the burst?
         if (bulletsCreated >= BulletsPerBurst)
             burstFinishedTime = Time.time;
-    }
-
-    void Hide()
-    {
-        // teleport off-screen
-        hiding = true;
-        transform.position = hidingSpot;
-
-        // randomly select a teleport destination
-        var validIndices = Enumerable.Range(0, teleportPoints.Count).ToList();
-        validIndices.Remove(selectedTeleport);
-        selectedTeleport = validIndices[
-            Random.Range(0, validIndices.Count)];
-
-        // telegraph the teleport destination
-        var teleport = teleportPoints[selectedTeleport];
-        teleport.SetBool("IsActive", true);
-
-        // reset hide timer
-        hideTime = Time.time;
-    }
-
-    void Reveal()
-    {
-        // teleport to destination
-        hiding = false;
-        var teleport = teleportPoints[selectedTeleport];
-        transform.position = teleport.transform.position;
-        teleport.SetBool("IsActive", false);
-
-        // reset teleport timer
-        teleportTime = Time.time;
     }
 }
