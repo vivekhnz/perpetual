@@ -42,23 +42,19 @@ public class BossController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<EnemyController>();
-        controller.InstanceReset += OnInitialized;
+        controller.InstanceReset += (sender, e) => Initialize();
 
         animator = GetComponent<Animator>();
         if (animator == null)
             Debug.LogError("No animator found!");
 
-        // find teleport points
-        teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
-            .Select(obj => obj.GetComponent<Animator>()).ToList();
-        if (teleportPoints.Count < 2)
-            Debug.LogError("Two teleport points must be defined!");
-
         // hiding spot (dont know how to temporarily disable)
         hidingSpot = new Vector3(-30, 0, 0);
+
+        Initialize();
     }
 
-    void OnInitialized(object sender, EventArgs e)
+    void Initialize()
     {
         // find teleport points
         teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
@@ -67,6 +63,7 @@ public class BossController : MonoBehaviour
             Debug.LogError("Two teleport points must be defined!");
 
         // start off-screen
+        StartTeleport(false);
         Hide();
         animator.SetBool("IsHiding", true);
     }
@@ -94,7 +91,7 @@ public class BossController : MonoBehaviour
             case BossState.Active:
                 // is it time to teleport?
                 if (Time.time - teleportTime > TimeBetweenTeleports)
-                    StartTeleport();
+                    StartTeleport(true);
                 break;
         }
     }
@@ -131,7 +128,7 @@ public class BossController : MonoBehaviour
         teleportTime = Time.time;
     }
 
-    void StartTeleport()
+    void StartTeleport(bool animate)
     {
         // randomly select a teleport destination
         var validIndices = Enumerable.Range(0, teleportPoints.Count).ToList();
@@ -143,9 +140,12 @@ public class BossController : MonoBehaviour
         var teleport = teleportPoints[selectedTeleport];
         teleport.SetBool("IsActive", true);
 
-        // play hide animation
-        currentState = BossState.Teleporting;
-        animator.SetBool("IsHiding", true);
+        if (animate)
+        {
+            // play hide animation
+            currentState = BossState.Teleporting;
+            animator.SetBool("IsHiding", true);
+        }
     }
 
     void Fire()
