@@ -26,6 +26,7 @@ public class BossController : MonoBehaviour
     public float TimeBetweenBursts = 1f;
 
     private EnemyController controller;
+    private HUDController hudController;
     private Animator animator;
     private List<Animator> teleportPoints;
     private Vector3 hidingSpot;
@@ -56,6 +57,11 @@ public class BossController : MonoBehaviour
 
     void Initialize()
     {
+        // retrieve HUD controller
+        hudController = GameObject.FindObjectOfType<HUDController>();
+        if (hudController == null)
+            Debug.LogError("No HUD controller found!");
+
         // find teleport points
         teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
             .Select(obj => obj.GetComponent<Animator>()).ToList();
@@ -196,5 +202,11 @@ public class BossController : MonoBehaviour
         // was this the last bullet in the burst?
         if (bulletsCreated >= BulletsPerBurst)
             burstFinishedTime = Time.time;
+    }
+
+    public void UpdateHealthUI()
+    {
+        hudController.UpdateBossHealth(
+            controller.DamageableObject.CurrentHealth);
     }
 }
