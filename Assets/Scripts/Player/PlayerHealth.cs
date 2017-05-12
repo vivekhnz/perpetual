@@ -34,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
             shaker.RandomShake(damage * 0.5f);
 
         // reduce health
-        // currentHealth -= damage;
+        currentHealth -= damage;
         UpdateHealthUI();
     }
 
