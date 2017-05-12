@@ -11,13 +11,13 @@ public class DamageableObject : MonoBehaviour
     public UnityEvent OnDamaged;
     public UnityEvent OnDestroyed;
 
-    private float currentHealth;
+    public float CurrentHealth { get; private set; }
     private HUDController hudController;
 
     void Start()
     {
         Parent = Parent ?? gameObject;
-        currentHealth = InitialHealth;
+        CurrentHealth = InitialHealth;
 
         if (!gameObject.CompareTag("Damageable"))
             Debug.LogWarning("This object does not have the 'Damageable' tag. Objects may be unable to damage it.");
@@ -26,26 +26,26 @@ public class DamageableObject : MonoBehaviour
     public void TakeDamage(float damage, float? damageAngle = null)
     {
         // reduce health
-        currentHealth -= damage;
+        CurrentHealth -= damage;
 
         // raise damaged event
         if (OnDamaged != null)
             OnDamaged.Invoke();
 
         // am I dead?
-        if (currentHealth <= 0)
+        if (CurrentHealth <= 0)
             Die(damageAngle);
     }
 
     public void ResetHealth()
     {
-        currentHealth = InitialHealth;
+        CurrentHealth = InitialHealth;
     }
 
     private void Die(float? damageAngle)
     {
         // ensure we have zero health
-        currentHealth = 0;
+        CurrentHealth = 0;
 
         // raise destroyed event
         if (OnDestroyed != null)

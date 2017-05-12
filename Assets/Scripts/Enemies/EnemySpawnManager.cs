@@ -19,6 +19,7 @@ public class EnemySpawnManager : MonoBehaviour
     public int WavesPerRound = 2;
 
     private HUDController hud;
+    private DataProvider data;
     private PlayerHealth player;
 
     private List<Vector3> spawnLocations;
@@ -35,6 +36,9 @@ public class EnemySpawnManager : MonoBehaviour
         hud = GameObject.FindObjectOfType<HUDController>();
         if (hud == null)
             Debug.LogError("No HUD controller found.");
+        data = GetComponent<DataProvider>();
+        if (data == null)
+            Debug.LogError("No data provider found!");
         player = GameObject.FindObjectOfType<PlayerHealth>();
         if (player == null)
             Debug.LogError("No player found.");
@@ -85,7 +89,7 @@ public class EnemySpawnManager : MonoBehaviour
         else
         {
             // the number of spawners created is incremented each wave
-            var count = ((WavesPerRound - 3) * (round - 1)) + wave;
+            var count = Math.Max(((WavesPerRound - 3) * (round - 1)) + wave, 1);
             for (int i = 0; i < count; i++)
                 CreateSpawner(PickRandomSpawner());
         }
@@ -122,6 +126,22 @@ public class EnemySpawnManager : MonoBehaviour
         var spawner = sender as EnemySpawner;
         spawner.InstanceRecycled -= OnSpawnerDestroyed;
         activeSpawners.Remove(spawner);
+    }
+
+    public void StartBossEncounter(float initialHealth)
+    {
+        data.UpdateValue<bool>("IsBossEncounterActive", true);
+        UpdateBossHealth(initialHealth);
+    }
+
+    public void FinishBossEncounter()
+    {
+        data.UpdateValue<bool>("IsBossEncounterActive", false);
+    }
+
+    public void UpdateBossHealth(float currentHealth)
+    {
+        data.UpdateValue<float>("BossHealth", currentHealth);
     }
 
     void OnDestroy()
