@@ -89,4 +89,17 @@ public class PlayerUpgrades : MonoBehaviour
             }
         }
     }
+
+    public void UnlockAbility<T>()
+        where T : PlayerAbility
+    {
+        // remove any existing abilities
+        if (ability != null)
+            Destroy(ability);
+
+        // attach the new ability and retrieve its icon
+        ability = gameObject.AddComponent<T>();
+        ability.Icon = Resources.Load<Sprite>(
+            $"Abilities/{typeof(T).Name}Icon");
+    }
 }
