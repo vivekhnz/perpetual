@@ -10,9 +10,7 @@ public class Binding<T>
     public void Subscribe(UnityAction<T> listener)
     {
         if (Source != null)
-            Source.Subscribe(Key, listener);
-
-        listener.Invoke(DefaultValue);
+            Source.Subscribe(Key, listener, DefaultValue);
     }
 }
 

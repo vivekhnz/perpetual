@@ -8,22 +8,29 @@ public class DataProvider : MonoBehaviour
 
     private class DataValue
     {
+        private object data;
         public object Value
         {
-            set { OnUpdated.Invoke(value); }
+            get { return data; }
+            set
+            {
+                data = value;
+                OnUpdated.Invoke(value);
+            }
         }
+
         public DataUpdatedEvent OnUpdated = new DataUpdatedEvent();
 
         public DataValue(object value)
         {
-            Value = value;
+            data = value;
         }
     }
 
     private Dictionary<string, DataValue> values
         = new Dictionary<string, DataValue>();
 
-    void Start()
+    void Awake()
     {
         values.Clear();
     }
@@ -41,15 +48,18 @@ public class DataProvider : MonoBehaviour
         }
     }
 
-    public void Subscribe<T>(string key, UnityAction<T> listener)
+    public void Subscribe<T>(string key, UnityAction<T> listener,
+        T defaultValue)
     {
         DataValue data;
         if (!values.TryGetValue(key, out data))
         {
-            data = new DataValue(default(T));
+            data = new DataValue(defaultValue);
             values[key] = data;
         }
-        data.OnUpdated.AddListener(
-            obj => listener.Invoke((T)obj));
+
+        UnityAction<object> action = obj => listener.Invoke((T)obj);
+        data.OnUpdated.AddListener(action);
+        action.Invoke(data.Value);
     }
 }
