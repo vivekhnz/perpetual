@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Foreground: {fileID: 114296869645018480}
+  Icon: {fileID: 114311324695398010}
   Value:
     Source: {fileID: 0}
     Key: MyValueName
@@ -179,6 +180,10 @@ MonoBehaviour:
     Source: {fileID: 0}
     Key: MyValueName
     DefaultValue: 1
+  IconSprite:
+    Source: {fileID: 0}
+    Key: MyValueName
+    DefaultValue: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!222 &222237831705908056
 CanvasRenderer:
   m_ObjectHideFlags: 1

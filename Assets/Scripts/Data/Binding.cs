@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class Binding<T>
@@ -16,3 +17,4 @@ public class Binding<T>
 
 [Serializable] public class FloatBinding : Binding<float> { }
 [Serializable] public class BooleanBinding : Binding<bool> { }
+[Serializable] public class SpriteBinding : Binding<Sprite> { }

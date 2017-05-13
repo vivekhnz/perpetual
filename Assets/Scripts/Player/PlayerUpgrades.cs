@@ -43,6 +43,7 @@ public class PlayerUpgrades : MonoBehaviour
         else
         {
             data.UpdateValue<float>("SecondaryWeaponCharge", secondaryWeapon.Charge);
+            data.UpdateValue<Sprite>("SecondaryWeaponIcon", secondaryWeapon.Icon);
             data.UpdateValue<bool>("HasSecondaryWeapon", true);
         }
     }

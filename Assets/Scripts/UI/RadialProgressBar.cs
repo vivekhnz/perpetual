@@ -4,8 +4,11 @@ using UnityEngine.UI;
 public class RadialProgressBar : MonoBehaviour
 {
     public Image Foreground;
+    public Image Icon;
+
     public FloatBinding Value;
     public BooleanBinding IsEnabled;
+    public SpriteBinding IconSprite;
 
     void Start()
     {
@@ -20,5 +23,7 @@ public class RadialProgressBar : MonoBehaviour
                 foreach (var child in GetComponentsInChildren<Image>())
                     child.enabled = value;
             });
+        IconSprite.Subscribe(
+            sprite => Icon.sprite = sprite);
     }
 }

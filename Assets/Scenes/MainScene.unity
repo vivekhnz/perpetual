@@ -820,12 +820,6 @@ Prefab:
       propertyPath: Value.Key
       value: AbilityCharge
       objectReference: {fileID: 0}
-    - target: {fileID: 114311324695398010, guid: c81fd317965485b4baea5108de97116c,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8654111af42a48a4e9f3cb5b23e114f6,
-        type: 3}
     - target: {fileID: 1588537286844912, guid: c81fd317965485b4baea5108de97116c, type: 2}
       propertyPath: m_IsActive
       value: 1
@@ -840,6 +834,12 @@ Prefab:
       propertyPath: Value.Key
       value: AbilityCharge
       objectReference: {fileID: 0}
+    - target: {fileID: 114311324695398010, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8654111af42a48a4e9f3cb5b23e114f6,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c81fd317965485b4baea5108de97116c, type: 2}
   m_IsPrefabParent: 0
@@ -1544,12 +1544,6 @@ Prefab:
       propertyPath: Value.Key
       value: SecondaryWeaponCharge
       objectReference: {fileID: 0}
-    - target: {fileID: 114311324695398010, guid: c81fd317965485b4baea5108de97116c,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 3a343531b6a1fef40bb8d7e8517a262b,
-        type: 3}
     - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
         type: 2}
       propertyPath: Value.Source
@@ -1574,6 +1568,16 @@ Prefab:
         type: 2}
       propertyPath: IsEnabled.DefaultValue
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IconSprite.Source
+      value: 
+      objectReference: {fileID: 324306755}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IconSprite.Key
+      value: SecondaryWeaponIcon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c81fd317965485b4baea5108de97116c, type: 2}
@@ -2162,7 +2166,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4304638557884996, guid: 093bcad37d4d4234c93246863b7aa9b0, type: 2}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4304638557884996, guid: 093bcad37d4d4234c93246863b7aa9b0, type: 2}
       propertyPath: m_LocalScale.y
