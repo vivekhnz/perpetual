@@ -329,7 +329,7 @@ AnimationClip:
   m_IsEmpty: 0
   m_Events:
   - time: 1
-    functionName: Hide
+    functionName: Teleport
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

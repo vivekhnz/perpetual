@@ -10,37 +10,34 @@ public class BossController : MonoBehaviour
 {
     private enum BossState
     {
-        OffScreen = 0,
-        Appearing = 1,
-        Active = 2,
-        Teleporting = 3
+        Appearing = 0,
+        Active = 1,
+        Teleporting = 2
     }
 
-    public float TimeBetweenTeleports = 5;
-    public float TimeToHide = 1;
+    public AnimationCurve TimeBetweenTeleports = new AnimationCurve(
+        new Keyframe(0.0f, 5.0f),
+        new Keyframe(1.0f, 0.5f, Mathf.PI * -3f, 0.0f));
+    public AnimationCurve TimeBetweenBursts = new AnimationCurve(
+        new Keyframe(0.0f, 1.0f),
+        new Keyframe(1.0f, 0.1f, Mathf.PI * -0.8f, 0.0f));
     public BossProjectileController Projectile;
     public float BulletsPerMinute = 60.0f;
     public Transform LeftWeapon;
     public Transform RightWeapon;
     public int BulletsPerBurst = 6;
-    public float TimeBetweenBursts = 1f;
-    public float DamageThresholdBeforeStronger = 0.5f;
 
     private EnemyController controller;
     private EnemySpawnManager spawnManager;
     private Animator animator;
     private List<Animator> teleportPoints;
     private Vector3 hidingSpot;
-    private DamageableObject damageableOject;
 
     private BossState currentState;
-    private float hideTime;
     private float teleportTime;
-    private float initialTimeBetweenTeleports;
     private int selectedTeleport;
 
     private float projectileFiredTime = 0.0f;
-    private float initialTimeBetweenBursts;
     private int bulletsCreated = 0;
     private float burstFinishedTime;
 
@@ -53,17 +50,9 @@ public class BossController : MonoBehaviour
         if (animator == null)
             Debug.LogError("No animator found!");
 
-        damageableOject = controller.DamageableObject;
-        if (damageableOject == null)
-            Debug.LogError("No damageableObject found!");
-
         // hiding spot (dont know how to temporarily disable)
         hidingSpot = new Vector3(-30, 0, 0);
 
-        // store these initial values to calculate the boss becoming harder when on lower hp
-        initialTimeBetweenTeleports = TimeBetweenTeleports;
-        initialTimeBetweenBursts = TimeBetweenBursts;
-        
         Initialize();
     }
 
@@ -82,10 +71,11 @@ public class BossController : MonoBehaviour
         if (teleportPoints.Count < 2)
             Debug.LogError("Two teleport points must be defined!");
 
-        // start off-screen
-        StartTeleport(false);
-        Hide();
-        animator.SetBool("IsHiding", true);
+        // start off-screen and teleport in
+        transform.position = hidingSpot;
+        currentState = BossState.Active;
+        teleportTime = Time.time - TimeBetweenTeleports.Evaluate(0);
+        selectedTeleport = -1;
     }
 
     void FixedUpdate()
@@ -103,39 +93,37 @@ public class BossController : MonoBehaviour
 
         switch (currentState)
         {
-            case BossState.OffScreen:
-                // is it time to appear?
-                if (Time.time - hideTime > TimeToHide)
-                    Appear();
-                break;
             case BossState.Active:
+                float healthPercentage = 1.0f - (
+                    controller.DamageableObject.CurrentHealth /
+                    controller.DamageableObject.InitialHealth);
+
                 // is it time to teleport?
-                if (Time.time - teleportTime > TimeBetweenTeleports)
-                    StartTeleport(true);
+                if (Time.time - teleportTime
+                    > TimeBetweenTeleports.Evaluate(healthPercentage))
+                    PrepareToTeleport();
                 break;
         }
-
-        // makes the boss teleport and shoot more often when lower on hp
-        if (damageableOject.CurrentHealth < (damageableOject.InitialHealth * DamageThresholdBeforeStronger))
-        {
-            TimeBetweenTeleports = initialTimeBetweenTeleports * (damageableOject.CurrentHealth / damageableOject.InitialHealth);
-            TimeBetweenTeleports = Mathf.Clamp(TimeBetweenTeleports, 0.5f, initialTimeBetweenTeleports);
-            TimeBetweenBursts = initialTimeBetweenBursts * (damageableOject.CurrentHealth / damageableOject.InitialHealth);
-            //Debug.Log(TimeBetweenTeleports + " " + initialTimeBetweenBursts);
-        }
     }
 
-    void Hide()
+    void PrepareToTeleport()
     {
-        // teleport off-screen
-        currentState = BossState.OffScreen;
-        transform.position = hidingSpot;
+        // randomly select a teleport destination
+        var validIndices = Enumerable.Range(0, teleportPoints.Count).ToList();
+        validIndices.Remove(selectedTeleport);
+        selectedTeleport = validIndices[
+            Random.Range(0, validIndices.Count)];
 
-        // reset hide timer
-        hideTime = Time.time;
+        // telegraph the teleport destination
+        var teleport = teleportPoints[selectedTeleport];
+        teleport.SetBool("IsActive", true);
+
+        // play hide animation
+        currentState = BossState.Teleporting;
+        animator.SetBool("IsHiding", true);
     }
 
-    void Appear()
+    void Teleport()
     {
         // teleport to destination
         var teleport = teleportPoints[selectedTeleport];
@@ -157,26 +145,6 @@ public class BossController : MonoBehaviour
         teleportTime = Time.time;
     }
 
-    void StartTeleport(bool animate)
-    {
-        // randomly select a teleport destination
-        var validIndices = Enumerable.Range(0, teleportPoints.Count).ToList();
-        validIndices.Remove(selectedTeleport);
-        selectedTeleport = validIndices[
-            Random.Range(0, validIndices.Count)];
-
-        // telegraph the teleport destination
-        var teleport = teleportPoints[selectedTeleport];
-        teleport.SetBool("IsActive", true);
-
-        if (animate)
-        {
-            // play hide animation
-            currentState = BossState.Teleporting;
-            animator.SetBool("IsHiding", true);
-        }
-    }
-
     void Fire()
     {
         if (Projectile == null)
@@ -189,8 +157,13 @@ public class BossController : MonoBehaviour
         // can I fire any more bullets in this burst?
         if (bulletsCreated >= BulletsPerBurst)
         {
+            float healthPercentage = 1.0f - (
+                controller.DamageableObject.CurrentHealth /
+                controller.DamageableObject.InitialHealth);
+
             // can I start a new burst?
-            if (Time.time - burstFinishedTime >= TimeBetweenBursts)
+            if (Time.time - burstFinishedTime >=
+                TimeBetweenBursts.Evaluate(healthPercentage))
             {
                 // start a new burst
                 bulletsCreated = 0;
@@ -235,6 +208,7 @@ public class BossController : MonoBehaviour
 
     public void OnDefeated()
     {
+        animator.SetBool("IsHiding", true);
         spawnManager.FinishBossEncounter();
     }
 }

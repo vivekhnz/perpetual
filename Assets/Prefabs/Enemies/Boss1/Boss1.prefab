@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 50152923258903398}
   - component: {fileID: 114000609005742900}
   - component: {fileID: 95125455190508830}
-  - component: {fileID: 114518926223000380}
+  - component: {fileID: 114292614213115640}
   m_Layer: 10
   m_Name: Boss1
   m_TagString: Boss
@@ -287,7 +287,7 @@ MonoBehaviour:
   DamageableObject: {fileID: 114715127447421028}
   CollisionDamage: 100000
   EnemyID: Boss1
---- !u!114 &114518926223000380
+--- !u!114 &114292614213115640
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -298,16 +298,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab34396e0f351445b50464291c66fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeBetweenTeleports: 5
-  TimeToHide: 0
+  TimeBetweenTeleports:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0.5
+      inSlope: -9.424778
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  TimeBetweenBursts:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0.1
+      inSlope: -2.5132742
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
     type: 2}
   BulletsPerMinute: 400
   LeftWeapon: {fileID: 4814097187801794}
   RightWeapon: {fileID: 4856505277121890}
   BulletsPerBurst: 6
-  TimeBetweenBursts: 1
-  DamageThresholdBeforeStronger: 0.7
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -339,7 +371,7 @@ MonoBehaviour:
           m_StringArgument: OnDamaged
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114518926223000380}
+      - m_Target: {fileID: 114292614213115640}
         m_MethodName: UpdateBossHealth
         m_Mode: 1
         m_Arguments:
@@ -355,7 +387,7 @@ MonoBehaviour:
   OnDestroyed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114518926223000380}
+      - m_Target: {fileID: 114292614213115640}
         m_MethodName: OnDefeated
         m_Mode: 1
         m_Arguments:
