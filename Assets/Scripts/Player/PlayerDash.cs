@@ -55,6 +55,11 @@ public class PlayerDash : MonoBehaviour
         var dashDirection = new Vector2(
             Input.GetAxis("Horizontal"),
             Input.GetAxis("Vertical")).normalized;
+
+        // are we actually moving?
+        if (dashDirection.magnitude < 0.001f)
+            return;
+
         velocity += dashDirection * Speed;
 
         // reset cooldown

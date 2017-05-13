@@ -2,6 +2,7 @@
 using System.Linq;
 
 [RequireComponent(typeof(PlayerWeapon))]
+[RequireComponent(typeof(PlayerSecondaryWeapon))]
 [RequireComponent(typeof(LineRenderer))]
 public class LaserWeapon : MonoBehaviour
 {
@@ -15,17 +16,23 @@ public class LaserWeapon : MonoBehaviour
     public ParticleSystem LaserBeamEffect;
 
     PlayerWeapon weapon;
+    PlayerSecondaryWeapon secondaryWeapon;
     LineRenderer line;
     ParticleSystem.EmissionModule beamEmission;
 
     int layerMask;
     float startFireTime;
+    float stoppedFiringTime;
 
     void Start()
     {
         weapon = GetComponent<PlayerWeapon>();
         if (weapon == null)
             Debug.LogError("Weapon not found!");
+
+        secondaryWeapon = GetComponent<PlayerSecondaryWeapon>();
+        if (secondaryWeapon == null)
+            Debug.LogError("Secondary weapon not found!");
 
         line = GetComponent<LineRenderer>();
         if (line == null)
@@ -45,7 +52,7 @@ public class LaserWeapon : MonoBehaviour
 
         // is the laser being fired?
         if (Input.GetButtonDown("FireSecondary")
-            && Time.time - startFireTime > Cooldown)
+            && Time.time - stoppedFiringTime > Cooldown)
             startFireTime = Time.time;
 
         if (Input.GetButton("FireSecondary")
@@ -53,10 +60,24 @@ public class LaserWeapon : MonoBehaviour
         {
             FireLaser();
             weapon.IsFiring = true;
+
+            // show time remaining until laser runs out
+            float laserCharge = Mathf.Clamp(
+                (Time.time - startFireTime) / LaserDuration, 0, 1);
+            secondaryWeapon.Charge = 1.0f - laserCharge;
         }
         else
         {
+            // did we just stop firing?
+            if (weapon.IsFiring)
+                stoppedFiringTime = Time.time;
+
             weapon.IsFiring = false;
+
+            // show time remaining until laser is available
+            float laserCharge = Mathf.Clamp(
+                (Time.time - stoppedFiringTime) / Cooldown, 0, 1);
+            secondaryWeapon.Charge = laserCharge;
         }
     }
 

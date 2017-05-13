@@ -1,18 +1,18 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerUpgrades))]
 public class PlayerMovement : MonoBehaviour
 {
     public float MovementSpeed = 4.0f;
     public float MovementSpeedWhileFiring = 2.5f;
 
-    private PlayerWeapon[] weapons;
+    private PlayerUpgrades upgrades;
 
     void Start()
     {
-        // retrieve all weapons
-        weapons = GetComponentsInChildren<PlayerWeapon>();
+        upgrades = GetComponent<PlayerUpgrades>();
+        if (upgrades == null)
+            Debug.LogError("Upgrades component not found!");
     }
 
     void FixedUpdate()
@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // move player based on current speed
-        float speed = weapons.Any(w => w.IsFiring)
+        float speed = upgrades.IsFiring
             ? MovementSpeedWhileFiring
             : MovementSpeed;
         Vector2 movement = new Vector2(

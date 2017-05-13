@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114728136420781440}
   - component: {fileID: 120625547236985376}
   - component: {fileID: 114318623625464118}
+  - component: {fileID: 114614876271724538}
   m_Layer: 0
   m_Name: LaserWeapon
   m_TagString: Untagged
@@ -86,6 +87,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraShakeAmount: 1.5
+--- !u!114 &114614876271724538
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1579173886463928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f98799374d63644b89a0b3b94343f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114728136420781440
 MonoBehaviour:
   m_ObjectHideFlags: 1
