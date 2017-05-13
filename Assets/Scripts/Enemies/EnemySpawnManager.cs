@@ -143,7 +143,15 @@ public class EnemySpawnManager : MonoBehaviour
         data.UpdateValue<bool>("IsBossEncounterActive", false);
 
         // award an upgrade
-        playerUpgrades.UnlockAbility<DashAbility>();
+        if (playerUpgrades.HasWeapon<LaserWeapon>())
+        {
+            if (!playerUpgrades.HasAbility<DashAbility>())
+                playerUpgrades.UnlockAbility<DashAbility>();
+        }
+        else
+        {
+            playerUpgrades.UnlockWeapon<LaserWeapon>();
+        }
     }
 
     public void UpdateBossHealth(float currentHealth)

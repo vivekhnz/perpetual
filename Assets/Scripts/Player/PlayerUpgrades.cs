@@ -90,6 +90,13 @@ public class PlayerUpgrades : MonoBehaviour
         }
     }
 
+    public bool HasWeapon<T>()
+        where T : MonoBehaviour
+    {
+        return secondaryWeapon != null
+            && secondaryWeapon.GetComponent<T>() != null;
+    }
+
     public void UnlockAbility<T>()
         where T : PlayerAbility
     {
@@ -101,5 +108,11 @@ public class PlayerUpgrades : MonoBehaviour
         ability = gameObject.AddComponent<T>();
         ability.Icon = Resources.Load<Sprite>(
             $"Abilities/{typeof(T).Name}Icon");
+    }
+
+    public bool HasAbility<T>()
+        where T : PlayerAbility
+    {
+        return ability != null && ability is T;
     }
 }
