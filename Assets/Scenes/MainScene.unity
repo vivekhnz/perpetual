@@ -840,6 +840,31 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 8654111af42a48a4e9f3cb5b23e114f6,
         type: 3}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IsEnabled.Source
+      value: 
+      objectReference: {fileID: 324306755}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IsEnabled.DefaultValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IsEnabled.Key
+      value: HasAbility
+      objectReference: {fileID: 0}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IconSprite.Source
+      value: 
+      objectReference: {fileID: 324306755}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IconSprite.Key
+      value: AbilityIcon
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c81fd317965485b4baea5108de97116c, type: 2}
   m_IsPrefabParent: 0

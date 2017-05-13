@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-[RequireComponent(typeof(DataProvider))]
-public class PlayerDash : MonoBehaviour
+public class DashAbility : PlayerAbility
 {
     // force of the player's dash
     public float Speed = 0.25f;
@@ -10,25 +10,11 @@ public class PlayerDash : MonoBehaviour
     // multiplier to slow down a player's dash (must be < 1)
     public float Friction = 0.9f;
 
-    private DataProvider data;
-
     private Vector2 velocity;
     private float dashTime;
 
-    void Start()
-    {
-        data = GetComponent<DataProvider>();
-        if (data == null)
-            Debug.LogError("No data provider found!");
-    }
-
     void FixedUpdate()
     {
-        // update ability charge
-        float abilityCharge = Mathf.Clamp(
-            (Time.time - dashTime) / Cooldown, 0, 1);
-        data.UpdateValue<float>("AbilityCharge", abilityCharge);
-
         // can I dash?
         if (Input.GetButton("Ability")
             && Time.time - dashTime > Cooldown)
@@ -64,5 +50,11 @@ public class PlayerDash : MonoBehaviour
 
         // reset cooldown
         dashTime = Time.time;
+    }
+
+    public override float GetCharge()
+    {
+        return Mathf.Clamp(
+            (Time.time - dashTime) / Cooldown, 0, 1);
     }
 }

@@ -7,6 +7,7 @@ public class PlayerUpgrades : MonoBehaviour
     private DataProvider data;
     private PlayerWeapon[] weapons;
     private PlayerSecondaryWeapon secondaryWeapon;
+    private PlayerAbility ability;
 
     public bool IsFiring
     {
@@ -32,10 +33,14 @@ public class PlayerUpgrades : MonoBehaviour
                 break;
             }
         }
+
+        // find current ability
+        ability = GetComponent<PlayerAbility>();
     }
 
     void FixedUpdate()
     {
+        // update secondary weapon
         if (secondaryWeapon == null)
         {
             data.UpdateValue<bool>("HasSecondaryWeapon", false);
@@ -45,6 +50,18 @@ public class PlayerUpgrades : MonoBehaviour
             data.UpdateValue<float>("SecondaryWeaponCharge", secondaryWeapon.Charge);
             data.UpdateValue<Sprite>("SecondaryWeaponIcon", secondaryWeapon.Icon);
             data.UpdateValue<bool>("HasSecondaryWeapon", true);
+        }
+
+        // update ability
+        if (ability == null)
+        {
+            data.UpdateValue<bool>("HasAbility", false);
+        }
+        else
+        {
+            data.UpdateValue<float>("AbilityCharge", ability.GetCharge());
+            data.UpdateValue<Sprite>("AbilityIcon", ability.Icon);
+            data.UpdateValue<bool>("HasAbility", true);
         }
     }
 }
