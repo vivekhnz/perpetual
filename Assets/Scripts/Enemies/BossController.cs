@@ -24,19 +24,23 @@ public class BossController : MonoBehaviour
     public Transform RightWeapon;
     public int BulletsPerBurst = 6;
     public float TimeBetweenBursts = 1f;
+    public float DamageThresholdBeforeStronger = 0.5f;
 
     private EnemyController controller;
     private EnemySpawnManager spawnManager;
     private Animator animator;
     private List<Animator> teleportPoints;
     private Vector3 hidingSpot;
+    private DamageableObject damageableOject;
 
     private BossState currentState;
     private float hideTime;
     private float teleportTime;
+    private float initialTimeBetweenTeleports;
     private int selectedTeleport;
 
     private float projectileFiredTime = 0.0f;
+    private float initialTimeBetweenBursts;
     private int bulletsCreated = 0;
     private float burstFinishedTime;
 
@@ -49,9 +53,17 @@ public class BossController : MonoBehaviour
         if (animator == null)
             Debug.LogError("No animator found!");
 
+        damageableOject = controller.DamageableObject;
+        if (damageableOject == null)
+            Debug.LogError("No damageableObject found!");
+
         // hiding spot (dont know how to temporarily disable)
         hidingSpot = new Vector3(-30, 0, 0);
 
+        // store these initial values to calculate the boss becoming harder when on lower hp
+        initialTimeBetweenTeleports = TimeBetweenTeleports;
+        initialTimeBetweenBursts = TimeBetweenBursts;
+        
         Initialize();
     }
 
@@ -101,6 +113,15 @@ public class BossController : MonoBehaviour
                 if (Time.time - teleportTime > TimeBetweenTeleports)
                     StartTeleport(true);
                 break;
+        }
+
+        // makes the boss teleport and shoot more often when lower on hp
+        if (damageableOject.CurrentHealth < (damageableOject.InitialHealth * DamageThresholdBeforeStronger))
+        {
+            TimeBetweenTeleports = initialTimeBetweenTeleports * (damageableOject.CurrentHealth / damageableOject.InitialHealth);
+            TimeBetweenTeleports = Mathf.Clamp(TimeBetweenTeleports, 0.5f, initialTimeBetweenTeleports);
+            TimeBetweenBursts = initialTimeBetweenBursts * (damageableOject.CurrentHealth / damageableOject.InitialHealth);
+            //Debug.Log(TimeBetweenTeleports + " " + initialTimeBetweenBursts);
         }
     }
 

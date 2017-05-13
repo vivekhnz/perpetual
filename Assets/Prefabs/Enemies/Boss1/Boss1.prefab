@@ -307,6 +307,7 @@ MonoBehaviour:
   RightWeapon: {fileID: 4856505277121890}
   BulletsPerBurst: 6
   TimeBetweenBursts: 1
+  DamageThresholdBeforeStronger: 0.7
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -318,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 600
+  InitialHealth: 1000
   ScoreValue: 1000
   CameraShakeAmount: 5
   Parent: {fileID: 1541339381053536}

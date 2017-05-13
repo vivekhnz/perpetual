@@ -354,9 +354,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 600
+  m_MaxValue: 1000
   m_WholeNumbers: 0
-  m_Value: 600
+  m_Value: 1000
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -396,9 +396,11 @@ MonoBehaviour:
   Value:
     Source: {fileID: 173740077}
     Key: BossHealth
+    DefaultValue: 0
   IsEnabled:
     Source: {fileID: 173740077}
     Key: IsBossEncounterActive
+    DefaultValue: 0
 --- !u!114 &324306755 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114995451399308280, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
