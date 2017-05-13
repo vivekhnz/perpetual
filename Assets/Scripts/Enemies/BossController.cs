@@ -30,12 +30,12 @@ public class BossController : MonoBehaviour
     private EnemyController controller;
     private EnemySpawnManager spawnManager;
     private Animator animator;
-    private List<Animator> teleportPoints;
+    private List<BossTeleportPointController> teleportPoints;
     private Vector3 hidingSpot;
 
     private BossState currentState;
     private float teleportTime;
-    private int selectedTeleport;
+    private BossTeleportPointController selectedTeleport;
 
     private float projectileFiredTime = 0.0f;
     private int bulletsCreated = 0;
@@ -67,7 +67,7 @@ public class BossController : MonoBehaviour
 
         // find teleport points
         teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
-            .Select(obj => obj.GetComponent<Animator>()).ToList();
+            .Select(obj => obj.GetComponent<BossTeleportPointController>()).ToList();
         if (teleportPoints.Count < 2)
             Debug.LogError("Two teleport points must be defined!");
 
@@ -75,7 +75,7 @@ public class BossController : MonoBehaviour
         transform.position = hidingSpot;
         currentState = BossState.Active;
         teleportTime = Time.time - TimeBetweenTeleports.Evaluate(0);
-        selectedTeleport = -1;
+        selectedTeleport = null;
     }
 
     void FixedUpdate()
@@ -108,15 +108,22 @@ public class BossController : MonoBehaviour
 
     void PrepareToTeleport()
     {
-        // randomly select a teleport destination
-        var validIndices = Enumerable.Range(0, teleportPoints.Count).ToList();
-        validIndices.Remove(selectedTeleport);
-        selectedTeleport = validIndices[
-            Random.Range(0, validIndices.Count)];
+        // determine which teleport points I can go to
+        float healthPercentage =
+            controller.DamageableObject.CurrentHealth /
+            controller.DamageableObject.InitialHealth;
+        var validTeleports = (
+            from t in teleportPoints
+            where t != selectedTeleport
+            && healthPercentage <= t.HealthThreshold
+            select t).ToList();
 
-        // telegraph the teleport destination
-        var teleport = teleportPoints[selectedTeleport];
-        teleport.SetBool("IsActive", true);
+        // randomly select a teleport destination
+        selectedTeleport = validTeleports[
+            Random.Range(0, validTeleports.Count)];
+
+        // telegraph the destination
+        selectedTeleport.Activate();
 
         // play hide animation
         currentState = BossState.Teleporting;
@@ -126,8 +133,7 @@ public class BossController : MonoBehaviour
     void Teleport()
     {
         // teleport to destination
-        var teleport = teleportPoints[selectedTeleport];
-        transform.position = teleport.transform.position;
+        transform.position = selectedTeleport.transform.position;
 
         // play appear animation
         currentState = BossState.Appearing;
@@ -137,8 +143,7 @@ public class BossController : MonoBehaviour
     void Activate()
     {
         // disable our teleport point
-        var teleport = teleportPoints[selectedTeleport];
-        teleport.SetBool("IsActive", false);
+        selectedTeleport.Deactivate();
 
         // enable shooting and reset teleport timer
         currentState = BossState.Active;
@@ -203,12 +208,15 @@ public class BossController : MonoBehaviour
     public void UpdateBossHealth()
     {
         spawnManager.UpdateBossHealth(
-            controller.DamageableObject.CurrentHealth);
+            controller.DamageableObject.CurrentHealth
+            / controller.DamageableObject.InitialHealth);
     }
 
     public void OnDefeated()
     {
         animator.SetBool("IsHiding", true);
         spawnManager.FinishBossEncounter();
+        foreach (var teleport in teleportPoints)
+            teleport.Deactivate();
     }
 }

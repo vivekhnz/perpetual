@@ -303,19 +303,43 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 5
+      value: 4
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.4
+      value: 4
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.401
+      value: 2.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.8
+      value: 2.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.801
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
       time: 1
       value: 0.5
-      inSlope: -9.424778
+      inSlope: 0
       outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   TimeBetweenBursts:
     serializedVersion: 2
     m_Curve:
@@ -323,17 +347,41 @@ MonoBehaviour:
       time: 0
       value: 1
       inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.4
+      value: 1
+      inSlope: 0
+      outSlope: -500.00644
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.401
+      value: 0.5
+      inSlope: -500.00644
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.8
+      value: 0.5
+      inSlope: 0
+      outSlope: -500.00644
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.801
+      value: 0
+      inSlope: -500.00644
+      outSlope: -0
+      tangentMode: 69
     - serializedVersion: 2
       time: 1
-      value: 0.1
-      inSlope: -2.5132742
+      value: 0
+      inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 69
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
     type: 2}
   BulletsPerMinute: 400
@@ -351,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 1000
+  InitialHealth: 1200
   ScoreValue: 1000
   CameraShakeAmount: 5
   Parent: {fileID: 1541339381053536}
