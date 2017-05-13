@@ -15,12 +15,12 @@ public class BossController : MonoBehaviour
         Teleporting = 2
     }
 
-    public AnimationCurve TimeBetweenTeleports = new AnimationCurve(
-        new Keyframe(0.0f, 5.0f),
-        new Keyframe(1.0f, 0.5f, Mathf.PI * -3f, 0.0f));
-    public AnimationCurve TimeBetweenBursts = new AnimationCurve(
-        new Keyframe(0.0f, 1.0f),
-        new Keyframe(1.0f, 0.1f, Mathf.PI * -0.8f, 0.0f));
+    public AnimationCurve TimeBetweenTeleports =
+        AnimationCurve.Linear(0.0f, 4.0f, 1.0f, 0.5f);
+    public AnimationCurve TimeBetweenBursts =
+        AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 0.0f);
+    public AnimationCurve TeleportSpeed =
+        AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 2.0f);
     public BossProjectileController Projectile;
     public float BulletsPerMinute = 60.0f;
     public Transform LeftWeapon;
@@ -89,14 +89,17 @@ public class BossController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 
+        float healthPercentage = 1.0f - (
+            controller.DamageableObject.CurrentHealth /
+            controller.DamageableObject.InitialHealth);
+        animator.SetFloat("TeleportSpeed",
+            TeleportSpeed.Evaluate(healthPercentage));
+
         Fire();
 
         switch (currentState)
         {
             case BossState.Active:
-                float healthPercentage = 1.0f - (
-                    controller.DamageableObject.CurrentHealth /
-                    controller.DamageableObject.InitialHealth);
 
                 // is it time to teleport?
                 if (Time.time - teleportTime
