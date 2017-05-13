@@ -37,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4800868622073638}
   - component: {fileID: 95165191871047080}
+  - component: {fileID: 114472215951000796}
   m_Layer: 0
   m_Name: Boss1TeleportPoint
   m_TagString: TeleportPoint
@@ -119,6 +120,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114472215951000796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1866247234603760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae6b1d4cbc90d554f895a5a0f9583b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Stage: 1
 --- !u!198 &198718749090424842
 ParticleSystem:
   m_ObjectHideFlags: 1
