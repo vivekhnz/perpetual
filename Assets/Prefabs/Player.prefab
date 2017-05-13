@@ -162,6 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d903e2977fb467746b3b0620261175c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SecondaryWeapons:
+  - {fileID: 114614876271724538, guid: 093bcad37d4d4234c93246863b7aa9b0, type: 2}
 --- !u!114 &114910131314984590
 MonoBehaviour:
   m_ObjectHideFlags: 1

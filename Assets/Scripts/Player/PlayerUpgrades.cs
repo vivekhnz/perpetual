@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(DataProvider))]
 public class PlayerUpgrades : MonoBehaviour
 {
+    public List<PlayerSecondaryWeapon> SecondaryWeapons;
+
     private DataProvider data;
     private PlayerWeapon[] weapons;
     private PlayerSecondaryWeapon secondaryWeapon;
@@ -62,6 +66,27 @@ public class PlayerUpgrades : MonoBehaviour
             data.UpdateValue<float>("AbilityCharge", ability.GetCharge());
             data.UpdateValue<Sprite>("AbilityIcon", ability.Icon);
             data.UpdateValue<bool>("HasAbility", true);
+        }
+    }
+
+    public void UnlockWeapon<T>()
+        where T : MonoBehaviour
+    {
+        foreach (var prefab in SecondaryWeapons)
+        {
+            if (prefab.GetComponent<T>() != null)
+            {
+                // remove any existing secondary weapons
+                if (secondaryWeapon != null)
+                    Destroy(secondaryWeapon.gameObject);
+
+                // instantiate the weapon and attach it to the player
+                var weapon = Instantiate(prefab, gameObject.transform.position,
+                    gameObject.transform.rotation);
+                weapon.transform.parent = gameObject.transform;
+                secondaryWeapon = weapon;
+                break;
+            }
         }
     }
 }
