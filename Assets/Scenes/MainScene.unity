@@ -812,13 +812,11 @@ Prefab:
       propertyPath: m_Name
       value: AbilityCooldownMeter
       objectReference: {fileID: 0}
-    - target: {fileID: 114378026199600954, guid: c81fd317965485b4baea5108de97116c,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Value.Source
       value: 
       objectReference: {fileID: 324306755}
-    - target: {fileID: 114378026199600954, guid: c81fd317965485b4baea5108de97116c,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Value.Key
       value: AbilityCharge
       objectReference: {fileID: 0}
@@ -831,6 +829,16 @@ Prefab:
     - target: {fileID: 1588537286844912, guid: c81fd317965485b4baea5108de97116c, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: Value.Source
+      value: 
+      objectReference: {fileID: 324306755}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: Value.Key
+      value: AbilityCharge
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c81fd317965485b4baea5108de97116c, type: 2}
@@ -1528,13 +1536,11 @@ Prefab:
       propertyPath: m_Name
       value: WeaponCooldownMeter
       objectReference: {fileID: 0}
-    - target: {fileID: 114378026199600954, guid: c81fd317965485b4baea5108de97116c,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Value.Source
       value: 
       objectReference: {fileID: 324306755}
-    - target: {fileID: 114378026199600954, guid: c81fd317965485b4baea5108de97116c,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: Value.Key
       value: SecondaryWeaponCharge
       objectReference: {fileID: 0}
@@ -1544,6 +1550,31 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 3a343531b6a1fef40bb8d7e8517a262b,
         type: 3}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: Value.Source
+      value: 
+      objectReference: {fileID: 324306755}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: Value.Key
+      value: SecondaryWeaponCharge
+      objectReference: {fileID: 0}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IsEnabled.Source
+      value: 
+      objectReference: {fileID: 324306755}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IsEnabled.Key
+      value: HasSecondaryWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 114908886262666400, guid: c81fd317965485b4baea5108de97116c,
+        type: 2}
+      propertyPath: IsEnabled.DefaultValue
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c81fd317965485b4baea5108de97116c, type: 2}
   m_IsPrefabParent: 0
@@ -1758,12 +1789,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 386266432}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!114 &993571470 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114378026199600954, guid: c81fd317965485b4baea5108de97116c,
-    type: 2}
-  m_PrefabInternal: {fileID: 386266432}
-  m_Script: {fileID: 11500000, guid: 5d171bdccb6e47847903b6c4f459faf4, type: 3}
 --- !u!1 &996542974
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,12 +2571,12 @@ Prefab:
         type: 2}
       propertyPath: DashCooldownTimerHUD
       value: 
-      objectReference: {fileID: 993571470}
+      objectReference: {fileID: 0}
     - target: {fileID: 114688183229628730, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
         type: 2}
       propertyPath: DashCooldownTimerHUD
       value: 
-      objectReference: {fileID: 993571470}
+      objectReference: {fileID: 0}
     - target: {fileID: 114688183229628730, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
         type: 2}
       propertyPath: m_Enabled
@@ -2596,7 +2621,7 @@ Prefab:
         type: 2}
       propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 993571470}
+      objectReference: {fileID: 0}
     - target: {fileID: 114688183229628730, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
         type: 2}
       propertyPath: Event.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName

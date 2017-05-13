@@ -36,7 +36,14 @@ public class PlayerUpgrades : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (secondaryWeapon != null)
+        if (secondaryWeapon == null)
+        {
+            data.UpdateValue<bool>("HasSecondaryWeapon", false);
+        }
+        else
+        {
             data.UpdateValue<float>("SecondaryWeaponCharge", secondaryWeapon.Charge);
+            data.UpdateValue<bool>("HasSecondaryWeapon", true);
+        }
     }
 }

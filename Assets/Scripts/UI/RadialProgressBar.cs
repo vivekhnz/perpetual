@@ -1,18 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
 public class RadialProgressBar : MonoBehaviour
 {
+    public Image Foreground;
     public FloatBinding Value;
+    public BooleanBinding IsEnabled;
 
     void Start()
     {
-        var image = GetComponent<Image>();
-        if (image == null)
-            Debug.LogError("No image found!");
+        if (Foreground == null)
+            Debug.LogError("No foreground image specified!");
 
         Value.Subscribe(
-            value => image.fillAmount = value);
+            value => Foreground.fillAmount = value);
+        IsEnabled.Subscribe(
+            value =>
+            {
+                foreach (var child in GetComponentsInChildren<Image>())
+                    child.enabled = value;
+            });
     }
 }
