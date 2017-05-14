@@ -2,7 +2,9 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
 
+[RequireComponent(typeof(Animator))]
 public class HUDController : MonoBehaviour
 {
     public Text GameOverText;
@@ -14,7 +16,16 @@ public class HUDController : MonoBehaviour
     public Text RoundText;
     public Text HighScoreText;
 
-    public bool IsGameOver { get; private set; }
+    private Animator animator;
+    public GameObject Upgrade1;
+    public GameObject Upgrade2;
+
+    private bool isGameOver;
+    private bool isPopoverOpen;
+    public bool CanProgressToNextWave
+    {
+        get { return !isGameOver && !isPopoverOpen; }
+    }
 
     private int score;
     private int highscore;
@@ -22,14 +33,24 @@ public class HUDController : MonoBehaviour
     private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
 
+    private PlayerUpgrades upgrades;
+    private Type weaponUpgrade;
+    private Type abilityUpgrade;
+
     void Start()
     {
         // retrieve the highscore
         if (PlayerPrefs.HasKey("HighScore"))
             highscore = PlayerPrefs.GetInt("HighScore");
 
+        animator = GetComponent<Animator>();
+        if (animator == null)
+            Debug.LogError("No animator found!");
+
         score = 0;
-        IsGameOver = false;
+        isGameOver = false;
+        isPopoverOpen = false;
+        animator.SetBool("IsPopoverVisible", false);
 
         if (GameOverText != null)
             GameOverText.text = string.Empty;
@@ -49,6 +70,12 @@ public class HUDController : MonoBehaviour
         if (HighScoreText != null)
             HighScoreText.text = "High Score: " + highscore;
 
+        upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
+        if (upgrades == null)
+            Debug.LogError("No player upgrade manager found.");
+        weaponUpgrade = null;
+        abilityUpgrade = null;
+
         waveTime = 0;
         doShowWave = true;
     }
@@ -66,7 +93,7 @@ public class HUDController : MonoBehaviour
 
     public void GameOver()
     {
-        IsGameOver = true;
+        isGameOver = true;
 
         // did the player beat the highscore?
         if (score > highscore)
@@ -80,7 +107,8 @@ public class HUDController : MonoBehaviour
             GameOverText.text = "Game Over";
 
         // destroy all enemies and spawners
-        var enemyManager = Object.FindObjectOfType<EnemySpawnManager>();
+        var enemyManager = UnityEngine.Object
+            .FindObjectOfType<EnemySpawnManager>();
         Destroy(enemyManager);
 
         // go to start screen
@@ -145,6 +173,47 @@ public class HUDController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         isFlashing = false;
         MessageText.text = string.Empty;
+    }
+
+    public void SignalUpgradeUnlocked<TWeapon, TAbility>()
+        where TWeapon : MonoBehaviour
+        where TAbility : PlayerAbility
+    {
+        bool hasWeapon = upgrades.HasWeapon<TWeapon>();
+        bool hasAbility = upgrades.HasAbility<TAbility>();
+
+        // has the player already unlocked both upgrades?
+        if (hasWeapon && hasAbility)
+            return;
+
+        // hide unavailable upgrades
+        Upgrade1.SetActive(!hasWeapon);
+        Upgrade2.SetActive(!hasAbility);
+
+        weaponUpgrade = typeof(TWeapon);
+        abilityUpgrade = typeof(TAbility);
+
+        // show popover
+        animator.SetBool("IsPopoverVisible", true);
+        isPopoverOpen = true;
+    }
+
+    public void SelectUpgrade(int selectedUpgradeIndex)
+    {
+        // unlock upgrade
+        switch (selectedUpgradeIndex)
+        {
+            case 0:
+                upgrades.UnlockWeapon(weaponUpgrade);
+                break;
+            case 1:
+                upgrades.UnlockAbility(abilityUpgrade);
+                break;
+        }
+
+        // close popover
+        animator.SetBool("IsPopoverVisible", false);
+        isPopoverOpen = false;
     }
 
     private void ReturnToStartMenu()

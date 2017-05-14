@@ -217,9 +217,17 @@ public class BossController : MonoBehaviour
 
     public void OnDefeated()
     {
+        // reset animations
         animator.SetBool("IsHiding", true);
-        spawnManager.FinishBossEncounter();
         foreach (var teleport in teleportPoints)
             teleport.Deactivate();
+
+        // kill projectiles
+        var projectiles = GameObject.FindObjectsOfType<BossProjectileController>();
+        foreach (var projectile in projectiles)
+            projectile.Recycle();
+
+        // notify encounter completion
+        spawnManager.FinishBossEncounter();
     }
 }
