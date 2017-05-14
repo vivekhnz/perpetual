@@ -163,13 +163,11 @@ public class HUDController : MonoBehaviour
         {
             UpgradeOverlay.gameObject.SetActive(true);
             isPopoverOpen = true;
-            StartCoroutine(HidePopover(3.0f));
         }
     }
 
-    private IEnumerator HidePopover(float duration)
+    public void SelectUpgrade(int selectedUpgradeIndex)
     {
-        yield return new WaitForSeconds(duration);
         UpgradeOverlay.gameObject.SetActive(false);
         isPopoverOpen = false;
     }
