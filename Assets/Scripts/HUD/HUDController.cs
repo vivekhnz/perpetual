@@ -13,8 +13,14 @@ public class HUDController : MonoBehaviour
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
+    public Image UpgradeOverlay;
 
-    public bool IsGameOver { get; private set; }
+    private bool isGameOver;
+    private bool isPopoverOpen;
+    public bool CanProgressToNextWave
+    {
+        get { return !isGameOver && !isPopoverOpen; }
+    }
 
     private int score;
     private int highscore;
@@ -29,7 +35,8 @@ public class HUDController : MonoBehaviour
             highscore = PlayerPrefs.GetInt("HighScore");
 
         score = 0;
-        IsGameOver = false;
+        isGameOver = false;
+        isPopoverOpen = false;
 
         if (GameOverText != null)
             GameOverText.text = string.Empty;
@@ -49,6 +56,9 @@ public class HUDController : MonoBehaviour
         if (HighScoreText != null)
             HighScoreText.text = "High Score: " + highscore;
 
+        if (UpgradeOverlay != null)
+            UpgradeOverlay.gameObject.SetActive(false);
+
         waveTime = 0;
         doShowWave = true;
     }
@@ -66,7 +76,7 @@ public class HUDController : MonoBehaviour
 
     public void GameOver()
     {
-        IsGameOver = true;
+        isGameOver = true;
 
         // did the player beat the highscore?
         if (score > highscore)
@@ -145,6 +155,23 @@ public class HUDController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         isFlashing = false;
         MessageText.text = string.Empty;
+    }
+
+    public void SignalUpgradeUnlocked()
+    {
+        if (UpgradeOverlay != null)
+        {
+            UpgradeOverlay.gameObject.SetActive(true);
+            isPopoverOpen = true;
+            StartCoroutine(HidePopover(3.0f));
+        }
+    }
+
+    private IEnumerator HidePopover(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        UpgradeOverlay.gameObject.SetActive(false);
+        isPopoverOpen = false;
     }
 
     private void ReturnToStartMenu()

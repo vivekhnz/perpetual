@@ -62,7 +62,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         // start a new wave if no spawners are active and the
         // game has not ended
-        if (activeSpawners.Count == 0 && !hud.IsGameOver)
+        if (activeSpawners.Count == 0 && hud.CanProgressToNextWave)
             StartNewWave();
     }
 
@@ -143,15 +143,24 @@ public class EnemySpawnManager : MonoBehaviour
         data.UpdateValue<bool>("IsBossEncounterActive", false);
 
         // award an upgrade
-        if (playerUpgrades.HasWeapon<LaserWeapon>())
+        bool hasLaser = playerUpgrades.HasWeapon<LaserWeapon>();
+        bool hasDash = playerUpgrades.HasAbility<DashAbility>();
+        if (hasLaser && hasDash)
         {
-            if (!playerUpgrades.HasAbility<DashAbility>())
-                playerUpgrades.UnlockAbility<DashAbility>();
+            // we already have all upgrades
+            return;
         }
-        else
+        if (!hasLaser)
         {
             playerUpgrades.UnlockWeapon<LaserWeapon>();
         }
+        else if (!hasDash)
+        {
+            playerUpgrades.UnlockAbility<DashAbility>();
+        }
+
+        // show upgrade unlocked message
+        hud.SignalUpgradeUnlocked();
     }
 
     public void UpdateBossHealth(float currentHealth)
