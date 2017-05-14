@@ -371,7 +371,7 @@ MonoBehaviour:
     Weight: 1
   BossSpawner: {fileID: 114999065554894730, guid: e8d8f6f8b1445014c95376b3cf833ef3,
     type: 2}
-  WavesPerRound: 1
+  WavesPerRound: 5
 --- !u!4 &173740076
 Transform:
   m_ObjectHideFlags: 0
@@ -2930,7 +2930,6 @@ MonoBehaviour:
   WaveText: {fileID: 910987639}
   RoundText: {fileID: 1823300251}
   HighScoreText: {fileID: 399068022}
-  UpgradeOverlay: {fileID: 213283310}
   Upgrade1: {fileID: 1328365054}
   Upgrade2: {fileID: 1910807406}
 --- !u!95 &1136098459
