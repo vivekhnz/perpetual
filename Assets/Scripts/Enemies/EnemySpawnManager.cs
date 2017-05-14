@@ -21,7 +21,6 @@ public class EnemySpawnManager : MonoBehaviour
     private HUDController hud;
     private DataProvider data;
     private PlayerHealth player;
-    private PlayerUpgrades playerUpgrades;
 
     private List<Vector3> spawnLocations;
     private List<EnemySpawner> activeSpawners;
@@ -43,9 +42,6 @@ public class EnemySpawnManager : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerHealth>();
         if (player == null)
             Debug.LogError("No player found.");
-        playerUpgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
-        if (player == null)
-            Debug.LogError("No player upgrade manager found.");
 
         activeSpawners = new List<EnemySpawner>();
         round = 0;
@@ -142,25 +138,8 @@ public class EnemySpawnManager : MonoBehaviour
     {
         data.UpdateValue<bool>("IsBossEncounterActive", false);
 
-        // award an upgrade
-        bool hasLaser = playerUpgrades.HasWeapon<LaserWeapon>();
-        bool hasDash = playerUpgrades.HasAbility<DashAbility>();
-        if (hasLaser && hasDash)
-        {
-            // we already have all upgrades
-            return;
-        }
-        if (!hasLaser)
-        {
-            playerUpgrades.UnlockWeapon<LaserWeapon>();
-        }
-        else if (!hasDash)
-        {
-            playerUpgrades.UnlockAbility<DashAbility>();
-        }
-
         // show upgrade unlocked message
-        hud.SignalUpgradeUnlocked();
+        hud.SignalUpgradeUnlocked<LaserWeapon, DashAbility>();
     }
 
     public void UpdateBossHealth(float currentHealth)

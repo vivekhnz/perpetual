@@ -69,12 +69,11 @@ public class PlayerUpgrades : MonoBehaviour
         }
     }
 
-    public void UnlockWeapon<T>()
-        where T : MonoBehaviour
+    public void UnlockWeapon(Type weaponType)
     {
         foreach (var prefab in SecondaryWeapons)
         {
-            if (prefab.GetComponent<T>() != null)
+            if (prefab.GetComponent(weaponType) != null)
             {
                 // remove any existing secondary weapons
                 if (secondaryWeapon != null)
@@ -97,17 +96,16 @@ public class PlayerUpgrades : MonoBehaviour
             && secondaryWeapon.GetComponent<T>() != null;
     }
 
-    public void UnlockAbility<T>()
-        where T : PlayerAbility
+    public void UnlockAbility(Type abilityType)
     {
         // remove any existing abilities
         if (ability != null)
             Destroy(ability);
 
         // attach the new ability and retrieve its icon
-        ability = gameObject.AddComponent<T>();
+        ability = gameObject.AddComponent(abilityType) as PlayerAbility;
         ability.Icon = Resources.Load<Sprite>(
-            $"Abilities/{typeof(T).Name}Icon");
+            $"Abilities/{abilityType.Name}Icon");
     }
 
     public bool HasAbility<T>()
