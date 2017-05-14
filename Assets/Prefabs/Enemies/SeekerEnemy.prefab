@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4647578873214484}
   - component: {fileID: 58367732161014586}
   - component: {fileID: 114715127447421028}
+  - component: {fileID: 114054756551486688}
   m_Layer: 0
   m_Name: EnemyCollider
   m_TagString: Damageable
@@ -56,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.4083169, y: -3.4063292, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4647578873214484}
@@ -109,7 +110,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.56
+  m_Radius: 0.7
 --- !u!58 &58367732161014586
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -121,9 +122,9 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -0.14, y: 0}
+  m_Offset: {x: 0.03, y: 0}
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.37
 --- !u!95 &95125455190508830
 Animator:
   serializedVersion: 3
@@ -154,6 +155,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageableObject: {fileID: 114715127447421028}
   CollisionDamage: 40
+  EnemyID: Seeker
+--- !u!114 &114054756551486688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1040045782742810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2974a063b14904c832242ffbf9ed44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Friction: 0.9
+  Parent: {fileID: 1541339381053536}
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,10 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 100
-  ScoreValue: 5
+  InitialHealth: 75
+  ScoreValue: 15
   Parent: {fileID: 1541339381053536}
-  Explosion: {fileID: 198433298794925042, guid: cc41a2c5c22d4da4fabc3a220cab24e1,
+  Explosion: {fileID: 114546208615000262, guid: 39b611f5dbaed534b925124d1e92b814,
     type: 2}
   OnDamaged:
     m_PersistentCalls:
@@ -186,6 +201,11 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  OnDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114795217862693978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e464cb1f7400dc640b996742f7c32b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 2
+  MovementSpeed: 1.8
 --- !u!212 &212229862091881538
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -229,7 +249,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: dce0828e6d827bc4986cbca3e0b28634, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b4083329e95daed4a862a9e964a4bfb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

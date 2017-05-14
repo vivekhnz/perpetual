@@ -7,21 +7,45 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    public EnemySpawner Spawner;
+    [Serializable]
+    public class EnemySpawn
+    {
+        public EnemySpawner Spawner;
+        public int Weight;
+    }
+
+    public List<EnemySpawn> Spawners;
+    public EnemySpawner BossSpawner;
+    public int WavesPerRound = 2;
+
+    private HUDController hud;
+    private DataProvider data;
+    private PlayerHealth player;
 
     private List<Vector3> spawnLocations;
     private List<EnemySpawner> activeSpawners;
     private int wave;
-    private HUDController hud;
+    private int round;
 
     void Start()
     {
-        if (Spawner == null)
+        if (Spawners == null || Spawners.Count < 1)
             Debug.LogError("No enemy spawner specified!");
-
+        if (BossSpawner == null)
+            Debug.LogError("No boss spawner specified!");
         hud = GameObject.FindObjectOfType<HUDController>();
+        if (hud == null)
+            Debug.LogError("No HUD controller found.");
+        data = GetComponent<DataProvider>();
+        if (data == null)
+            Debug.LogError("No data provider found!");
+        player = GameObject.FindObjectOfType<PlayerHealth>();
+        if (player == null)
+            Debug.LogError("No player found.");
+
         activeSpawners = new List<EnemySpawner>();
-        wave = 0;
+        round = 0;
+        StartNewRound();
 
         // find spawn points
         spawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint")
@@ -34,26 +58,60 @@ public class EnemySpawnManager : MonoBehaviour
     {
         // start a new wave if no spawners are active and the
         // game has not ended
-        if (activeSpawners.Count == 0
-            && !hud.IsGameOver)
+        if (activeSpawners.Count == 0 && hud.CanProgressToNextWave)
             StartNewWave();
+    }
+
+    void StartNewRound()
+    {
+        round++;
+        wave = 0;
+        player.ResetHealth();
     }
 
     void StartNewWave()
     {
-        // increment current wave
-        wave++;
-        hud.ShowWave(wave);
+        // start a new round if we defeated the boss
+        if (wave > WavesPerRound)
+            StartNewRound();
 
-        // the number of spawners created is equal to the wave number
-        for (int i = 0; i < wave; i++)
-            CreateSpawner();
+        // increment current wave and update HUD
+        wave++;
+        hud.ShowRoundAndWave(round, wave);
+
+        // have we reached a boss fight?
+        if (wave == WavesPerRound + 1)
+        {
+            // signal the boss fight and create the boss spawner
+            hud.SignalBossFight();
+            CreateSpawner(BossSpawner);
+        }
+        else
+        {
+            // the number of spawners created is incremented each wave
+            var count = Math.Max(((WavesPerRound - 3) * (round - 1)) + wave, 1);
+            for (int i = 0; i < count; i++)
+                CreateSpawner(PickRandomSpawner());
+        }
     }
 
-    void CreateSpawner()
+    EnemySpawner PickRandomSpawner()
+    {
+        // pick a random spawner type
+        int selection = Random.Range(0, Spawners.Sum(s => s.Weight));
+        foreach (var spawn in Spawners)
+        {
+            selection -= spawn.Weight;
+            if (selection < 0)
+                return spawn.Spawner;
+        }
+        return Spawners.Last().Spawner;
+    }
+
+    void CreateSpawner(EnemySpawner spawnerType)
     {
         // create spawner
-        var spawner = Spawner.Fetch<EnemySpawner>();
+        var spawner = spawnerType.Fetch<EnemySpawner>();
         spawner.Initialize(
             spawnLocations[Random.Range(0, spawnLocations.Count)]);
 
@@ -68,6 +126,25 @@ public class EnemySpawnManager : MonoBehaviour
         var spawner = sender as EnemySpawner;
         spawner.InstanceRecycled -= OnSpawnerDestroyed;
         activeSpawners.Remove(spawner);
+    }
+
+    public void StartBossEncounter(float initialHealth)
+    {
+        data.UpdateValue<bool>("IsBossEncounterActive", true);
+        UpdateBossHealth(initialHealth);
+    }
+
+    public void FinishBossEncounter()
+    {
+        data.UpdateValue<bool>("IsBossEncounterActive", false);
+
+        // show upgrade unlocked message
+        hud.SignalUpgradeUnlocked<LaserWeapon, DashAbility>();
+    }
+
+    public void UpdateBossHealth(float currentHealth)
+    {
+        data.UpdateValue<float>("BossHealth", currentHealth);
     }
 
     void OnDestroy()

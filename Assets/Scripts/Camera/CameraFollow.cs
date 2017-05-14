@@ -9,7 +9,7 @@ namespace CompleteProject
 
         Vector3 offset;                     // The initial offset from the target.
 
-        void Start ()
+        void Start()
         {
             if (target == null)
                 return;
@@ -18,11 +18,13 @@ namespace CompleteProject
             offset = transform.position - target.position;
         }
 
-        void FixedUpdate ()
+        void FixedUpdate()
         {
+            if (target == null)
+                return;
+
             // Create a postion the camera is aiming for based on the offset from the target.
-            Vector3 targetCamPos =
-                (target == null ? Vector3.zero : target.position) + offset;
+            Vector3 targetCamPos = target.position + offset;
 
             // Smoothly interpolate between the camera's current position and it's target position.
             transform.position = Vector3.Lerp(

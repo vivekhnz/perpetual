@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4367130147249410}
   - component: {fileID: 212824994238841868}
   - component: {fileID: 114493100372726622}
-  - component: {fileID: 114677491730002394}
   - component: {fileID: 58270066615730010}
   - component: {fileID: 50392157022359794}
+  - component: {fileID: 114537559253093310}
+  - component: {fileID: 114995451399308280}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -41,9 +42,10 @@ GameObject:
   - component: {fileID: 4764064567741456}
   - component: {fileID: 58741674938003426}
   - component: {fileID: 114910131314984590}
+  - component: {fileID: 114416741710553756}
   m_Layer: 0
   m_Name: PlayerCollider
-  m_TagString: Untagged
+  m_TagString: PlayerCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,6 +125,19 @@ CircleCollider2D:
   m_Offset: {x: -0.2, y: 0}
   serializedVersion: 2
   m_Radius: 0.35
+--- !u!114 &114416741710553756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768500079984100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2974a063b14904c832242ffbf9ed44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Friction: 0.9
+  Parent: {fileID: 1288057475374176}
 --- !u!114 &114493100372726622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -134,8 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c235e756e5304f87d637ab2354fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 3
---- !u!114 &114677491730002394
+  MovementSpeed: 4
+  MovementSpeedWhileFiring: 2.5
+--- !u!114 &114537559253093310
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -143,13 +159,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1288057475374176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc2e7caaaf6187f4980cf90a9e494175, type: 3}
+  m_Script: {fileID: 11500000, guid: d903e2977fb467746b3b0620261175c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 114904970035565966, guid: c43864e4af9c146419dbf55d455a1a2e,
-    type: 2}
-  ProjectileSpreadDegrees: 5
-  BulletsPerMinute: 1000
+  SecondaryWeapons:
+  - {fileID: 114614876271724538, guid: 093bcad37d4d4234c93246863b7aa9b0, type: 2}
 --- !u!114 &114910131314984590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -163,6 +177,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Parent: {fileID: 114493100372726622}
   InitialHealth: 100
+--- !u!114 &114995451399308280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1288057475374176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0284b90bd52d9b14b8789c2213130e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212824994238841868
 SpriteRenderer:
   m_ObjectHideFlags: 1
