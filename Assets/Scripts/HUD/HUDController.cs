@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
 
+[RequireComponent(typeof(Animator))]
 public class HUDController : MonoBehaviour
 {
     public Text GameOverText;
@@ -15,7 +16,7 @@ public class HUDController : MonoBehaviour
     public Text RoundText;
     public Text HighScoreText;
 
-    public Image UpgradeOverlay;
+    private Animator animator;
     public GameObject Upgrade1;
     public GameObject Upgrade2;
 
@@ -42,9 +43,14 @@ public class HUDController : MonoBehaviour
         if (PlayerPrefs.HasKey("HighScore"))
             highscore = PlayerPrefs.GetInt("HighScore");
 
+        animator = GetComponent<Animator>();
+        if (animator == null)
+            Debug.LogError("No animator found!");
+
         score = 0;
         isGameOver = false;
         isPopoverOpen = false;
+        animator.SetBool("IsPopoverVisible", false);
 
         if (GameOverText != null)
             GameOverText.text = string.Empty;
@@ -63,9 +69,6 @@ public class HUDController : MonoBehaviour
 
         if (HighScoreText != null)
             HighScoreText.text = "High Score: " + highscore;
-
-        if (UpgradeOverlay != null)
-            UpgradeOverlay.gameObject.SetActive(false);
 
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
@@ -176,9 +179,6 @@ public class HUDController : MonoBehaviour
         where TWeapon : MonoBehaviour
         where TAbility : PlayerAbility
     {
-        if (UpgradeOverlay == null)
-            return;
-
         bool hasWeapon = upgrades.HasWeapon<TWeapon>();
         bool hasAbility = upgrades.HasAbility<TAbility>();
 
@@ -194,7 +194,7 @@ public class HUDController : MonoBehaviour
         abilityUpgrade = typeof(TAbility);
 
         // show popover
-        UpgradeOverlay.gameObject.SetActive(true);
+        animator.SetBool("IsPopoverVisible", true);
         isPopoverOpen = true;
     }
 
@@ -212,7 +212,7 @@ public class HUDController : MonoBehaviour
         }
 
         // close popover
-        UpgradeOverlay.gameObject.SetActive(false);
+        animator.SetBool("IsPopoverVisible", false);
         isPopoverOpen = false;
     }
 

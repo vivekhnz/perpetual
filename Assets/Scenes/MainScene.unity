@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 233261172}
   - component: {fileID: 233261171}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2824,6 +2824,7 @@ GameObject:
   - component: {fileID: 1136098455}
   - component: {fileID: 1136098454}
   - component: {fileID: 1136098458}
+  - component: {fileID: 1136098459}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2932,6 +2933,23 @@ MonoBehaviour:
   UpgradeOverlay: {fileID: 213283310}
   Upgrade1: {fileID: 1328365054}
   Upgrade2: {fileID: 1910807406}
+--- !u!95 &1136098459
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1136098453}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9adaa24c13e1a445b4747dd2cdd4ee1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1164706665
 GameObject:
   m_ObjectHideFlags: 0
@@ -4010,7 +4028,7 @@ GameObject:
   - component: {fileID: 1721556163}
   - component: {fileID: 1721556162}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
