@@ -50,6 +50,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1991649008072944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4707346788785084}
+  - component: {fileID: 114419168697687802}
+  - component: {fileID: 114981693061743574}
+  m_Layer: 0
+  m_Name: PrimaryWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4367130147249410
 Transform:
   m_ObjectHideFlags: 1
@@ -61,8 +78,22 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4764064567741456}
+  - {fileID: 4707346788785084}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4707346788785084
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1991649008072944}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4367130147249410}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4764064567741456
 Transform:
@@ -138,6 +169,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Friction: 0.9
   Parent: {fileID: 1288057475374176}
+--- !u!114 &114419168697687802
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1991649008072944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51dacb84977417c4e8591d1b1edb6965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Projectile: {fileID: 114904970035565966, guid: e663f6ad43daf114195ff75bd6093677,
+    type: 2}
+  ProjectileSpreadDegrees: 5
+  BulletsPerMinute: 1200
 --- !u!114 &114493100372726622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -177,6 +223,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Parent: {fileID: 114493100372726622}
   InitialHealth: 100
+  InvincibilityLength: 1
+--- !u!114 &114981693061743574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1991649008072944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2502900e5d32577428ba9ef9ed9bfbc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraShakeAmount: 0
 --- !u!114 &114995451399308280
 MonoBehaviour:
   m_ObjectHideFlags: 1

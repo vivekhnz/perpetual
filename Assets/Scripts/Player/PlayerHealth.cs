@@ -7,10 +7,12 @@ public class PlayerHealth : MonoBehaviour
 {
     public PlayerMovement Parent;
     public float InitialHealth;
+    public float InvincibilityLength;
 
     private HUDController hudController;
     private CameraShake shaker;
     private float currentHealth;
+    private float timeWhenDamaged;
 
     void Start()
     {
@@ -23,19 +25,27 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage, string damageSource)
     {
-        var data = new Dictionary<string, object>()
+        // player has temp invincibility after being damaged
+        if ((Time.time - timeWhenDamaged) > InvincibilityLength)
         {
-            { "DamageSource", damageSource }
-        };
-        Analytics.CustomEvent("PlayerDamaged", data);
+            // telemetry showing which enemy damaged player
+            var data = new Dictionary<string, object>()
+            {
+                { "DamageSource", damageSource }
+            };
+            Analytics.CustomEvent("PlayerDamaged", data);
 
-        // shake camera
-        if (shaker != null)
-            shaker.RandomShake(damage * 0.5f);
+            // shake camera
+            if (shaker != null)
+                shaker.RandomShake(damage * 0.5f);
 
-        // reduce health
-        currentHealth -= damage;
-        UpdateHealthUI();
+            // reduce health
+            currentHealth -= damage;
+            UpdateHealthUI();
+
+            // store time to address temp invincibility
+            timeWhenDamaged = Time.time;
+        }
     }
 
     public void ResetHealth()
