@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageableObject: {fileID: 114715127447421028}
-  CollisionDamage: 100000
+  CollisionDamage: 20
   EnemyID: Boss1
 --- !u!114 &114715127447421028
 MonoBehaviour:
@@ -345,10 +345,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  Projectile: {fileID: 0}
+  Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
+    type: 2}
   BulletsPerMinute: 60
-  LeftWeapon: {fileID: 0}
-  RightWeapon: {fileID: 0}
+  LeftWeapon: {fileID: 4814097187801794}
+  RightWeapon: {fileID: 4856505277121890}
   BulletsPerBurst: 6
 --- !u!212 &212229862091881538
 SpriteRenderer:
