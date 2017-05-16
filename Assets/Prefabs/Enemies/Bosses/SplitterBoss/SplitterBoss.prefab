@@ -27,7 +27,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1459494108574540
 GameObject:
   m_ObjectHideFlags: 0
@@ -38,13 +38,14 @@ GameObject:
   - component: {fileID: 4589464123034462}
   - component: {fileID: 50651875439877806}
   - component: {fileID: 58063805755707176}
-  m_Layer: 10
+  - component: {fileID: 114429768096018776}
+  m_Layer: 0
   m_Name: PortSideWeakpoint
-  m_TagString: Untagged
+  m_TagString: Damageable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1541339381053536
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: -0.05, z: 0}
+  m_LocalPosition: {x: 1.4329997, y: -0.1418811, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4814097187801794}
@@ -120,7 +121,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1459494108574540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.88, y: 1.08, z: 0}
+  m_LocalPosition: {x: -1.96, y: 1.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4574171249462434}
@@ -285,6 +286,33 @@ MonoBehaviour:
   DamageableObject: {fileID: 114715127447421028}
   CollisionDamage: 20
   EnemyID: Boss1
+--- !u!114 &114429768096018776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1459494108574540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitialHealth: 100
+  ScoreValue: 5
+  CameraShakeAmount: 5
+  Parent: {fileID: 1541339381053536}
+  Explosion: {fileID: 114546208615000262, guid: 9444f77ab196b914691ba335698ae7e1,
+    type: 2}
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114715127447421028
 MonoBehaviour:
   m_ObjectHideFlags: 1
