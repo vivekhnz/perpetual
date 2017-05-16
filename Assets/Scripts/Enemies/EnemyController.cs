@@ -33,8 +33,9 @@ public class EnemyController : PooledObject
             if (Player != null)
                 Player.TakeDamage(CollisionDamage, EnemyID);
 
-            // self-destruct
-            Recycle();
+            // self-destruct if not boss
+            if (!tag.Equals("Boss"))
+                Recycle();
         }
     }
 }
