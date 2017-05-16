@@ -12,23 +12,19 @@ public class SplitterBossController : MonoBehaviour {
         Teleporting = 2
     }
 
-    public AnimationCurve TimeBetweenTeleports =
-        AnimationCurve.Linear(0.0f, 4.0f, 1.0f, 0.5f);
     public AnimationCurve TimeBetweenBursts =
         AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 0.0f);
-    public AnimationCurve TeleportSpeed =
-        AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 2.0f);
     public BossProjectileController Projectile;
     public float BulletsPerMinute = 60.0f;
     public Transform LeftWeapon;
     public Transform RightWeapon;
     public int BulletsPerBurst = 6;
     public float RotationSpeed = 1f;
+    public Vector3 EntryLocation;
 
     private EnemyController controller;
     private EnemySpawnManager spawnManager;
     private Animator animator;
-    private List<BossTeleportPointController> teleportPoints;
     private Vector3 hidingSpot;
 
     private BossState currentState;
@@ -46,8 +42,25 @@ public class SplitterBossController : MonoBehaviour {
 
         Initialize();
 	}
-	
-	void FixedUpdate () {
+
+    void Initialize()
+    {
+        // retrieve enemy manager
+        spawnManager = GameObject.FindObjectOfType<EnemySpawnManager>();
+        if (spawnManager == null)
+            Debug.LogError("No spawn manager found!");
+        spawnManager.StartBossEncounter(
+            controller.DamageableObject.InitialHealth);
+
+        // start off-screen and teleport in
+        transform.position = Vector3.zero;
+        currentState = BossState.Active;
+    }
+
+    void FixedUpdate () {
+
+        // keep the boss in the middle of arena to avoid spawning bugs
+        transform.position = Vector3.zero;
 
         // find the direction towards the player
         Vector2 direction = controller.Player.transform.position - transform.position;
@@ -116,25 +129,26 @@ public class SplitterBossController : MonoBehaviour {
             burstFinishedTime = Time.time;
     }
 
-    void Initialize()
+    public void UpdateBossHealth()
     {
-        // retrieve enemy manager
-        spawnManager = GameObject.FindObjectOfType<EnemySpawnManager>();
-        if (spawnManager == null)
-            Debug.LogError("No spawn manager found!");
-        spawnManager.StartBossEncounter(
-            controller.DamageableObject.InitialHealth);
+        spawnManager.UpdateBossHealth(
+            controller.DamageableObject.CurrentHealth
+            / controller.DamageableObject.InitialHealth);
+    }
 
-        // find teleport points
-        teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
-            .Select(obj => obj.GetComponent<BossTeleportPointController>()).ToList();
-        if (teleportPoints.Count < 2)
-            Debug.LogError("Two teleport points must be defined!");
+    public void OnDefeated()
+    {
+        // reset animations
+        animator.SetBool("IsHiding", true);
+        //foreach (var teleport in teleportPoints)
+        //    teleport.Deactivate();
 
-        // start off-screen and teleport in
-        transform.position = hidingSpot;
-        currentState = BossState.Active;
-        teleportTime = Time.time - TimeBetweenTeleports.Evaluate(0);
-        selectedTeleport = null;
+        // kill projectiles
+        var projectiles = GameObject.FindObjectsOfType<BossProjectileController>();
+        foreach (var projectile in projectiles)
+            projectile.Recycle();
+
+        // notify encounter completion
+        spawnManager.FinishBossEncounter();
     }
 }

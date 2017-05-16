@@ -88,6 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4809900813424800}
   - component: {fileID: 212602299949609382}
+  - component: {fileID: 114247814779150948}
   m_Layer: 10
   m_Name: Portside
   m_TagString: Boss
@@ -595,6 +596,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &114247814779150948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1423637728644170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a9b70e153162984d83f449e74d48a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageableObject: {fileID: 114229351219621934}
+  CollisionDamage: 40
+  EnemyID: UnknownEnemy
 --- !u!114 &114477404232569698
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -633,24 +648,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab7efc2ea891b14dbbc3e90d2408258, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeBetweenTeleports:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 4
-      inSlope: 0
-      outSlope: -3.5
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0.5
-      inSlope: -3.5
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   TimeBetweenBursts:
     serializedVersion: 2
     m_Curve:
@@ -669,24 +666,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  TeleportSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 2
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
     type: 2}
   BulletsPerMinute: 60
@@ -694,6 +673,7 @@ MonoBehaviour:
   RightWeapon: {fileID: 4284829642085110}
   BulletsPerBurst: 6
   RotationSpeed: 0.3
+  EntryLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &114679732418166628
 MonoBehaviour:
   m_ObjectHideFlags: 1
