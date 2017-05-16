@@ -23,6 +23,7 @@ public class SplitterBossController : MonoBehaviour {
     public Transform LeftWeapon;
     public Transform RightWeapon;
     public int BulletsPerBurst = 6;
+    public float RotationSpeed = 1f;
 
     private EnemyController controller;
     private EnemySpawnManager spawnManager;
@@ -47,11 +48,15 @@ public class SplitterBossController : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-        // rotate to face player
+
+        // find the direction towards the player
         Vector2 direction = controller.Player.transform.position - transform.position;
         direction.Normalize();
-        transform.rotation = Quaternion.Euler(0, 0,
+        Quaternion targetRotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+
+        // rotate slowly towards the player
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
 
         Fire();
     }

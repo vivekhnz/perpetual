@@ -28,6 +28,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1459494108574540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4589464123034462}
+  - component: {fileID: 50651875439877806}
+  - component: {fileID: 58063805755707176}
+  m_Layer: 10
+  m_Name: PortSideWeakpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &1541339381053536
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,8 +109,22 @@ Transform:
   - {fileID: 4814097187801794}
   - {fileID: 4856505277121890}
   - {fileID: 4647578873214484}
+  - {fileID: 4589464123034462}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4589464123034462
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1459494108574540}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.88, y: 1.08, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4574171249462434}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4647578873214484
 Transform:
@@ -154,6 +185,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!50 &50651875439877806
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1459494108574540}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &58060776143180016
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -168,6 +219,20 @@ CircleCollider2D:
   m_Offset: {x: -0.27, y: 0}
   serializedVersion: 2
   m_Radius: 2.5878742
+--- !u!58 &58063805755707176
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1459494108574540}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!60 &60568655565446702
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -231,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 1200
+  InitialHealth: 10000
   ScoreValue: 1000
   CameraShakeAmount: 5
   Parent: {fileID: 1541339381053536}
@@ -351,6 +416,7 @@ MonoBehaviour:
   LeftWeapon: {fileID: 4814097187801794}
   RightWeapon: {fileID: 4856505277121890}
   BulletsPerBurst: 6
+  RotationSpeed: 1
 --- !u!212 &212229862091881538
 SpriteRenderer:
   m_ObjectHideFlags: 1
