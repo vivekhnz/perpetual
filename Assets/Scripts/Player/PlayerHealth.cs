@@ -13,19 +13,33 @@ public class PlayerHealth : MonoBehaviour
     private CameraShake shaker;
     private float currentHealth;
     private float timeWhenDamaged;
+    private Animator anim;
 
     void Start()
     {
         hudController = Object.FindObjectOfType<HUDController>();
         shaker = Camera.main.GetComponent<CameraShake>();
+        anim = GetComponentInParent<Animator>();
 
         currentHealth = InitialHealth;
         hudController.UpdateHealth(currentHealth);
     }
 
+    void FixedUpdate()
+    {
+        // stops invincible anim after set amount of time.
+        if (anim.GetBool("isInvincible"))
+        {
+            if ((Time.time - timeWhenDamaged) > InvincibilityLength)
+            {
+                anim.SetBool("isInvincible", false);
+            }
+        }
+    }
+
     public void TakeDamage(float damage, string damageSource)
     {
-        // player has temp invincibility after being damaged
+        // see if player is still invincible
         if ((Time.time - timeWhenDamaged) > InvincibilityLength)
         {
             // telemetry showing which enemy damaged player
@@ -42,6 +56,9 @@ public class PlayerHealth : MonoBehaviour
             // reduce health
             currentHealth -= damage;
             UpdateHealthUI();
+
+            // the player is now invincible.
+            anim.SetBool("isInvincible", true);
 
             // store time to address temp invincibility
             timeWhenDamaged = Time.time;
