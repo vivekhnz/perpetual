@@ -416,7 +416,7 @@ MonoBehaviour:
   LeftWeapon: {fileID: 4814097187801794}
   RightWeapon: {fileID: 4856505277121890}
   BulletsPerBurst: 6
-  RotationSpeed: 1
+  RotationSpeed: 0.3
 --- !u!212 &212229862091881538
 SpriteRenderer:
   m_ObjectHideFlags: 1
