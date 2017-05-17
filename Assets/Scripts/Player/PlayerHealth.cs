@@ -7,22 +7,44 @@ public class PlayerHealth : MonoBehaviour
 {
     public PlayerMovement Parent;
     public float InitialHealth;
+    public float InvincibilityDuration = 1.0f;
 
     private HUDController hudController;
     private CameraShake shaker;
+    private Animator animator;
+
     private float currentHealth;
+    private float damagedTime;
+    private bool isInvincible = false;
 
     void Start()
     {
         hudController = Object.FindObjectOfType<HUDController>();
         shaker = Camera.main.GetComponent<CameraShake>();
+        animator = GetComponentInParent<Animator>();
 
         currentHealth = InitialHealth;
+        isInvincible = false;
         hudController.UpdateHealth(currentHealth);
+    }
+
+    void FixedUpdate()
+    {
+        // has the invincibility period ended?
+        if (isInvincible && (Time.time - damagedTime) > InvincibilityDuration)
+        {
+            isInvincible = false;
+            animator.SetBool("IsInvincible", false);
+        }
     }
 
     public void TakeDamage(float damage, string damageSource)
     {
+        // am I invincible?
+        if (isInvincible)
+            return;
+
+        // send telemetry regarding what the player was damaged by
         var data = new Dictionary<string, object>()
         {
             { "DamageSource", damageSource }
@@ -36,6 +58,11 @@ public class PlayerHealth : MonoBehaviour
         // reduce health
         currentHealth -= damage;
         UpdateHealthUI();
+
+        // trigger temporary invincibility
+        isInvincible = true;
+        animator.SetBool("IsInvincible", true);
+        damagedTime = Time.time;
     }
 
     public void ResetHealth()
