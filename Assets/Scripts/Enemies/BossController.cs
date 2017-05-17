@@ -26,6 +26,7 @@ public class BossController : MonoBehaviour
     public Transform LeftWeapon;
     public Transform RightWeapon;
     public int BulletsPerBurst = 6;
+    public ShockwaveController Shockwave;
 
     private EnemyController controller;
     private EnemySpawnManager spawnManager;
@@ -49,6 +50,9 @@ public class BossController : MonoBehaviour
         animator = GetComponent<Animator>();
         if (animator == null)
             Debug.LogError("No animator found!");
+
+        if (Shockwave == null)
+            Debug.LogError("Shockwave object not found!");
 
         // hiding spot (dont know how to temporarily disable)
         hidingSpot = new Vector3(-30, 0, 0);
@@ -151,6 +155,10 @@ public class BossController : MonoBehaviour
         // enable shooting and reset teleport timer
         currentState = BossState.Active;
         teleportTime = Time.time;
+
+        // spawn shockwave
+        var shockwave = Shockwave.Fetch<ShockwaveController>();
+        shockwave.transform.position = transform.position;
     }
 
     void Fire()

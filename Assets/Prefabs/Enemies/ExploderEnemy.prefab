@@ -89,7 +89,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.033574, y: -1.6006122, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4647578873214484}
@@ -223,6 +223,7 @@ MonoBehaviour:
   DamageableObject: {fileID: 114715127447421028}
   CollisionDamage: 40
   EnemyID: Exploder
+  SelfDestructOnCollision: 1
 --- !u!114 &114018307138614838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -291,6 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitialHealth: 150
   ScoreValue: 30
+  CameraShakeAmount: 5
   Parent: {fileID: 1541339381053536}
   Explosion: {fileID: 114546208615000262, guid: cc41a2c5c22d4da4fabc3a220cab24e1,
     type: 2}
