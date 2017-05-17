@@ -26,6 +26,7 @@ public class BossController : MonoBehaviour
     public Transform LeftWeapon;
     public Transform RightWeapon;
     public int BulletsPerBurst = 6;
+    public GameObject Shockwave;
 
     private EnemyController controller;
     private EnemySpawnManager spawnManager;
@@ -49,6 +50,9 @@ public class BossController : MonoBehaviour
         animator = GetComponent<Animator>();
         if (animator == null)
             Debug.LogError("No animator found!");
+
+        if (Shockwave == null)
+            Debug.LogError("Shockwave object not found!");
 
         // hiding spot (dont know how to temporarily disable)
         hidingSpot = new Vector3(-30, 0, 0);
@@ -141,6 +145,8 @@ public class BossController : MonoBehaviour
         // play appear animation
         currentState = BossState.Appearing;
         animator.SetBool("IsHiding", false);
+
+        Instantiate(Shockwave, selectedTeleport.transform.position, Quaternion.identity);
     }
 
     void Activate()
