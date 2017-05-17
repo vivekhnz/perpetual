@@ -6,9 +6,8 @@ using UnityEngine;
 public class ShockwaveController : PooledObject
 {
     // damage of the shockwave
-    public float Damage = 200f;
-    // damage modifier applied to the player (normally < 1)
-    public float PlayerDamageModifier = 0.1f;
+    public float DamageToEnemies = 75.0f;
+    public float DamageToPlayer = 25.0f;
     // how much force to push nearby objects with
     public float Force = 5f;
 
@@ -17,17 +16,22 @@ public class ShockwaveController : PooledObject
         switch (collider.gameObject.tag)
         {
             case "Damageable":
+                if (DamageToEnemies < 1)
+                    return;
+
                 // damage the object
                 var damageable = collider.GetComponent<DamageableObject>();
                 if (damageable != null)
-                    damageable.TakeDamage(Damage,
+                    damageable.TakeDamage(DamageToEnemies,
                         transform.rotation.eulerAngles.z);
                 break;
             case "Player":
+                if (DamageToPlayer < 1)
+                    return;
+
                 // damage the player
                 PlayerHealth playerHeath = collider.GetComponentInChildren<PlayerHealth>();
-                playerHeath.TakeDamage(Damage * PlayerDamageModifier,
-                    "Shockwave");
+                playerHeath.TakeDamage(DamageToPlayer, "Shockwave");
                 break;
         }
 

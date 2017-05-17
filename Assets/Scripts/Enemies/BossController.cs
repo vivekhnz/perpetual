@@ -99,7 +99,7 @@ public class BossController : MonoBehaviour
         animator.SetFloat("TeleportSpeed",
             TeleportSpeed.Evaluate(healthPercentage));
 
-        // Fire();
+        Fire();
 
         switch (currentState)
         {
