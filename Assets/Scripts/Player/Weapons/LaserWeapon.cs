@@ -19,6 +19,7 @@ public class LaserWeapon : MonoBehaviour
     PlayerSecondaryWeapon secondaryWeapon;
     LineRenderer line;
     ParticleSystem.EmissionModule beamEmission;
+    AudioSource gunSound;
 
     int layerMask;
     float startFireTime;
@@ -38,6 +39,8 @@ public class LaserWeapon : MonoBehaviour
         if (line == null)
             Debug.LogError("No line renderer found!");
         line.sortingLayerName = "Effects";
+
+        gunSound = GetComponent<AudioSource>();
 
         beamEmission = LaserBeamEffect.emission;
 
@@ -60,6 +63,25 @@ public class LaserWeapon : MonoBehaviour
         {
             FireLaser();
             weapon.IsFiring = true;
+
+            // play gun sound at a rate slower than actual RoF
+            if (!gunSound.isPlaying)
+            {
+                gunSound.Play();
+            }
+            // 0.28f is a sweet spot from experimentation. Change at your own risk!
+            if (gunSound.time > 0.28f)
+            {
+                // randomise volume to keep it fresh
+                float randomVolume = Random.Range(0.8f, 1);
+                gunSound.volume = randomVolume;
+
+                // pitch not randomised due to poor results from testing
+                //float randomPitch = Random.Range(0.8f, 1.0f);
+                //gunSound.pitch = randomPitch;
+
+                gunSound.Play();
+            }
 
             // show time remaining until laser runs out
             float laserCharge = Mathf.Clamp(
