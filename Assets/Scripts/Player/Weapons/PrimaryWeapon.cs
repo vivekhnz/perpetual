@@ -9,12 +9,17 @@ public class PrimaryWeapon : MonoBehaviour
 
     private float projectileFiredTime = 0.0f;
     private PlayerWeapon weapon;
+    private AudioSource gunSound;
 
     void Start()
     {
         weapon = GetComponent<PlayerWeapon>();
         if (weapon == null)
             Debug.LogError("Weapon not found!");
+
+        gunSound = GetComponent<AudioSource>();
+        if (gunSound == null)
+            Debug.LogError("Gun Sound not found!");
     }
 
     void FixedUpdate()
@@ -33,6 +38,23 @@ public class PrimaryWeapon : MonoBehaviour
 
     void Fire()
     {
+        // play gun sound at a rate slower than actual RoF
+        if (!gunSound.isPlaying)
+        {
+            gunSound.Play();
+        }
+        if (gunSound.time > 0.05f)
+        {
+            // randomise pitch and volume to keep it fresh
+            float randomVolume = Random.Range(0.6f, 1);
+            gunSound.volume = randomVolume;
+
+            float randomPitch = Random.Range(0.8f, 1.2f);
+            gunSound.pitch = randomPitch;
+
+            gunSound.Play();
+        }
+
         if (Projectile == null)
             return;
 
