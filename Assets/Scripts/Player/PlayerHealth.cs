@@ -7,35 +7,62 @@ public class PlayerHealth : MonoBehaviour
 {
     public PlayerMovement Parent;
     public float InitialHealth;
+    public float InvincibilityLength;
 
     private HUDController hudController;
     private CameraShake shaker;
     private float currentHealth;
+    private float timeWhenDamaged;
+    private Animator anim;
 
     void Start()
     {
         hudController = Object.FindObjectOfType<HUDController>();
         shaker = Camera.main.GetComponent<CameraShake>();
+        anim = GetComponentInParent<Animator>();
 
         currentHealth = InitialHealth;
         hudController.UpdateHealth(currentHealth);
     }
 
+    void FixedUpdate()
+    {
+        // stops invincible anim after set amount of time.
+        if (anim.GetBool("isInvincible"))
+        {
+            if ((Time.time - timeWhenDamaged) > InvincibilityLength)
+            {
+                anim.SetBool("isInvincible", false);
+            }
+        }
+    }
+
     public void TakeDamage(float damage, string damageSource)
     {
-        var data = new Dictionary<string, object>()
+        // see if player is still invincible
+        if ((Time.time - timeWhenDamaged) > InvincibilityLength)
         {
-            { "DamageSource", damageSource }
-        };
-        Analytics.CustomEvent("PlayerDamaged", data);
+            // telemetry showing which enemy damaged player
+            var data = new Dictionary<string, object>()
+            {
+                { "DamageSource", damageSource }
+            };
+            Analytics.CustomEvent("PlayerDamaged", data);
 
-        // shake camera
-        if (shaker != null)
-            shaker.RandomShake(damage * 0.5f);
+            // shake camera
+            if (shaker != null)
+                shaker.RandomShake(damage * 0.5f);
 
-        // reduce health
-        currentHealth -= damage;
-        UpdateHealthUI();
+            // reduce health
+            currentHealth -= damage;
+            UpdateHealthUI();
+
+            // the player is now invincible.
+            anim.SetBool("isInvincible", true);
+
+            // store time to address temp invincibility
+            timeWhenDamaged = Time.time;
+        }
     }
 
     public void ResetHealth()
