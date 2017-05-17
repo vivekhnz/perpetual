@@ -32,6 +32,7 @@ public class BossController : MonoBehaviour
     private Animator animator;
     private List<BossTeleportPointController> teleportPoints;
     private Vector3 hidingSpot;
+    private AudioSource gunSound;
 
     private BossState currentState;
     private float teleportTime;
@@ -49,6 +50,8 @@ public class BossController : MonoBehaviour
         animator = GetComponent<Animator>();
         if (animator == null)
             Debug.LogError("No animator found!");
+
+        gunSound = GetComponent<AudioSource>();
 
         // hiding spot (dont know how to temporarily disable)
         hidingSpot = new Vector3(-30, 0, 0);
@@ -202,6 +205,16 @@ public class BossController : MonoBehaviour
         projectile.Initialize(
             currentWeapon.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
         bulletsCreated++;
+
+        // play gun sound at the same RoF for bosses
+        // randomise pitch and volume to keep it fresh
+        float randomVolume = Random.Range(0.3f, 0.7f);
+        gunSound.volume = randomVolume;
+
+        float randomPitch = Random.Range(0.7f, 1.0f);
+        gunSound.pitch = randomPitch;
+
+        gunSound.Play();
 
         // was this the last bullet in the burst?
         if (bulletsCreated >= BulletsPerBurst)
