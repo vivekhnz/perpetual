@@ -7,62 +7,62 @@ public class PlayerHealth : MonoBehaviour
 {
     public PlayerMovement Parent;
     public float InitialHealth;
-    public float InvincibilityLength;
+    public float InvincibilityDuration = 1.0f;
 
     private HUDController hudController;
     private CameraShake shaker;
+    private Animator animator;
+
     private float currentHealth;
-    private float timeWhenDamaged;
-    private Animator anim;
+    private float damagedTime;
+    private bool isInvincible = false;
 
     void Start()
     {
         hudController = Object.FindObjectOfType<HUDController>();
         shaker = Camera.main.GetComponent<CameraShake>();
-        anim = GetComponentInParent<Animator>();
+        animator = GetComponentInParent<Animator>();
 
         currentHealth = InitialHealth;
+        isInvincible = false;
         hudController.UpdateHealth(currentHealth);
     }
 
     void FixedUpdate()
     {
-        // stops invincible anim after set amount of time.
-        if (anim.GetBool("isInvincible"))
+        // has the invincibility period ended?
+        if (isInvincible && (Time.time - damagedTime) > InvincibilityDuration)
         {
-            if ((Time.time - timeWhenDamaged) > InvincibilityLength)
-            {
-                anim.SetBool("isInvincible", false);
-            }
+            isInvincible = false;
+            animator.SetBool("IsInvincible", false);
         }
     }
 
     public void TakeDamage(float damage, string damageSource)
     {
-        // see if player is still invincible
-        if ((Time.time - timeWhenDamaged) > InvincibilityLength)
+        // am I invincible?
+        if (isInvincible)
+            return;
+
+        // send telemetry regarding what the player was damaged by
+        var data = new Dictionary<string, object>()
         {
-            // telemetry showing which enemy damaged player
-            var data = new Dictionary<string, object>()
-            {
-                { "DamageSource", damageSource }
-            };
-            Analytics.CustomEvent("PlayerDamaged", data);
+            { "DamageSource", damageSource }
+        };
+        Analytics.CustomEvent("PlayerDamaged", data);
 
-            // shake camera
-            if (shaker != null)
-                shaker.RandomShake(damage * 0.5f);
+        // shake camera
+        if (shaker != null)
+            shaker.RandomShake(damage * 0.5f);
 
-            // reduce health
-            currentHealth -= damage;
-            UpdateHealthUI();
+        // reduce health
+        currentHealth -= damage;
+        UpdateHealthUI();
 
-            // the player is now invincible.
-            anim.SetBool("isInvincible", true);
-
-            // store time to address temp invincibility
-            timeWhenDamaged = Time.time;
-        }
+        // trigger temporary invincibility
+        isInvincible = true;
+        animator.SetBool("IsInvincible", true);
+        damagedTime = Time.time;
     }
 
     public void ResetHealth()
