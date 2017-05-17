@@ -26,7 +26,7 @@ public class BossController : MonoBehaviour
     public Transform LeftWeapon;
     public Transform RightWeapon;
     public int BulletsPerBurst = 6;
-    public GameObject Shockwave;
+    public ShockwaveController Shockwave;
 
     private EnemyController controller;
     private EnemySpawnManager spawnManager;
@@ -99,7 +99,7 @@ public class BossController : MonoBehaviour
         animator.SetFloat("TeleportSpeed",
             TeleportSpeed.Evaluate(healthPercentage));
 
-        Fire();
+        // Fire();
 
         switch (currentState)
         {
@@ -145,8 +145,6 @@ public class BossController : MonoBehaviour
         // play appear animation
         currentState = BossState.Appearing;
         animator.SetBool("IsHiding", false);
-
-        Instantiate(Shockwave, selectedTeleport.transform.position, Quaternion.identity);
     }
 
     void Activate()
@@ -157,6 +155,10 @@ public class BossController : MonoBehaviour
         // enable shooting and reset teleport timer
         currentState = BossState.Active;
         teleportTime = Time.time;
+
+        // spawn shockwave
+        var shockwave = Shockwave.Fetch<ShockwaveController>();
+        shockwave.transform.position = transform.position;
     }
 
     void Fire()

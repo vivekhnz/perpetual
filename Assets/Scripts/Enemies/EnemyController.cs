@@ -5,6 +5,7 @@ public class EnemyController : PooledObject
     public DamageableObject DamageableObject;
     public float CollisionDamage = 40.0f;
     public string EnemyID = "UnknownEnemy";
+    public bool SelfDestructOnCollision = true;
 
     public PlayerHealth Player { get; private set; }
 
@@ -34,7 +35,7 @@ public class EnemyController : PooledObject
                 Player.TakeDamage(CollisionDamage, EnemyID);
 
             // self-destruct if not boss
-            if (!tag.Equals("Boss"))
+            if (SelfDestructOnCollision)
                 Recycle();
         }
     }
