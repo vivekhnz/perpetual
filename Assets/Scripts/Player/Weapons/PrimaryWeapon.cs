@@ -47,9 +47,9 @@ public class PrimaryWeapon : MonoBehaviour
         {
             // randomise pitch and volume to keep it fresh
             float randomVolume = Random.Range(0.4f, 0.6f);
-            gunSound.volume = randomVolume;
+            gunSound.volume = 0.2f;//randomVolume;
 
-            float randomPitch = Random.Range(0.8f, 1.2f);
+            float randomPitch = Random.Range(0.7f, 1.1f);
             gunSound.pitch = randomPitch;
 
             gunSound.Play();
