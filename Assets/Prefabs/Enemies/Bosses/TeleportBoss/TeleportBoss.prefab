@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 95125455190508830}
   - component: {fileID: 114292614213115640}
   m_Layer: 10
-  m_Name: Boss1
+  m_Name: TeleportBoss
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

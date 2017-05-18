@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 95165191871047080}
   - component: {fileID: 114472215951000796}
   m_Layer: 0
-  m_Name: Boss1TeleportPoint
+  m_Name: TeleportBossTeleportPoint
   m_TagString: TeleportPoint
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae6b1d4cbc90d554f895a5a0f9583b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stage: 1
+  HealthThreshold: 1
 --- !u!198 &198718749090424842
 ParticleSystem:
   m_ObjectHideFlags: 1
