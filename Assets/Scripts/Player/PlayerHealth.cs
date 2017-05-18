@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public PlayerMovement Parent;
     public float InitialHealth;
     public float InvincibilityDuration = 1.0f;
+    public AudioSource takeDamageAudio;
 
     private HUDController hudController;
     private CameraShake shaker;
@@ -63,6 +64,9 @@ public class PlayerHealth : MonoBehaviour
         isInvincible = true;
         animator.SetBool("IsInvincible", true);
         damagedTime = Time.time;
+
+        // play damage audio
+        takeDamageAudio.Play();
     }
 
     public void ResetHealth()
