@@ -23,9 +23,6 @@ public class SplitterBossController : MonoBehaviour
     public Vector3 EntryLocation;
 
     private EnemyController controller;
-    private EnemySpawnManager spawnManager;
-    private Animator animator;
-    private Vector3 hidingSpot;
 
     private BossState currentState;
     private float teleportTime;
@@ -46,13 +43,6 @@ public class SplitterBossController : MonoBehaviour
 
     void Initialize()
     {
-        // retrieve enemy manager
-        spawnManager = GameObject.FindObjectOfType<EnemySpawnManager>();
-        if (spawnManager == null)
-            Debug.LogError("No spawn manager found!");
-        spawnManager.StartBossEncounter(
-            controller.DamageableObject.InitialHealth);
-
         // start off-screen and teleport in
         transform.position = Vector3.zero;
         currentState = BossState.Active;
@@ -120,26 +110,7 @@ public class SplitterBossController : MonoBehaviour
             burstFinishedTime = Time.time;
     }
 
-    public void UpdateBossHealth()
-    {
-        spawnManager.UpdateBossHealth(
-            controller.DamageableObject.CurrentHealth
-            / controller.DamageableObject.InitialHealth);
-    }
-
     public void OnDefeated()
     {
-        // reset animations
-        animator.SetBool("IsHiding", true);
-        //foreach (var teleport in teleportPoints)
-        //    teleport.Deactivate();
-
-        // kill projectiles
-        var projectiles = GameObject.FindObjectsOfType<BossProjectileController>();
-        foreach (var projectile in projectiles)
-            projectile.Recycle();
-
-        // notify encounter completion
-        spawnManager.FinishBossEncounter();
     }
 }
