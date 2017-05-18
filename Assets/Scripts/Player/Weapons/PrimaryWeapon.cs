@@ -46,7 +46,7 @@ public class PrimaryWeapon : MonoBehaviour
         if (gunSound.time > 0.05f)
         {
             // randomise pitch and volume to keep it fresh
-            float randomVolume = Random.Range(0.6f, 1);
+            float randomVolume = Random.Range(0.4f, 0.6f);
             gunSound.volume = randomVolume;
 
             float randomPitch = Random.Range(0.8f, 1.2f);

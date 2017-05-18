@@ -208,7 +208,7 @@ public class BossController : MonoBehaviour
 
         // play gun sound at the same RoF for bosses
         // randomise pitch and volume to keep it fresh
-        float randomVolume = Random.Range(0.3f, 0.7f);
+        float randomVolume = Random.Range(0.2f, 0.4f);
         gunSound.volume = randomVolume;
 
         float randomPitch = Random.Range(0.7f, 1.0f);
