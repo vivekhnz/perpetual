@@ -371,7 +371,7 @@ MonoBehaviour:
     Weight: 1
   BossSpawner: {fileID: 114999065554894730, guid: e8d8f6f8b1445014c95376b3cf833ef3,
     type: 2}
-  WavesPerRound: 0
+  WavesPerRound: 5
 --- !u!4 &173740076
 Transform:
   m_ObjectHideFlags: 0
@@ -4577,7 +4577,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8e76c0630786f6440a925d0b8a662dd3, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
