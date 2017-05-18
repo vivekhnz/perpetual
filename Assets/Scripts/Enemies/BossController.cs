@@ -99,6 +99,10 @@ public class BossController : MonoBehaviour
         animator.SetFloat("TeleportSpeed",
             TeleportSpeed.Evaluate(healthPercentage));
 
+        // set appearance of boss according to health
+        SetHealthStage(controller.DamageableObject.CurrentHealth /
+            controller.DamageableObject.InitialHealth);
+
         Fire();
 
         switch (currentState)
@@ -237,5 +241,17 @@ public class BossController : MonoBehaviour
 
         // notify encounter completion
         spawnManager.FinishBossEncounter();
+    }
+
+    public void SetHealthStage(float currentHealthPercentage)
+    {
+        if (currentHealthPercentage < 0.6f)
+        {
+            animator.SetBool("PassStage1", true);
+        }
+        if (currentHealthPercentage < 0.2f)
+        {
+            animator.SetBool("PassStage2", true);
+        }
     }
 }
