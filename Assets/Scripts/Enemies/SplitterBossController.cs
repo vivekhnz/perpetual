@@ -16,9 +16,10 @@ public class SplitterBossController : MonoBehaviour
         AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 0.0f);
     public BossProjectileController Projectile;
     public float BulletsPerMinute = 60.0f;
-    public Transform Cannon;
+    public Transform Pointer;
     public int BulletsPerBurst = 6;
-    public float RotationSpeed = 1f;
+    public float BodyRotationSpeed = 30f;
+    public float PointerRotationSpeed = 12f;
     public Vector3 EntryLocation;
 
     private EnemyController controller;
@@ -59,17 +60,17 @@ public class SplitterBossController : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.Rotate(0.0f, 0.0f, 20.0f * Mathf.Deg2Rad);
+        transform.Rotate(0.0f, 0.0f, BodyRotationSpeed * Mathf.Deg2Rad);
 
         // find the direction towards the player
-        Vector2 direction = controller.Player.transform.position - Cannon.position;
+        Vector2 direction = controller.Player.transform.position - Pointer.position;
         direction.Normalize();
         Quaternion targetRotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 
         // rotate slowly towards the player
-        Cannon.rotation = Quaternion.Slerp(Cannon.rotation, targetRotation,
-            Time.deltaTime * RotationSpeed);
+        Pointer.rotation = Quaternion.Slerp(Pointer.rotation, targetRotation,
+            Time.deltaTime * PointerRotationSpeed);
 
         Fire();
     }
@@ -111,7 +112,7 @@ public class SplitterBossController : MonoBehaviour
 
         // spawn projectile
         var projectile = Projectile.Fetch<BossProjectileController>();
-        projectile.Initialize(Cannon.position, Cannon.rotation);
+        projectile.Initialize(Pointer.position, Pointer.rotation);
         bulletsCreated++;
 
         // was this the last bullet in the burst?

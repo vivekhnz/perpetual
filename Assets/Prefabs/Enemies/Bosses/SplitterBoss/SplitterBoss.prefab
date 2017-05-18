@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 4249329193271566}
   - component: {fileID: 212793492278354846}
   m_Layer: 0
-  m_Name: SplitterBossCannon
+  m_Name: Pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -636,9 +636,10 @@ MonoBehaviour:
   Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
     type: 2}
   BulletsPerMinute: 400
-  Cannon: {fileID: 4249329193271566}
+  Pointer: {fileID: 4249329193271566}
   BulletsPerBurst: 8
-  RotationSpeed: 7
+  BodyRotationSpeed: 30
+  PointerRotationSpeed: 12
   EntryLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &114679732418166628
 MonoBehaviour:
@@ -733,7 +734,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3f9b94e195e321540b350ec3757c364d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 61dca34810ecd77499b47683f600e0d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -838,7 +839,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 03eafa57086c8cd47af4ff1a2d011180, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 867a99c772f51a44291b92bd9ded8507, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
