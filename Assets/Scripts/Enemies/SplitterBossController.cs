@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SplitterBossController : MonoBehaviour {
-
+public class SplitterBossController : MonoBehaviour
+{
     private enum BossState
     {
         Appearing = 0,
@@ -16,8 +16,7 @@ public class SplitterBossController : MonoBehaviour {
         AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 0.0f);
     public BossProjectileController Projectile;
     public float BulletsPerMinute = 60.0f;
-    public Transform LeftWeapon;
-    public Transform RightWeapon;
+    public Transform Cannon;
     public int BulletsPerBurst = 6;
     public float RotationSpeed = 1f;
     public Vector3 EntryLocation;
@@ -36,12 +35,13 @@ public class SplitterBossController : MonoBehaviour {
     private float burstFinishedTime;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         controller = GetComponent<EnemyController>();
         controller.InstanceReset += (sender, e) => Initialize();
 
         Initialize();
-	}
+    }
 
     void Initialize()
     {
@@ -57,19 +57,17 @@ public class SplitterBossController : MonoBehaviour {
         currentState = BossState.Active;
     }
 
-    void FixedUpdate () {
-
-        // keep the boss in the middle of arena to avoid spawning bugs
-        transform.position = Vector3.zero;
-
+    void FixedUpdate()
+    {
         // find the direction towards the player
-        Vector2 direction = controller.Player.transform.position - transform.position;
+        Vector2 direction = controller.Player.transform.position - Cannon.position;
         direction.Normalize();
         Quaternion targetRotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 
         // rotate slowly towards the player
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
+        Cannon.rotation = Quaternion.Slerp(Cannon.rotation, targetRotation,
+            Time.deltaTime * RotationSpeed);
 
         Fire();
     }
@@ -111,17 +109,7 @@ public class SplitterBossController : MonoBehaviour {
 
         // spawn projectile
         var projectile = Projectile.Fetch<BossProjectileController>();
-
-        // calculate projectile direction
-        var currentWeapon = bulletsCreated % 2 == 0
-            ? LeftWeapon : RightWeapon;
-        var dirToPlayer = controller.Player.transform.position
-            - currentWeapon.position;
-        float projectileDir = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x)
-            * Mathf.Rad2Deg;
-
-        projectile.Initialize(
-            currentWeapon.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
+        projectile.Initialize(Cannon.position, Cannon.rotation);
         bulletsCreated++;
 
         // was this the last bullet in the burst?
