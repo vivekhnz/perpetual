@@ -40,6 +40,8 @@ public class PlayerUpgrades : MonoBehaviour
 
         // find current ability
         ability = GetComponent<PlayerAbility>();
+
+        UnlockAbility(typeof(NukeAbility));
     }
 
     void FixedUpdate()
