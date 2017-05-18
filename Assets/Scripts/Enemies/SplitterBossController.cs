@@ -59,6 +59,8 @@ public class SplitterBossController : MonoBehaviour
 
     void FixedUpdate()
     {
+        transform.Rotate(0.0f, 0.0f, 20.0f * Mathf.Deg2Rad);
+
         // find the direction towards the player
         Vector2 direction = controller.Player.transform.position - Cannon.position;
         direction.Normalize();
