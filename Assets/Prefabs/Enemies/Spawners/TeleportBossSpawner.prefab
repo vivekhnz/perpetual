@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
-  - Enemy: {fileID: 114000609005742900, guid: f3adccf10a8e29048a9c48cfd07dc2a9, type: 2}
+  - Enemy: {fileID: 114842166424473826, guid: d1e0b31ce57c4034fa486b23288a0b09, type: 2}
     EnemiesToSpawn: 1
     EnemiesSpawned: 0
   SpawnInterval: 0.5
