@@ -6,6 +6,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(BossController))]
 public class TeleportBossController : MonoBehaviour
 {
     private enum BossState
@@ -28,7 +29,7 @@ public class TeleportBossController : MonoBehaviour
     public int BulletsPerBurst = 6;
     public ShockwaveController Shockwave;
 
-    private EnemyController controller;
+    private BossController controller;
     private Animator animator;
     private List<BossTeleportPointController> teleportPoints;
 
@@ -42,8 +43,9 @@ public class TeleportBossController : MonoBehaviour
 
     void Start()
     {
-        controller = GetComponent<EnemyController>();
-        controller.InstanceReset += (sender, e) => Initialize();
+        controller = GetComponent<BossController>();
+        controller.Initialized += (sender, e) => Initialize();
+        controller.Defeated += (sender, e) => OnDefeated();
 
         animator = GetComponent<Animator>();
         if (animator == null)

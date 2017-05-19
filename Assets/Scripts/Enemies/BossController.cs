@@ -1,12 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(EnemyController))]
 public class BossController : MonoBehaviour
 {
+    public Vector3 InitialPosition = new Vector3(-30, 0, 0);
+
+    public PlayerHealth Player
+    {
+        get { return controller.Player; }
+    }
+    public DamageableObject DamageableObject
+    {
+        get { return controller.DamageableObject; }
+    }
+
+    public event EventHandler Initialized;
+    public event EventHandler Defeated;
+
     private EnemyController controller;
     private EnemySpawnManager spawnManager;
-
-    public Vector3 InitialPosition = new Vector3(-30, 0, 0);
 
     void Start()
     {
@@ -26,6 +39,9 @@ public class BossController : MonoBehaviour
             controller.DamageableObject.InitialHealth);
 
         transform.position = InitialPosition;
+
+        if (Initialized != null)
+            Initialized(this, EventArgs.Empty);
     }
 
     public void UpdateBossHealth()
@@ -44,5 +60,8 @@ public class BossController : MonoBehaviour
 
         // notify encounter completion
         spawnManager.FinishBossEncounter();
+
+        if (Defeated != null)
+            Defeated(this, EventArgs.Empty);
     }
 }

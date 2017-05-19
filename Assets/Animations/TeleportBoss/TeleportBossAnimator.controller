@@ -240,7 +240,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Boss1Hidden
+  m_Name: BossHidden
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -312,7 +312,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Boss1Appear
+  m_Name: BossAppear
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(BossController))]
 public class SplitterBossController : MonoBehaviour
 {
     private enum BossState
@@ -20,9 +21,8 @@ public class SplitterBossController : MonoBehaviour
     public int BulletsPerBurst = 6;
     public float BodyRotationSpeed = 30f;
     public float PointerRotationSpeed = 12f;
-    public Vector3 EntryLocation;
 
-    private EnemyController controller;
+    private BossController controller;
 
     private BossState currentState;
     private float teleportTime;
@@ -32,11 +32,10 @@ public class SplitterBossController : MonoBehaviour
     private int bulletsCreated = 0;
     private float burstFinishedTime;
 
-    // Use this for initialization
     void Start()
     {
-        controller = GetComponent<EnemyController>();
-        controller.InstanceReset += (sender, e) => Initialize();
+        controller = GetComponent<BossController>();
+        controller.Initialized += (sender, e) => Initialize();
 
         Initialize();
     }
@@ -108,9 +107,5 @@ public class SplitterBossController : MonoBehaviour
         // was this the last bullet in the burst?
         if (bulletsCreated >= BulletsPerBurst)
             burstFinishedTime = Time.time;
-    }
-
-    public void OnDefeated()
-    {
     }
 }

@@ -562,17 +562,6 @@ MonoBehaviour:
   OnDestroyed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114674327531929056}
-        m_MethodName: OnDefeated
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 114086223997546172}
         m_MethodName: OnDefeated
         m_Mode: 1
@@ -664,7 +653,6 @@ MonoBehaviour:
   BulletsPerBurst: 8
   BodyRotationSpeed: 30
   PointerRotationSpeed: 12
-  EntryLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &114679732418166628
 MonoBehaviour:
   m_ObjectHideFlags: 1
