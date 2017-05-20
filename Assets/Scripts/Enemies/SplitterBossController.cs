@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using Random = UnityEngine.Random;
+
 [RequireComponent(typeof(BossController))]
 [RequireComponent(typeof(Animator))]
 public class SplitterBossController : MonoBehaviour
@@ -18,6 +20,7 @@ public class SplitterBossController : MonoBehaviour
 
     private BossController controller;
     private Animator animator;
+    private AudioSource gunSound;
 
     private float projectileFiredTime = 0.0f;
     private int bulletsCreated = 0;
@@ -33,6 +36,8 @@ public class SplitterBossController : MonoBehaviour
         animator = GetComponent<Animator>();
         if (animator == null)
             Debug.LogError("No animator found!");
+
+        gunSound = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -89,6 +94,10 @@ public class SplitterBossController : MonoBehaviour
         var projectile = Projectile.Fetch<BossProjectileController>();
         projectile.Initialize(Pointer.position, Pointer.rotation);
         bulletsCreated++;
+
+        // play fire sound
+        gunSound.pitch = Random.Range(0.7f, 1.0f);
+        gunSound.Play();
 
         // was this the last bullet in the burst?
         if (bulletsCreated >= BulletsPerBurst)

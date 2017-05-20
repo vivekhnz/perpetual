@@ -40,6 +40,7 @@ public class PlayerUpgrades : MonoBehaviour
 
         // find current ability
         ability = GetComponent<PlayerAbility>();
+        UnlockWeapon(typeof(LaserWeapon));
     }
 
     void FixedUpdate()
