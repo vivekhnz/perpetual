@@ -86,7 +86,6 @@ public class BossController : MonoBehaviour
 
         if (Initialized != null)
             Initialized(this, EventArgs.Empty);
-
         BeginTeleport();
     }
 

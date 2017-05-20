@@ -110,6 +110,9 @@ public class TeleportBossController : MonoBehaviour
         animator.SetFloat("TeleportSpeed",
             TeleportSpeed.Evaluate(healthPercentage));
 
+        // set appearance of boss according to health
+        SetHealthStage(controller.HealthPercentage);
+
         Fire();
 
         if (controller.IsBossActive)
@@ -176,5 +179,17 @@ public class TeleportBossController : MonoBehaviour
         // was this the last bullet in the burst?
         if (bulletsCreated >= BulletsPerBurst)
             burstFinishedTime = Time.time;
+    }
+
+    public void SetHealthStage(float currentHealthPercentage)
+    {
+        if (currentHealthPercentage < 0.6f)
+        {
+            animator.SetBool("PassStage1", true);
+        }
+        if (currentHealthPercentage < 0.2f)
+        {
+            animator.SetBool("PassStage2", true);
+        }
     }
 }
