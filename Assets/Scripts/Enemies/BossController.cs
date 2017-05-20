@@ -86,7 +86,6 @@ public class BossController : MonoBehaviour
 
         if (Initialized != null)
             Initialized(this, EventArgs.Empty);
-
         BeginTeleport();
     }
 
@@ -124,9 +123,7 @@ public class BossController : MonoBehaviour
 
     public void UpdateBossHealth()
     {
-        spawnManager.UpdateBossHealth(
-            Controller.DamageableObject.CurrentHealth
-            / Controller.DamageableObject.InitialHealth);
+        spawnManager.UpdateBossHealth(HealthPercentage);
     }
 
     public void OnDefeated()

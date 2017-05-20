@@ -109,6 +109,7 @@ public class TeleportBossController : MonoBehaviour
         float healthPercentage = 1.0f - controller.HealthPercentage;
         animator.SetFloat("TeleportSpeed",
             TeleportSpeed.Evaluate(healthPercentage));
+        animator.SetFloat("HealthPercentage", controller.HealthPercentage);
 
         Fire();
 
