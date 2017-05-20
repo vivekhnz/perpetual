@@ -56,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
 
         // shake camera
         if (shaker != null)
-            shaker.RandomShake(damage * 0.5f);
+            shaker.RandomShake(damage * 0.25f);
 
         // reduce health
         currentHealth -= damage;
