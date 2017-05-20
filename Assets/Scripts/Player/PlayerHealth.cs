@@ -54,24 +54,23 @@ public class PlayerHealth : MonoBehaviour
         };
         Analytics.CustomEvent("PlayerDamaged", data);
 
-        // shake camera
+        // activate damage effects
         if (shaker != null)
             shaker.RandomShake(damage * 0.25f);
-
-        // reduce health
-        currentHealth -= damage;
-        UpdateHealthUI();
+        if (damageEffects != null)
+            damageEffects.Activate();
 
         // trigger temporary invincibility
         isInvincible = true;
         animator.SetBool("IsInvincible", true);
         damagedTime = Time.time;
 
-        // activate damage effects
-        damageEffects.Activate();
-
         // play damage audio
         takeDamageAudio.Play();
+
+        // reduce health
+        currentHealth -= damage;
+        UpdateHealthUI();
     }
 
     public void ResetHealth()
