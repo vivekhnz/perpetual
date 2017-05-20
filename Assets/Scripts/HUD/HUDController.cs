@@ -200,6 +200,9 @@ public class HUDController : MonoBehaviour
 
     public void SelectUpgrade(int selectedUpgradeIndex)
     {
+        if (!isPopoverOpen)
+            return;
+
         // unlock upgrade
         switch (selectedUpgradeIndex)
         {
