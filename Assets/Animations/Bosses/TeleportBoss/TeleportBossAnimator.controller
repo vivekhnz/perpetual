@@ -13,31 +13,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: IsHiding
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: TeleportSpeed
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: PassStage1
-    m_Type: 4
-    m_DefaultFloat: 0
+    m_Controller: {fileID: 0}
+  - m_Name: HealthPercentage
+    m_Type: 1
+    m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: PassStage2
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Damageable
@@ -82,9 +76,9 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: PassStage1
-    m_EventTreshold: 0
+  - m_ConditionMode: 4
+    m_ConditionEvent: HealthPercentage
+    m_EventTreshold: 0.61
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102188650540644430}
   m_Solo: 0
@@ -151,9 +145,9 @@ AnimatorStateTransition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: PassStage2
-    m_EventTreshold: 0
+  - m_ConditionMode: 4
+    m_ConditionEvent: HealthPercentage
+    m_EventTreshold: 0.2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102577401373208266}
   m_Solo: 0
@@ -288,7 +282,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Boss1HealthStage2
+  m_Name: Stage2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -312,7 +306,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Boss1HealthStage1
+  m_Name: Stage1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -408,7 +402,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Boss1HealthStage3
+  m_Name: Stage3
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -537,20 +531,20 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102227793064525102}
-    m_Position: {x: 324, y: -12, z: 0}
+    m_Position: {x: 444, y: 24, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102188650540644430}
-    m_Position: {x: 324, y: 84, z: 0}
+    m_Position: {x: 444, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102577401373208266}
-    m_Position: {x: 324, y: 180, z: 0}
+    m_Position: {x: 444, y: 216, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
-  m_EntryPosition: {x: 348, y: -108, z: 0}
+  m_EntryPosition: {x: 228, y: 24, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1102227793064525102}
