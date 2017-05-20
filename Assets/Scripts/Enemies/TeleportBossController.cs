@@ -5,8 +5,8 @@ using UnityEngine;
 
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BossController))]
+[RequireComponent(typeof(Animator))]
 public class TeleportBossController : MonoBehaviour
 {
     public AnimationCurve TimeBetweenTeleports =
@@ -20,12 +20,11 @@ public class TeleportBossController : MonoBehaviour
     public Transform LeftWeapon;
     public Transform RightWeapon;
     public int BulletsPerBurst = 6;
-    public ShockwaveController Shockwave;
 
     private BossController controller;
     private Animator animator;
-    private List<BossTeleportPointController> teleportPoints;
 
+    private List<BossTeleportPointController> teleportPoints;
     private float teleportTime;
     private BossTeleportPointController selectedTeleport;
 
@@ -36,19 +35,18 @@ public class TeleportBossController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<BossController>();
-        controller.Initialized += (sender, e) => Initialize();
-        controller.Teleporting += (sender, e) => OnTeleporting();
-        controller.Defeated += (sender, e) => OnDefeated();
+        controller.Initialized += OnInitialized;
+        controller.Teleporting += OnTeleporting;
+        controller.Teleported += (sender, args) => animator.SetBool("IsHiding", false);
+        controller.Activated += OnActivated;
+        controller.Defeated += OnDefeated;
 
         animator = GetComponent<Animator>();
         if (animator == null)
             Debug.LogError("No animator found!");
-
-        if (Shockwave == null)
-            Debug.LogError("Shockwave object not found!");
     }
 
-    void Initialize()
+    void OnInitialized(object sender, EventArgs e)
     {
         // find teleport points
         teleportPoints = GameObject.FindGameObjectsWithTag("TeleportPoint")
@@ -59,6 +57,39 @@ public class TeleportBossController : MonoBehaviour
         // teleport in
         teleportTime = Time.time - TimeBetweenTeleports.Evaluate(0);
         selectedTeleport = null;
+    }
+
+    void OnTeleporting(object sender, BossController.TeleportingEventArgs args)
+    {
+        // determine which teleport points I can go to
+        var validTeleports = (
+            from t in teleportPoints
+            where t != selectedTeleport
+            && controller.HealthPercentage <= t.HealthThreshold
+            select t).ToList();
+
+        // randomly select a teleport destination
+        selectedTeleport = validTeleports[
+            Random.Range(0, validTeleports.Count)];
+
+        // telegraph the destination
+        selectedTeleport.Activate();
+        animator.SetBool("IsHiding", true);
+
+        args.Destination = selectedTeleport.transform.position;
+    }
+
+    void OnActivated(object sender, EventArgs e)
+    {
+        selectedTeleport.Deactivate();
+        teleportTime = Time.time;
+    }
+
+    void OnDefeated(object sender, EventArgs e)
+    {
+        animator.SetBool("IsHiding", true);
+        foreach (var teleport in teleportPoints)
+            teleport.Deactivate();
     }
 
     void FixedUpdate()
@@ -83,48 +114,8 @@ public class TeleportBossController : MonoBehaviour
             // is it time to teleport?
             if (Time.time - teleportTime
                 > TimeBetweenTeleports.Evaluate(healthPercentage))
-                controller.PrepareToTeleport();
+                controller.BeginTeleport();
         }
-    }
-
-    void OnTeleporting()
-    {
-        // determine which teleport points I can go to
-        var validTeleports = (
-            from t in teleportPoints
-            where t != selectedTeleport
-            && controller.HealthPercentage <= t.HealthThreshold
-            select t).ToList();
-
-        // randomly select a teleport destination
-        selectedTeleport = validTeleports[
-            Random.Range(0, validTeleports.Count)];
-
-        // telegraph the destination
-        selectedTeleport.Activate();
-
-        // play hide animation
-        animator.SetBool("IsHiding", true);
-    }
-
-    void Teleport()
-    {
-        controller.TeleportToPosition(selectedTeleport.transform.position);
-        animator.SetBool("IsHiding", false);
-    }
-
-    void Activate()
-    {
-        // disable our teleport point
-        selectedTeleport.Deactivate();
-
-        // enable shooting and reset teleport timer
-        controller.Activate();
-        teleportTime = Time.time;
-
-        // spawn shockwave
-        var shockwave = Shockwave.Fetch<ShockwaveController>();
-        shockwave.transform.position = transform.position;
     }
 
     void Fire()
@@ -178,13 +169,5 @@ public class TeleportBossController : MonoBehaviour
         // was this the last bullet in the burst?
         if (bulletsCreated >= BulletsPerBurst)
             burstFinishedTime = Time.time;
-    }
-
-    public void OnDefeated()
-    {
-        // reset animations
-        animator.SetBool("IsHiding", true);
-        foreach (var teleport in teleportPoints)
-            teleport.Deactivate();
     }
 }

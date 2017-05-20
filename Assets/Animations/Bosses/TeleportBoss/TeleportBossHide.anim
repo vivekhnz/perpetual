@@ -396,7 +396,7 @@ AnimationClip:
   m_IsEmpty: 0
   m_Events:
   - time: 1
-    functionName: Teleport
+    functionName: FinishTeleport
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -11,7 +11,19 @@ public class BossController : MonoBehaviour
         Teleporting = 2
     }
 
-    public Vector3 InitialPosition = new Vector3(-30, 0, 0);
+    public class TeleportingEventArgs : EventArgs
+    {
+        public Vector3 Destination;
+
+        public TeleportingEventArgs(Vector3 destination)
+        {
+            Destination = destination;
+        }
+    }
+
+    public Vector3 OffScreenPosition = new Vector3(-30, 0, 0);
+    public Vector3 InitialPosition = Vector3.zero;
+    public ShockwaveController Shockwave;
 
     private EnemyController controller;
     private EnemyController Controller
@@ -43,14 +55,20 @@ public class BossController : MonoBehaviour
 
     public event EventHandler Initialized;
     public event EventHandler Defeated;
-    public event EventHandler Teleporting;
+    public event EventHandler<TeleportingEventArgs> Teleporting;
+    public event EventHandler Teleported;
+    public event EventHandler Activated;
 
     private EnemySpawnManager spawnManager;
     private BossState currentState;
+    private Vector3 teleportDestination;
 
     void Start()
     {
         Controller.InstanceReset += (sender, e) => Initialize();
+
+        if (Shockwave == null)
+            Debug.LogError("Shockwave object not found!");
 
         Initialize();
     }
@@ -64,31 +82,44 @@ public class BossController : MonoBehaviour
         spawnManager.StartBossEncounter(
             Controller.DamageableObject.InitialHealth);
 
-        transform.position = InitialPosition;
+        transform.position = OffScreenPosition;
 
         if (Initialized != null)
             Initialized(this, EventArgs.Empty);
 
-        PrepareToTeleport();
+        BeginTeleport();
     }
 
-    public void PrepareToTeleport()
+    public void BeginTeleport()
     {
         currentState = BossState.Teleporting;
 
+        TeleportingEventArgs args = new TeleportingEventArgs(InitialPosition);
         if (Teleporting != null)
-            Teleporting(this, EventArgs.Empty);
+            Teleporting(this, args);
+
+        teleportDestination = args.Destination;
     }
 
-    public void TeleportToPosition(Vector3 destination)
+    public void FinishTeleport()
     {
-        transform.position = destination;
+        transform.position = teleportDestination;
         currentState = BossState.Appearing;
+
+        if (Teleported != null)
+            Teleported(this, EventArgs.Empty);
     }
 
     public void Activate()
     {
         currentState = BossState.Active;
+
+        // spawn shockwave
+        var shockwave = Shockwave.Fetch<ShockwaveController>();
+        shockwave.transform.position = transform.position;
+
+        if (Activated != null)
+            Activated(this, EventArgs.Empty);
     }
 
     public void UpdateBossHealth()

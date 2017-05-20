@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(BossController))]
+[RequireComponent(typeof(Animator))]
 public class SplitterBossController : MonoBehaviour
 {
     public AnimationCurve TimeBetweenBursts =
@@ -16,9 +17,7 @@ public class SplitterBossController : MonoBehaviour
     public float PointerRotationSpeed = 12f;
 
     private BossController controller;
-
-    private float teleportTime;
-    private BossTeleportPointController selectedTeleport;
+    private Animator animator;
 
     private float projectileFiredTime = 0.0f;
     private int bulletsCreated = 0;
@@ -27,6 +26,13 @@ public class SplitterBossController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<BossController>();
+        controller.Teleporting += (sender, args) => animator.SetBool("IsHiding", true);
+        controller.Teleported += (sender, args) => animator.SetBool("IsHiding", false);
+        controller.Defeated += (sender, args) => animator.SetBool("IsHiding", true);
+
+        animator = GetComponent<Animator>();
+        if (animator == null)
+            Debug.LogError("No animator found!");
     }
 
     void FixedUpdate()
