@@ -23,6 +23,7 @@ public class TeleportBossController : MonoBehaviour
 
     private BossController controller;
     private Animator animator;
+    private AudioSource gunSound;
 
     private List<BossTeleportPointController> teleportPoints;
     private float teleportTime;
@@ -44,6 +45,8 @@ public class TeleportBossController : MonoBehaviour
         animator = GetComponent<Animator>();
         if (animator == null)
             Debug.LogError("No animator found!");
+
+        gunSound = GetComponent<AudioSource>();
     }
 
     void OnInitialized(object sender, EventArgs e)
@@ -165,6 +168,10 @@ public class TeleportBossController : MonoBehaviour
         projectile.Initialize(
             currentWeapon.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
         bulletsCreated++;
+
+        // play fire sound
+        gunSound.pitch = Random.Range(0.7f, 1.0f);
+        gunSound.Play();
 
         // was this the last bullet in the burst?
         if (bulletsCreated >= BulletsPerBurst)
