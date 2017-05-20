@@ -371,7 +371,7 @@ MonoBehaviour:
     Weight: 1
   BossSpawner: {fileID: 114999065554894730, guid: 927769426a16d0141a1d9e6afd998611,
     type: 2}
-  WavesPerRound: 1
+  WavesPerRound: 5
 --- !u!4 &173740076
 Transform:
   m_ObjectHideFlags: 0
@@ -2320,11 +2320,6 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 543704368}
-    - target: {fileID: 20864053426221500, guid: d70815656a39e8243bee5ad8a85c8777,
-        type: 2}
-      propertyPath: orthographic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d70815656a39e8243bee5ad8a85c8777, type: 2}
   m_IsPrefabParent: 0

@@ -8,9 +8,11 @@ public class PlayerHealth : MonoBehaviour
     public PlayerMovement Parent;
     public float InitialHealth;
     public float InvincibilityDuration = 1.0f;
+    public AudioSource takeDamageAudio;
 
     private HUDController hudController;
     private CameraShake shaker;
+    private DamageEffects damageEffects;
     private Animator animator;
 
     private float currentHealth;
@@ -21,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
     {
         hudController = Object.FindObjectOfType<HUDController>();
         shaker = Camera.main.GetComponent<CameraShake>();
+        damageEffects = Camera.main.GetComponent<DamageEffects>();
         animator = GetComponentInParent<Animator>();
 
         currentHealth = InitialHealth;
@@ -51,18 +54,23 @@ public class PlayerHealth : MonoBehaviour
         };
         Analytics.CustomEvent("PlayerDamaged", data);
 
-        // shake camera
+        // activate damage effects
         if (shaker != null)
-            shaker.RandomShake(damage * 0.5f);
-
-        // reduce health
-        currentHealth -= damage;
-        UpdateHealthUI();
+            shaker.RandomShake(damage * 0.25f);
+        if (damageEffects != null)
+            damageEffects.Activate();
 
         // trigger temporary invincibility
         isInvincible = true;
         animator.SetBool("IsInvincible", true);
         damagedTime = Time.time;
+
+        // play damage audio
+        takeDamageAudio.Play();
+
+        // reduce health
+        currentHealth -= damage;
+        UpdateHealthUI();
     }
 
     public void ResetHealth()
