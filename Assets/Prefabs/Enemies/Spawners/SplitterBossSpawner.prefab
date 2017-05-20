@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4033983686115914}
   - component: {fileID: 114999065554894730}
   m_Layer: 0
-  m_Name: Boss1Spawner
+  m_Name: SplitterBossSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
-  - Enemy: {fileID: 114000609005742900, guid: f3adccf10a8e29048a9c48cfd07dc2a9, type: 2}
+  - Enemy: {fileID: 114136082352134822, guid: 1b4d0516946dccc46aba26bd3df6e837, type: 2}
     EnemiesToSpawn: 1
     EnemiesSpawned: 0
   SpawnInterval: 0.5
