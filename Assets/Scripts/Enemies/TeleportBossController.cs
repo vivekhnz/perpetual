@@ -9,13 +9,6 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(BossController))]
 public class TeleportBossController : MonoBehaviour
 {
-    private enum BossState
-    {
-        Appearing = 0,
-        Active = 1,
-        Teleporting = 2
-    }
-
     public AnimationCurve TimeBetweenTeleports =
         AnimationCurve.Linear(0.0f, 4.0f, 1.0f, 0.5f);
     public AnimationCurve TimeBetweenBursts =
@@ -33,7 +26,6 @@ public class TeleportBossController : MonoBehaviour
     private Animator animator;
     private List<BossTeleportPointController> teleportPoints;
 
-    private BossState currentState;
     private float teleportTime;
     private BossTeleportPointController selectedTeleport;
 
@@ -45,6 +37,7 @@ public class TeleportBossController : MonoBehaviour
     {
         controller = GetComponent<BossController>();
         controller.Initialized += (sender, e) => Initialize();
+        controller.Teleporting += (sender, e) => OnTeleporting();
         controller.Defeated += (sender, e) => OnDefeated();
 
         animator = GetComponent<Animator>();
@@ -53,8 +46,6 @@ public class TeleportBossController : MonoBehaviour
 
         if (Shockwave == null)
             Debug.LogError("Shockwave object not found!");
-
-        Initialize();
     }
 
     void Initialize()
@@ -66,7 +57,6 @@ public class TeleportBossController : MonoBehaviour
             Debug.LogError("Two teleport points must be defined!");
 
         // teleport in
-        currentState = BossState.Active;
         teleportTime = Time.time - TimeBetweenTeleports.Evaluate(0);
         selectedTeleport = null;
     }
@@ -82,36 +72,28 @@ public class TeleportBossController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 
-        float healthPercentage = 1.0f - (
-            controller.DamageableObject.CurrentHealth /
-            controller.DamageableObject.InitialHealth);
+        float healthPercentage = 1.0f - controller.HealthPercentage;
         animator.SetFloat("TeleportSpeed",
             TeleportSpeed.Evaluate(healthPercentage));
 
         Fire();
 
-        switch (currentState)
+        if (controller.IsBossActive)
         {
-            case BossState.Active:
-
-                // is it time to teleport?
-                if (Time.time - teleportTime
-                    > TimeBetweenTeleports.Evaluate(healthPercentage))
-                    PrepareToTeleport();
-                break;
+            // is it time to teleport?
+            if (Time.time - teleportTime
+                > TimeBetweenTeleports.Evaluate(healthPercentage))
+                controller.PrepareToTeleport();
         }
     }
 
-    void PrepareToTeleport()
+    void OnTeleporting()
     {
         // determine which teleport points I can go to
-        float healthPercentage =
-            controller.DamageableObject.CurrentHealth /
-            controller.DamageableObject.InitialHealth;
         var validTeleports = (
             from t in teleportPoints
             where t != selectedTeleport
-            && healthPercentage <= t.HealthThreshold
+            && controller.HealthPercentage <= t.HealthThreshold
             select t).ToList();
 
         // randomly select a teleport destination
@@ -122,17 +104,12 @@ public class TeleportBossController : MonoBehaviour
         selectedTeleport.Activate();
 
         // play hide animation
-        currentState = BossState.Teleporting;
         animator.SetBool("IsHiding", true);
     }
 
     void Teleport()
     {
-        // teleport to destination
-        transform.position = selectedTeleport.transform.position;
-
-        // play appear animation
-        currentState = BossState.Appearing;
+        controller.TeleportToPosition(selectedTeleport.transform.position);
         animator.SetBool("IsHiding", false);
     }
 
@@ -142,7 +119,7 @@ public class TeleportBossController : MonoBehaviour
         selectedTeleport.Deactivate();
 
         // enable shooting and reset teleport timer
-        currentState = BossState.Active;
+        controller.Activate();
         teleportTime = Time.time;
 
         // spawn shockwave
@@ -156,15 +133,13 @@ public class TeleportBossController : MonoBehaviour
             return;
 
         // am I active?
-        if (currentState != BossState.Active)
+        if (!controller.IsBossActive)
             return;
 
         // can I fire any more bullets in this burst?
         if (bulletsCreated >= BulletsPerBurst)
         {
-            float healthPercentage = 1.0f - (
-                controller.DamageableObject.CurrentHealth /
-                controller.DamageableObject.InitialHealth);
+            float healthPercentage = 1.0f - controller.HealthPercentage;
 
             // can I start a new burst?
             if (Time.time - burstFinishedTime >=

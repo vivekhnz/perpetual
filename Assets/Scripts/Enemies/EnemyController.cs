@@ -15,11 +15,15 @@ public class EnemyController : PooledObject
             Debug.LogError("Enemy does not have a damageable object.");
     }
 
+    public override void ResetInstance()
+    {
+        Player = Object.FindObjectOfType<PlayerHealth>();
+        DamageableObject.ResetHealth();
+    }
+
     public void Initialize(Vector3 position)
     {
         this.transform.position = position;
-        Player = Object.FindObjectOfType<PlayerHealth>();
-        DamageableObject.ResetHealth();
     }
 
     void OnTriggerEnter2D(Collider2D other)

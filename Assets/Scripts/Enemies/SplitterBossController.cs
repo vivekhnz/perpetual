@@ -6,13 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(BossController))]
 public class SplitterBossController : MonoBehaviour
 {
-    private enum BossState
-    {
-        Appearing = 0,
-        Active = 1,
-        Teleporting = 2
-    }
-
     public AnimationCurve TimeBetweenBursts =
         AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 0.0f);
     public BossProjectileController Projectile;
@@ -24,7 +17,6 @@ public class SplitterBossController : MonoBehaviour
 
     private BossController controller;
 
-    private BossState currentState;
     private float teleportTime;
     private BossTeleportPointController selectedTeleport;
 
@@ -35,16 +27,6 @@ public class SplitterBossController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<BossController>();
-        controller.Initialized += (sender, e) => Initialize();
-
-        Initialize();
-    }
-
-    void Initialize()
-    {
-        // start off-screen and teleport in
-        transform.position = Vector3.zero;
-        currentState = BossState.Active;
     }
 
     void FixedUpdate()
@@ -70,15 +52,13 @@ public class SplitterBossController : MonoBehaviour
             return;
 
         // am I active?
-        if (currentState != BossState.Active)
+        if (!controller.IsBossActive)
             return;
 
         // can I fire any more bullets in this burst?
         if (bulletsCreated >= BulletsPerBurst)
         {
-            float healthPercentage = 1.0f - (
-                controller.DamageableObject.CurrentHealth /
-                controller.DamageableObject.InitialHealth);
+            float healthPercentage = 1.0f - controller.HealthPercentage;
 
             // can I start a new burst?
             if (Time.time - burstFinishedTime >=
