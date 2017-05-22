@@ -60,6 +60,10 @@ public class SplitterBossController : MonoBehaviour
         Pointer.rotation = Quaternion.Slerp(Pointer.rotation, targetRotation,
             Time.deltaTime * pointerRotate);
 
+        // update animator health stage
+        animator.SetFloat("HealthLevel", controller.HealthPercentage);
+        Debug.Log(controller.HealthPercentage);
+
         Fire();
     }
 
