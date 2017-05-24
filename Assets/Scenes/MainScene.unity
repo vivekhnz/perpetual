@@ -2320,6 +2320,61 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 543704368}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: intensity
+      value: 0.036
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: chromaticAberration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: axialAberration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: blur
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: blurSpread
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: luminanceDependency
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: blurDistance
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: vignetteShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: separableBlurShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134151292883142, guid: d70815656a39e8243bee5ad8a85c8777,
+        type: 2}
+      propertyPath: chromAberrationShader
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d70815656a39e8243bee5ad8a85c8777, type: 2}
   m_IsPrefabParent: 0
