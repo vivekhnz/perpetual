@@ -4,7 +4,7 @@ using UnityEngine;
 public class NukeAbility : PlayerAbility<NukeAbility.Upgrade>
 {
     [Serializable]
-    public class Upgrade : Upgrade<NukeAbility>
+    public class Upgrade : AbilityUpgrade<NukeAbility>
     {
         public NukeController NukeShockwave;
     }

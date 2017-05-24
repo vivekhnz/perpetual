@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DashAbility : PlayerAbility<DashAbility.Upgrade>
 {
-    [Serializable] public class Upgrade : Upgrade<DashAbility> { }
+    [Serializable] public class Upgrade : AbilityUpgrade<DashAbility> { }
 
     // force of the player's dash
     public float Speed = 0.25f;

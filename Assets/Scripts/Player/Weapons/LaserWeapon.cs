@@ -7,8 +7,6 @@ using System;
 [RequireComponent(typeof(LineRenderer))]
 public class LaserWeapon : MonoBehaviour
 {
-    [Serializable] public class LaserUpgrade : Upgrade<LaserWeapon> { }
-
     public float Damage = 10.0f;
     // determines how many targets the laser beam
     // can penetrate

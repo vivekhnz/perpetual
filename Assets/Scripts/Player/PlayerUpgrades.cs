@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(DataProvider))]
 public class PlayerUpgrades : MonoBehaviour
 {
-    public List<PlayerSecondaryWeapon> SecondaryWeapons;
     public UpgradeCollection Upgrades;
 
     private DataProvider data;
@@ -80,36 +79,28 @@ public class PlayerUpgrades : MonoBehaviour
         switch (upgrade.Type)
         {
             case UpgradeType.Weapon:
-                UnlockWeapon(upgrade.Component);
+                UnlockWeapon(upgrade as WeaponUpgrade);
                 break;
             case UpgradeType.Ability:
-                UnlockAbility(upgrade);
+                UnlockAbility(upgrade as AbilityUpgradeBase);
                 break;
         }
         tree.Unlock(upgrade);
     }
 
-    private void UnlockWeapon(Type weaponType)
+    private void UnlockWeapon(WeaponUpgrade upgrade)
     {
-        foreach (var prefab in SecondaryWeapons)
-        {
-            if (prefab.GetComponent(weaponType) != null)
-            {
-                // remove any existing secondary weapons
-                if (secondaryWeapon != null)
-                    Destroy(secondaryWeapon.gameObject);
+        // remove any existing secondary weapons
+        if (secondaryWeapon != null)
+            Destroy(secondaryWeapon.gameObject);
 
-                // instantiate the weapon and attach it to the player
-                var weapon = Instantiate(prefab, gameObject.transform.position,
-                    gameObject.transform.rotation);
-                weapon.transform.parent = gameObject.transform;
-                secondaryWeapon = weapon;
-                break;
-            }
-        }
+        // instantiate the weapon and attach it to the player
+        secondaryWeapon = Instantiate(upgrade.Prefab, gameObject.transform.position,
+            gameObject.transform.rotation);
+        secondaryWeapon.transform.parent = gameObject.transform;
     }
 
-    private void UnlockAbility(UpgradeBase upgrade)
+    private void UnlockAbility(AbilityUpgradeBase upgrade)
     {
         // remove any existing abilities
         if (ability != null)

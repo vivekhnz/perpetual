@@ -18,13 +18,35 @@ public abstract class UpgradeBase : ScriptableObject
     public string Name = "New Upgrade";
     public UpgradeType Type;
     public Sprite Icon;
-    public Type Component;
 }
 
-public abstract class Upgrade<T> : UpgradeBase
+public abstract class AbilityUpgradeBase : UpgradeBase
 {
-    public Upgrade()
+    public Type Component;
+
+    public AbilityUpgradeBase()
+    {
+        Name = "New Ability";
+        Type = UpgradeType.Ability;
+    }
+}
+
+public abstract class AbilityUpgrade<T> : AbilityUpgradeBase
+{
+    public AbilityUpgrade()
     {
         Component = typeof(T);
+    }
+}
+
+[Serializable]
+public class WeaponUpgrade : UpgradeBase
+{
+    public PlayerSecondaryWeapon Prefab;
+
+    public WeaponUpgrade()
+    {
+        Name = "New Weapon";
+        Type = UpgradeType.Weapon;
     }
 }
