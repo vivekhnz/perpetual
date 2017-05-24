@@ -14,6 +14,7 @@ public class DamageableObject : MonoBehaviour
     public float CurrentHealth { get; private set; }
     private HUDController hudController;
     private AudioSource explosionSound;
+    private GameObject audioListener;
 
     void Start()
     {
@@ -24,6 +25,9 @@ public class DamageableObject : MonoBehaviour
             Debug.LogWarning("This object does not have the 'Damageable' tag. Objects may be unable to damage it.");
 
         explosionSound = GetComponent<AudioSource>();
+
+        // used so that explosion sound clip sounds louder
+        audioListener = GameObject.Find("Camera");
     }
 
     public void TakeDamage(float damage, float? damageAngle = null)
@@ -64,11 +68,13 @@ public class DamageableObject : MonoBehaviour
         if (Explosion != null)
             Explode(damageAngle);
 
+        PlayExplosionSoundClip();
+
         // recycle the object if it is poolable, destroy it otherwise
         var poolable = Parent.GetComponent<PooledObject>();
         if (poolable == null)
         {
-            Destroy(Parent);
+            Destroy(Parent);        
         }
         else
         {
@@ -105,13 +111,18 @@ public class DamageableObject : MonoBehaviour
         Die(null);
     }
 
-    public void PlayExplosionSound()
+    public void PlayExplosionSoundClip()
     {
-        // play explosion sound
+        // play explosion sound as an audioClip
         if (explosionSound != null)
         {
-            explosionSound.Play();
-            Debug.Log("Expl");
+            AudioClip explosionSoundClip = explosionSound.clip;
+
+            // calculate where the explosion sound plays to make it louder or quieter
+            Vector3 PosOfExplosionSound = (audioListener.transform.position - transform.position) * 0.6f;
+
+            // plays the audio clip even if gameObject is recycled
+            AudioSource.PlayClipAtPoint(explosionSoundClip, PosOfExplosionSound);
         }
     }
 }
