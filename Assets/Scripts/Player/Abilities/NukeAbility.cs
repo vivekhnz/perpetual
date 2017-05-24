@@ -5,13 +5,13 @@ public class NukeAbility : PlayerAbility
     public float Cooldown = 12;
 
     private float nukeTime;
-    private ShockwaveController NukeShockwave;
+    private NukeController NukeShockwave;
 
     public override void ExtractAbilityInfo(AbilityInfo info)
     {
         base.ExtractAbilityInfo(info);
 
-        NukeShockwave = info.GetComponent<ShockwaveController>("NukeShockwave");
+        NukeShockwave = info.GetComponent<NukeController>("NukeShockwave");
     }
 
     void FixedUpdate()
@@ -22,7 +22,7 @@ public class NukeAbility : PlayerAbility
 
     private void Nuke()
     {
-        var shockwave = NukeShockwave.Fetch<ShockwaveController>();
+        var shockwave = NukeShockwave.Fetch<NukeController>();
         shockwave.transform.position = transform.position;
         nukeTime = Time.time;
     }
