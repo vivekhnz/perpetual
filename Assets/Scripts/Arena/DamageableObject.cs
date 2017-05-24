@@ -13,6 +13,7 @@ public class DamageableObject : MonoBehaviour
 
     public float CurrentHealth { get; private set; }
     private HUDController hudController;
+    private AudioSource explosionSound;
 
     void Start()
     {
@@ -21,6 +22,8 @@ public class DamageableObject : MonoBehaviour
 
         if (!gameObject.CompareTag("Damageable"))
             Debug.LogWarning("This object does not have the 'Damageable' tag. Objects may be unable to damage it.");
+
+        explosionSound = GetComponent<AudioSource>();
     }
 
     public void TakeDamage(float damage, float? damageAngle = null)
@@ -100,5 +103,15 @@ public class DamageableObject : MonoBehaviour
     public void SelfDestruct()
     {
         Die(null);
+    }
+
+    public void PlayExplosionSound()
+    {
+        // play explosion sound
+        if (explosionSound != null)
+        {
+            explosionSound.Play();
+            Debug.Log("Expl");
+        }
     }
 }
