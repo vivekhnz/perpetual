@@ -3,16 +3,18 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 
+using Random = UnityEngine.Random;
+
 [RequireComponent(typeof(DataProvider))]
 public class PlayerUpgrades : MonoBehaviour
 {
-    public List<PlayerSecondaryWeapon> SecondaryWeapons;
-    public List<AbilityInfo> Abilities;
+    public UpgradeCollection Upgrades;
 
     private DataProvider data;
     private PlayerWeapon[] weapons;
     private PlayerSecondaryWeapon secondaryWeapon;
-    private PlayerAbility ability;
+    private PlayerAbilityBase ability;
+    private UpgradeTree tree;
 
     public bool IsFiring
     {
@@ -24,6 +26,8 @@ public class PlayerUpgrades : MonoBehaviour
         data = GetComponent<DataProvider>();
         if (data == null)
             Debug.LogError("No data provider found!");
+
+        tree = new UpgradeTree(Upgrades);
 
         // retrieve all weapons
         weapons = GetComponentsInChildren<PlayerWeapon>();
@@ -40,7 +44,7 @@ public class PlayerUpgrades : MonoBehaviour
         }
 
         // find current ability
-        ability = GetComponent<PlayerAbility>();
+        ability = GetComponent<PlayerAbilityBase>();
     }
 
     void FixedUpdate()
@@ -70,46 +74,60 @@ public class PlayerUpgrades : MonoBehaviour
         }
     }
 
-    public void UnlockWeapon(Type weaponType)
+    public void Unlock(UpgradeBase upgrade)
     {
-        foreach (var prefab in SecondaryWeapons)
+        switch (upgrade.Type)
         {
-            if (prefab.GetComponent(weaponType) != null)
-            {
-                // remove any existing secondary weapons
-                if (secondaryWeapon != null)
-                    Destroy(secondaryWeapon.gameObject);
-
-                // instantiate the weapon and attach it to the player
-                var weapon = Instantiate(prefab, gameObject.transform.position,
-                    gameObject.transform.rotation);
-                weapon.transform.parent = gameObject.transform;
-                secondaryWeapon = weapon;
+            case UpgradeType.Weapon:
+                UnlockWeapon(upgrade as WeaponUpgrade);
                 break;
-            }
+            case UpgradeType.Ability:
+                UnlockAbility(upgrade as AbilityUpgradeBase);
+                break;
         }
+        tree.Unlock(upgrade);
     }
 
-    public bool HasWeapon<T>()
-        where T : MonoBehaviour
+    private void UnlockWeapon(WeaponUpgrade upgrade)
     {
-        return secondaryWeapon != null
-            && secondaryWeapon.GetComponent<T>() != null;
+        // remove any existing secondary weapons
+        if (secondaryWeapon != null)
+            Destroy(secondaryWeapon.gameObject);
+
+        // instantiate the weapon and attach it to the player
+        secondaryWeapon = Instantiate(upgrade.Prefab, gameObject.transform.position,
+            gameObject.transform.rotation);
+        secondaryWeapon.transform.parent = gameObject.transform;
     }
 
-    public void UnlockAbility(Type abilityType)
+    private void UnlockAbility(AbilityUpgradeBase upgrade)
     {
         // remove any existing abilities
         if (ability != null)
             Destroy(ability);
 
         // attach the new ability
-        ability = gameObject.AddComponent(abilityType) as PlayerAbility;
+        ability = gameObject.AddComponent(upgrade.Component) as PlayerAbilityBase;
+        ability.InjectUpgrade(upgrade);
     }
 
-    public bool HasAbility<T>()
-        where T : PlayerAbility
+    public List<UpgradeBase> GetUpgradeChoices(int maximum)
     {
-        return ability != null && ability is T;
+        var available = tree.GetAvailableUpgrades();
+        if (available.Count > maximum)
+        {
+            var choices = new List<UpgradeBase>();
+            while (choices.Count < maximum)
+            {
+                var upgrade = available[Random.Range(0, available.Count)];
+                choices.Add(upgrade);
+                available.Remove(upgrade);
+            }
+            return choices;
+        }
+        else
+        {
+            return available;
+        }
     }
 }

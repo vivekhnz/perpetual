@@ -1,77 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-using UnityObject = UnityEngine.Object;
-
-public abstract class PlayerAbility : MonoBehaviour
+public abstract class PlayerAbilityBase : MonoBehaviour
 {
     public Sprite Icon { get; private set; }
 
     public abstract float GetCharge();
 
-    void Start()
+    public void InjectUpgrade(UpgradeBase upgrade)
     {
-        var upgrades = GetComponent<PlayerUpgrades>();
-        if (upgrades == null)
-            Debug.LogError("Upgrades component not found!");
-
-        // retrieve ability info
-        string abilityName = GetType().Name;
-        AbilityInfo abilityInfo = null;
-        foreach (var info in upgrades.Abilities)
-        {
-            if (info.AbilityName.Equals(abilityName))
-            {
-                abilityInfo = info;
-                break;
-            }
-        }
-        if (abilityInfo == null)
-        {
-            Debug.LogError("No ability info found!");
-        }
-        else
-        {
-            ExtractAbilityInfo(abilityInfo);
-        }
+        Icon = upgrade.Icon;
+        ExtractAbilityInfo(upgrade);
     }
 
-    public virtual void ExtractAbilityInfo(AbilityInfo info)
+    public virtual void ExtractAbilityInfo(UpgradeBase upgrade)
     {
-        Icon = info.Icon;
     }
 }
 
-[Serializable]
-public class AbilityInfo
+public abstract class PlayerAbility<T> : PlayerAbilityBase
+    where T : UpgradeBase
 {
-    [Serializable]
-    public class AbilityProp
+    public sealed override void ExtractAbilityInfo(UpgradeBase upgrade)
     {
-        public string Name;
-        public UnityObject Value;
+        ExtractAbilityInfo(upgrade as T);
     }
 
-    public string AbilityName;
-    public Sprite Icon;
-    public List<AbilityProp> Properties;
-
-    public UnityObject GetObject(string name)
+    public virtual void ExtractAbilityInfo(T upgrade)
     {
-        foreach (var prop in Properties)
-        {
-            if (prop.Name.Equals(name))
-                return prop.Value;
-        }
-
-        Debug.LogError($"Property '{name}' not found!");
-        return null;
-    }
-
-    public T GetComponent<T>(string name)
-    {
-        var go = GetObject(name) as GameObject;
-        return go.GetComponent<T>();
     }
 }
