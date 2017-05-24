@@ -6,19 +6,20 @@ using UnityEngine.UI;
 public class UpgradeButtonController : MonoBehaviour
 {
     [Serializable]
-    public class UpgradeSelectedEvent : UnityEvent<Upgrade> { }
+    public class UpgradeSelectedEvent : UnityEvent<UpgradeBase> { }
 
     public Text UpgradeNameText;
     public Text UpgradeTypeText;
     public Image UpgradeButtonIcon;
     public UpgradeSelectedEvent OnUpgradeSelected;
 
-    private Upgrade upgrade;
+    private UpgradeBase upgrade;
 
-    public void SetUpgrade(Upgrade upgrade)
+    public void SetUpgrade(UpgradeBase upgrade)
     {
         UpgradeNameText.text = upgrade.Name;
         UpgradeTypeText.text = upgrade.Type.ToString();
+        UpgradeButtonIcon.sprite = upgrade.Icon;
         this.upgrade = upgrade;
     }
 

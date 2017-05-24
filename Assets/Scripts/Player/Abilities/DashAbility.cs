@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-[Upgrade("Dash", UpgradeType.Ability)]
 public class DashAbility : PlayerAbility
 {
+    [Serializable] public class Upgrade : Upgrade<DashAbility> { }
+
     // force of the player's dash
     public float Speed = 0.25f;
     // how long the player cannot dash for in seconds

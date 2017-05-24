@@ -197,7 +197,7 @@ public class HUDController : MonoBehaviour
         isPopoverOpen = true;
     }
 
-    public void SelectUpgrade(Upgrade selectedUpgrade)
+    public void SelectUpgrade(UpgradeBase selectedUpgrade)
     {
         if (!isPopoverOpen)
             return;

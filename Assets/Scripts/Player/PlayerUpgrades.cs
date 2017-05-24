@@ -10,6 +10,7 @@ public class PlayerUpgrades : MonoBehaviour
 {
     public List<PlayerSecondaryWeapon> SecondaryWeapons;
     public List<AbilityInfo> Abilities;
+    public UpgradeCollection Upgrades;
 
     private DataProvider data;
     private PlayerWeapon[] weapons;
@@ -28,7 +29,7 @@ public class PlayerUpgrades : MonoBehaviour
         if (data == null)
             Debug.LogError("No data provider found!");
 
-        tree = new UpgradeTree();
+        tree = new UpgradeTree(Upgrades);
 
         // retrieve all weapons
         weapons = GetComponentsInChildren<PlayerWeapon>();
@@ -75,7 +76,7 @@ public class PlayerUpgrades : MonoBehaviour
         }
     }
 
-    public void Unlock(Upgrade upgrade)
+    public void Unlock(UpgradeBase upgrade)
     {
         switch (upgrade.Type)
         {
@@ -119,12 +120,12 @@ public class PlayerUpgrades : MonoBehaviour
         ability = gameObject.AddComponent(abilityType) as PlayerAbility;
     }
 
-    public List<Upgrade> GetUpgradeChoices(int maximum)
+    public List<UpgradeBase> GetUpgradeChoices(int maximum)
     {
         var available = tree.GetAvailableUpgrades();
         if (available.Count > maximum)
         {
-            var choices = new List<Upgrade>();
+            var choices = new List<UpgradeBase>();
             while (choices.Count < maximum)
             {
                 var upgrade = available[Random.Range(0, available.Count)];

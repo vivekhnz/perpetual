@@ -272,6 +272,7 @@ MonoBehaviour:
     Properties:
     - Name: NukeShockwave
       Value: {fileID: 1532199718276376, guid: 46901935a6831884f84717b7a02426e5, type: 2}
+  Upgrades: {fileID: 11400000, guid: 346f3e0cd94299f49aa9aceb8903014d, type: 2}
 --- !u!114 &114910131314984590
 MonoBehaviour:
   m_ObjectHideFlags: 1

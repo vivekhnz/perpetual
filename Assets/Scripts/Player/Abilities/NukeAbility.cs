@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-[Upgrade("Nuke", UpgradeType.Ability)]
 public class NukeAbility : PlayerAbility
 {
+    [Serializable] public class Upgrade : Upgrade<NukeAbility> { }
+
     public float Cooldown = 12;
     public float Range = 1.5f;
 

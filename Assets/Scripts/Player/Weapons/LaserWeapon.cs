@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Linq;
+using System;
 
 [RequireComponent(typeof(PlayerWeapon))]
 [RequireComponent(typeof(PlayerSecondaryWeapon))]
 [RequireComponent(typeof(LineRenderer))]
-[Upgrade("Laser", UpgradeType.Weapon)]
 public class LaserWeapon : MonoBehaviour
 {
+    [Serializable] public class LaserUpgrade : Upgrade<LaserWeapon> { }
+
     public float Damage = 10.0f;
     // determines how many targets the laser beam
     // can penetrate

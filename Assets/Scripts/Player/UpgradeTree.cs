@@ -6,43 +6,24 @@ using UnityEngine;
 
 public class UpgradeTree
 {
-    readonly static List<Upgrade> Upgrades;
+    private List<UpgradeBase> allUpgrades;
+    private List<UpgradeBase> unlocked;
 
-    static UpgradeTree()
+    public UpgradeTree(UpgradeCollection upgrades)
     {
-        // retrieve all upgrade types
-        var upgrades =
-            from type in Assembly.GetExecutingAssembly().GetTypes()
-            let attributes = type.GetCustomAttributes(typeof(UpgradeAttribute), true)
-            where attributes != null && attributes.Length > 0
-            let attribute = attributes[0] as UpgradeAttribute
-            select new Upgrade
-            {
-                Name = attribute.Name,
-                Type = attribute.Type,
-                Component = type
-            };
-        Upgrades = upgrades.ToList();
+        allUpgrades = upgrades.Upgrades;
+        unlocked = new List<UpgradeBase>();
     }
 
-    private List<Upgrade> unlocked = new List<Upgrade>();
-
-    public void Unlock(Upgrade upgrade)
+    public void Unlock(UpgradeBase upgrade)
     {
         unlocked.Add(upgrade);
     }
 
-    public List<Upgrade> GetAvailableUpgrades()
+    public List<UpgradeBase> GetAvailableUpgrades()
     {
         // only allow one upgrade of each type
         var equippedTypes = unlocked.Select(u => u.Type);
-        return Upgrades.Where(u => !equippedTypes.Contains(u.Type)).ToList();
+        return allUpgrades.Where(u => !equippedTypes.Contains(u.Type)).ToList();
     }
-}
-
-public class Upgrade
-{
-    public string Name { get; set; }
-    public UpgradeType Type { get; set; }
-    public Type Component { get; set; }
 }
