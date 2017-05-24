@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class DashAbility : PlayerAbility
+public class DashAbility : PlayerAbility<DashAbility.Upgrade>
 {
     [Serializable] public class Upgrade : Upgrade<DashAbility> { }
 

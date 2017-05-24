@@ -9,13 +9,12 @@ using Random = UnityEngine.Random;
 public class PlayerUpgrades : MonoBehaviour
 {
     public List<PlayerSecondaryWeapon> SecondaryWeapons;
-    public List<AbilityInfo> Abilities;
     public UpgradeCollection Upgrades;
 
     private DataProvider data;
     private PlayerWeapon[] weapons;
     private PlayerSecondaryWeapon secondaryWeapon;
-    private PlayerAbility ability;
+    private PlayerAbilityBase ability;
     private UpgradeTree tree;
 
     public bool IsFiring
@@ -46,7 +45,7 @@ public class PlayerUpgrades : MonoBehaviour
         }
 
         // find current ability
-        ability = GetComponent<PlayerAbility>();
+        ability = GetComponent<PlayerAbilityBase>();
     }
 
     void FixedUpdate()
@@ -84,7 +83,7 @@ public class PlayerUpgrades : MonoBehaviour
                 UnlockWeapon(upgrade.Component);
                 break;
             case UpgradeType.Ability:
-                UnlockAbility(upgrade.Component);
+                UnlockAbility(upgrade);
                 break;
         }
         tree.Unlock(upgrade);
@@ -110,14 +109,15 @@ public class PlayerUpgrades : MonoBehaviour
         }
     }
 
-    private void UnlockAbility(Type abilityType)
+    private void UnlockAbility(UpgradeBase upgrade)
     {
         // remove any existing abilities
         if (ability != null)
             Destroy(ability);
 
         // attach the new ability
-        ability = gameObject.AddComponent(abilityType) as PlayerAbility;
+        ability = gameObject.AddComponent(upgrade.Component) as PlayerAbilityBase;
+        ability.InjectUpgrade(upgrade);
     }
 
     public List<UpgradeBase> GetUpgradeChoices(int maximum)

@@ -1,9 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
-public class NukeAbility : PlayerAbility
+public class NukeAbility : PlayerAbility<NukeAbility.Upgrade>
 {
-    [Serializable] public class Upgrade : Upgrade<NukeAbility> { }
+    [Serializable]
+    public class Upgrade : Upgrade<NukeAbility>
+    {
+        public NukeController NukeShockwave;
+    }
 
     public float Cooldown = 12;
     public float Range = 1.5f;
@@ -11,11 +15,9 @@ public class NukeAbility : PlayerAbility
     private float nukeTime;
     private NukeController NukeShockwave;
 
-    public override void ExtractAbilityInfo(AbilityInfo info)
+    public override void ExtractAbilityInfo(NukeAbility.Upgrade upgrade)
     {
-        base.ExtractAbilityInfo(info);
-
-        NukeShockwave = info.GetComponent<NukeController>("NukeShockwave");
+        NukeShockwave = upgrade.NukeShockwave;
     }
 
     void FixedUpdate()
