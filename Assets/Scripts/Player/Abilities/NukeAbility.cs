@@ -1,16 +1,17 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NukeAbility : PlayerAbility
 {
     public float Cooldown = 12;
 
-    private NukeController controller;
     private float nukeTime;
+    private ShockwaveController NukeShockwave;
 
-    void Start()
+    public override void ExtractAbilityInfo(AbilityInfo info)
     {
-        controller = GetComponent<NukeController>();
+        base.ExtractAbilityInfo(info);
+
+        NukeShockwave = info.GetComponent<ShockwaveController>("NukeShockwave");
     }
 
     void FixedUpdate()
@@ -21,7 +22,8 @@ public class NukeAbility : PlayerAbility
 
     private void Nuke()
     {
-        controller.CreateShockwave();
+        var shockwave = NukeShockwave.Fetch<ShockwaveController>();
+        shockwave.transform.position = transform.position;
         nukeTime = Time.time;
     }
 

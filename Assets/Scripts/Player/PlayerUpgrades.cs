@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class PlayerUpgrades : MonoBehaviour
 {
     public List<PlayerSecondaryWeapon> SecondaryWeapons;
+    public List<AbilityInfo> Abilities;
 
     private DataProvider data;
     private PlayerWeapon[] weapons;
@@ -40,8 +41,6 @@ public class PlayerUpgrades : MonoBehaviour
 
         // find current ability
         ability = GetComponent<PlayerAbility>();
-
-        UnlockAbility(typeof(NukeAbility));
     }
 
     void FixedUpdate()
@@ -104,10 +103,8 @@ public class PlayerUpgrades : MonoBehaviour
         if (ability != null)
             Destroy(ability);
 
-        // attach the new ability and retrieve its icon
+        // attach the new ability
         ability = gameObject.AddComponent(abilityType) as PlayerAbility;
-        ability.Icon = Resources.Load<Sprite>(
-            $"Abilities/{abilityType.Name}Icon");
     }
 
     public bool HasAbility<T>()

@@ -810,24 +810,6 @@ MonoBehaviour:
     Source: {fileID: 173740077}
     Key: IsBossEncounterActive
     DefaultValue: 0
---- !u!1 &298863787 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1288057475374176, guid: 2121cc37f9fb49b4cbebd4672b0a818d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1729454764}
---- !u!114 &298863788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 298863787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b1701c45036ec042a2942c3722fff02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NukeShockwave: {fileID: 114184908365980684, guid: 46901935a6831884f84717b7a02426e5,
-    type: 2}
 --- !u!1001 &305855734
 Prefab:
   m_ObjectHideFlags: 0

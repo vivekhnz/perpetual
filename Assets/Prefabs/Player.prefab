@@ -263,6 +263,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SecondaryWeapons:
   - {fileID: 114614876271724538, guid: 093bcad37d4d4234c93246863b7aa9b0, type: 2}
+  Abilities:
+  - AbilityName: DashAbility
+    Icon: {fileID: 21300000, guid: 768d2d2e983e2344f862a92d4d8e1cda, type: 3}
+    Properties: []
+  - AbilityName: NukeAbility
+    Icon: {fileID: 21300000, guid: f3ef42a1e66feb14e89d66825c53cea3, type: 3}
+    Properties:
+    - Name: NukeShockwave
+      Value: {fileID: 1532199718276376, guid: 46901935a6831884f84717b7a02426e5, type: 2}
 --- !u!114 &114910131314984590
 MonoBehaviour:
   m_ObjectHideFlags: 1
