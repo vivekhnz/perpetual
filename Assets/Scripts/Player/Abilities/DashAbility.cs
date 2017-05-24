@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[Upgrade("Dash", UpgradeType.Ability)]
 public class DashAbility : PlayerAbility
 {
     // force of the player's dash

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Animator))]
 public class HUDController : MonoBehaviour
@@ -15,10 +16,10 @@ public class HUDController : MonoBehaviour
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
+    public List<UpgradeButtonController> UpgradeButtons;
 
     private Animator animator;
-    public GameObject Upgrade1;
-    public GameObject Upgrade2;
+    private PlayerUpgrades upgrades;
 
     private bool isGameOver;
     private bool isPopoverOpen;
@@ -32,10 +33,6 @@ public class HUDController : MonoBehaviour
     private bool doShowWave;
     private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
-
-    private PlayerUpgrades upgrades;
-    private Type weaponUpgrade;
-    private Type abilityUpgrade;
 
     void Start()
     {
@@ -73,8 +70,6 @@ public class HUDController : MonoBehaviour
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
             Debug.LogError("No player upgrade manager found.");
-        weaponUpgrade = null;
-        abilityUpgrade = null;
 
         waveTime = 0;
         doShowWave = true;
@@ -175,44 +170,40 @@ public class HUDController : MonoBehaviour
         MessageText.text = string.Empty;
     }
 
-    public void SignalUpgradeUnlocked<TWeapon, TAbility>()
-        where TWeapon : MonoBehaviour
-        where TAbility : PlayerAbility
+    public void SignalUpgradeUnlocked()
     {
-        bool hasWeapon = upgrades.HasWeapon<TWeapon>();
-        bool hasAbility = upgrades.HasAbility<TAbility>();
+        var choices = upgrades.GetUpgradeChoices(UpgradeButtons.Count);
 
-        // has the player already unlocked both upgrades?
-        if (hasWeapon && hasAbility)
+        if (choices.Count == 0)
             return;
 
-        // hide unavailable upgrades
-        Upgrade1.SetActive(!hasWeapon);
-        Upgrade2.SetActive(!hasAbility);
-
-        weaponUpgrade = typeof(TWeapon);
-        abilityUpgrade = typeof(TAbility);
+        // show upgrade buttons
+        for (int i = 0; i < UpgradeButtons.Count; i++)
+        {
+            var button = UpgradeButtons[i];
+            if (choices.Count > i)
+            {
+                button.gameObject.SetActive(true);
+                button.SetUpgrade(choices[i]);
+            }
+            else
+            {
+                button.gameObject.SetActive(false);
+            }
+        }
 
         // show popover
         animator.SetBool("IsPopoverVisible", true);
         isPopoverOpen = true;
     }
 
-    public void SelectUpgrade(int selectedUpgradeIndex)
+    public void SelectUpgrade(Upgrade selectedUpgrade)
     {
         if (!isPopoverOpen)
             return;
 
         // unlock upgrade
-        switch (selectedUpgradeIndex)
-        {
-            case 0:
-                upgrades.UnlockWeapon(weaponUpgrade);
-                break;
-            case 1:
-                upgrades.UnlockAbility(abilityUpgrade);
-                break;
-        }
+        upgrades.Unlock(selectedUpgrade);
 
         // close popover
         animator.SetBool("IsPopoverVisible", false);

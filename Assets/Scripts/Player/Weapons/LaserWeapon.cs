@@ -4,6 +4,7 @@ using System.Linq;
 [RequireComponent(typeof(PlayerWeapon))]
 [RequireComponent(typeof(PlayerSecondaryWeapon))]
 [RequireComponent(typeof(LineRenderer))]
+[Upgrade("Laser", UpgradeType.Weapon)]
 public class LaserWeapon : MonoBehaviour
 {
     public float Damage = 10.0f;

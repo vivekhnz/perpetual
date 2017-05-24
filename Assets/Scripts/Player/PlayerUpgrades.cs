@@ -3,6 +3,8 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 
+using Random = UnityEngine.Random;
+
 [RequireComponent(typeof(DataProvider))]
 public class PlayerUpgrades : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class PlayerUpgrades : MonoBehaviour
     private PlayerWeapon[] weapons;
     private PlayerSecondaryWeapon secondaryWeapon;
     private PlayerAbility ability;
+    private UpgradeTree tree;
 
     public bool IsFiring
     {
@@ -24,6 +27,8 @@ public class PlayerUpgrades : MonoBehaviour
         data = GetComponent<DataProvider>();
         if (data == null)
             Debug.LogError("No data provider found!");
+
+        tree = new UpgradeTree();
 
         // retrieve all weapons
         weapons = GetComponentsInChildren<PlayerWeapon>();
@@ -70,7 +75,21 @@ public class PlayerUpgrades : MonoBehaviour
         }
     }
 
-    public void UnlockWeapon(Type weaponType)
+    public void Unlock(Upgrade upgrade)
+    {
+        switch (upgrade.Type)
+        {
+            case UpgradeType.Weapon:
+                UnlockWeapon(upgrade.Component);
+                break;
+            case UpgradeType.Ability:
+                UnlockAbility(upgrade.Component);
+                break;
+        }
+        tree.Unlock(upgrade);
+    }
+
+    private void UnlockWeapon(Type weaponType)
     {
         foreach (var prefab in SecondaryWeapons)
         {
@@ -90,14 +109,7 @@ public class PlayerUpgrades : MonoBehaviour
         }
     }
 
-    public bool HasWeapon<T>()
-        where T : MonoBehaviour
-    {
-        return secondaryWeapon != null
-            && secondaryWeapon.GetComponent<T>() != null;
-    }
-
-    public void UnlockAbility(Type abilityType)
+    private void UnlockAbility(Type abilityType)
     {
         // remove any existing abilities
         if (ability != null)
@@ -107,9 +119,23 @@ public class PlayerUpgrades : MonoBehaviour
         ability = gameObject.AddComponent(abilityType) as PlayerAbility;
     }
 
-    public bool HasAbility<T>()
-        where T : PlayerAbility
+    public List<Upgrade> GetUpgradeChoices(int maximum)
     {
-        return ability != null && ability is T;
+        var available = tree.GetAvailableUpgrades();
+        if (available.Count > maximum)
+        {
+            var choices = new List<Upgrade>();
+            while (choices.Count < maximum)
+            {
+                var upgrade = available[Random.Range(0, available.Count)];
+                choices.Add(upgrade);
+                available.Remove(upgrade);
+            }
+            return choices;
+        }
+        else
+        {
+            return available;
+        }
     }
 }

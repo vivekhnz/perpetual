@@ -139,7 +139,7 @@ public class EnemySpawnManager : MonoBehaviour
         data.UpdateValue<bool>("IsBossEncounterActive", false);
 
         // show upgrade unlocked message
-        hud.SignalUpgradeUnlocked<LaserWeapon, DashAbility>();
+        hud.SignalUpgradeUnlocked();
     }
 
     public void UpdateBossHealth(float currentHealth)

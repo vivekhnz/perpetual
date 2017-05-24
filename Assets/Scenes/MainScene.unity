@@ -249,7 +249,7 @@ MonoBehaviour:
     Weight: 1
   BossSpawner: {fileID: 114999065554894730, guid: e8d8f6f8b1445014c95376b3cf833ef3,
     type: 2}
-  WavesPerRound: 1
+  WavesPerRound: 5
 --- !u!4 &173740076
 Transform:
   m_ObjectHideFlags: 0
@@ -1484,7 +1484,7 @@ Prefab:
     - target: {fileID: 114422805862809244, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
       propertyPath: OnUpgradeSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114422805862809244, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
@@ -1800,7 +1800,7 @@ Prefab:
     - target: {fileID: 114422805862809244, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
       propertyPath: OnUpgradeSelected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114422805862809244, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
@@ -1851,11 +1851,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
     type: 2}
   m_PrefabInternal: {fileID: 784376703}
---- !u!1 &784376705 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1922888951708620, guid: e09eae8d61e40114eaa1e6191294777f,
+--- !u!114 &784376706 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114422805862809244, guid: e09eae8d61e40114eaa1e6191294777f,
     type: 2}
   m_PrefabInternal: {fileID: 784376703}
+  m_Script: {fileID: 11500000, guid: 5b0bfb0771a924343aac21add8fbf3b8, type: 3}
 --- !u!1 &807584704
 GameObject:
   m_ObjectHideFlags: 0
@@ -2877,8 +2878,9 @@ MonoBehaviour:
   WaveText: {fileID: 910987639}
   RoundText: {fileID: 1823300251}
   HighScoreText: {fileID: 399068022}
-  Upgrade1: {fileID: 1328365054}
-  Upgrade2: {fileID: 784376705}
+  UpgradeButtons:
+  - {fileID: 1328365056}
+  - {fileID: 784376706}
 --- !u!95 &1136098459
 Animator:
   serializedVersion: 3
@@ -3201,16 +3203,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1299412483}
---- !u!1 &1328365054 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1922888951708620, guid: e09eae8d61e40114eaa1e6191294777f,
-    type: 2}
-  m_PrefabInternal: {fileID: 556390240}
 --- !u!224 &1328365055 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
     type: 2}
   m_PrefabInternal: {fileID: 556390240}
+--- !u!114 &1328365056 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114422805862809244, guid: e09eae8d61e40114eaa1e6191294777f,
+    type: 2}
+  m_PrefabInternal: {fileID: 556390240}
+  m_Script: {fileID: 11500000, guid: 5b0bfb0771a924343aac21add8fbf3b8, type: 3}
 --- !u!1001 &1369220393
 Prefab:
   m_ObjectHideFlags: 0

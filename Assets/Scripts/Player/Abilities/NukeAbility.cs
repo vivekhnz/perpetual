@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[Upgrade("Nuke", UpgradeType.Ability)]
 public class NukeAbility : PlayerAbility
 {
     public float Cooldown = 12;
