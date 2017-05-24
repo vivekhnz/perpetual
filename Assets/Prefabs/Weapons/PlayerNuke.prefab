@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 75
+  Range: 2
+  Collider: {fileID: 4693253434596786}
 --- !u!212 &212173226175573722
 SpriteRenderer:
   m_ObjectHideFlags: 1

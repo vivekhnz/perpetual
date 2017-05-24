@@ -3,6 +3,7 @@
 public class NukeAbility : PlayerAbility
 {
     public float Cooldown = 12;
+    public float Range = 1.5f;
 
     private float nukeTime;
     private NukeController NukeShockwave;
@@ -23,6 +24,7 @@ public class NukeAbility : PlayerAbility
     private void Nuke()
     {
         var shockwave = NukeShockwave.Fetch<NukeController>();
+        shockwave.Range = Range;
         shockwave.transform.position = transform.position;
         nukeTime = Time.time;
     }
