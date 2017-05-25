@@ -65,6 +65,6 @@ public class PrimaryWeapon : MonoBehaviour
         // spawn projectile
         var projectile = Projectile.Fetch<ProjectileController>();
         projectile.Initialize(
-            transform.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
+            transform.position, Quaternion.Euler(0.0f, 0.0f, projectileDir), 0.0f);
     }
 }

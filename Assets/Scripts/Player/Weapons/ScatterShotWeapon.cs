@@ -10,6 +10,7 @@ public class ScatterShotWeapon : MonoBehaviour {
     public ProjectileController Projectile;
     public int ProjectileAmount = 10;
     public float ProjectileSpreadDegrees = 45.0f;
+    public float ProjectileRange = 0.5f;
 
     PlayerWeapon weapon;
     PlayerSecondaryWeapon secondaryWeapon;
@@ -61,7 +62,7 @@ public class ScatterShotWeapon : MonoBehaviour {
             // spawn projectile
             var projectile = Projectile.Fetch<ProjectileController>();
             projectile.Initialize(
-                transform.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
+                transform.position, Quaternion.Euler(0.0f, 0.0f, projectileDir), ProjectileRange);
         }
 
         // reset time
