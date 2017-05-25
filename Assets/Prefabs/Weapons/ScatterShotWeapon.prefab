@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f98799374d63644b89a0b3b94343f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: ed58d7e6e22d91142a951dbdaae2d368, type: 3}
+  Icon: {fileID: 21300000, guid: 927a9511b9ad58b46a24f46b56091d08, type: 3}
 --- !u!114 &114796027593204962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,6 +70,7 @@ MonoBehaviour:
     type: 2}
   ProjectileAmount: 10
   ProjectileSpreadDegrees: 20
+  ProjectileRange: 0.5
 --- !u!114 &114989608400526664
 MonoBehaviour:
   m_ObjectHideFlags: 1
