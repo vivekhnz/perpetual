@@ -119,13 +119,17 @@ public class DamageableObject : MonoBehaviour
             AudioClip explosionSoundClip = explosionSound.clip;
 
             // the resulting float should be around 0.5f. Higher the health, bigger the boom!
-            float explosionVolume = InitialHealth / 200;
+            float explosionVolume = Mathf.Clamp(InitialHealth / 200, 0, 0.9f);
 
             // calculate where the explosion sound plays to make it louder or quieter
             Vector3 PosOfExplosionSound = (audioListener.transform.position - transform.position) * explosionVolume;
 
             // plays the audio clip even if gameObject is recycled
             AudioSource.PlayClipAtPoint(explosionSoundClip, PosOfExplosionSound);
+        }
+        else
+        {
+            Debug.LogError("No explosion sound attached!");
         }
     }
 }
