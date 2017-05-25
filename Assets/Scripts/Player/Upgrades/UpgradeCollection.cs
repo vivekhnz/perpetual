@@ -38,15 +38,3 @@ public abstract class AbilityUpgrade<T> : AbilityUpgradeBase
         Component = typeof(T);
     }
 }
-
-[Serializable]
-public class WeaponUpgrade : UpgradeBase
-{
-    public PlayerSecondaryWeapon Prefab;
-
-    public WeaponUpgrade()
-    {
-        Name = "New Weapon";
-        Type = UpgradeType.Weapon;
-    }
-}

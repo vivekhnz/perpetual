@@ -8,9 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: b1e921c525123ea4f90fde77f6b93e0b, type: 3}
   m_Name: DashAbilityUpgrade
-  m_EditorClassIdentifier: Assembly-CSharp::DashAbility/Upgrade
+  m_EditorClassIdentifier: 
   Name: Dash
   Type: 1
   Icon: {fileID: 21300000, guid: 768d2d2e983e2344f862a92d4d8e1cda, type: 3}
