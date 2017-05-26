@@ -11,6 +11,8 @@ public class SplitterBossController : MonoBehaviour
 {
     public AnimationCurve TimeBetweenBursts =
         AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 0.0f);
+    public AnimationCurve RotationSpeed =
+        AnimationCurve.Linear(0.0f, 2.0f, 1.0f, 1.0f);
     public BossProjectileController Projectile;
     public float BulletsPerMinute = 60.0f;
     public Transform Pointer;
@@ -50,9 +52,17 @@ public class SplitterBossController : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 
+        // find rotation speed according to health stage
+        float pointerRotate = PointerRotationSpeed * (RotationSpeed.Evaluate(
+            1.0f - controller.HealthPercentage));
+
         // rotate slowly towards the player
         Pointer.rotation = Quaternion.Slerp(Pointer.rotation, targetRotation,
-            Time.deltaTime * PointerRotationSpeed);
+            Time.deltaTime * pointerRotate);
+
+        // update animator health stage
+        animator.SetFloat("HealthLevel", controller.HealthPercentage);
+        Debug.Log(controller.HealthPercentage);
 
         Fire();
     }
