@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 58801050103024530}
   - component: {fileID: 114033340439730472}
   - component: {fileID: 82974619273477714}
+  - component: {fileID: 95505480414331974}
   m_Layer: 0
   m_Name: HealthPickup
   m_TagString: Untagged
@@ -137,6 +138,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!95 &95505480414331974
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867421041270404}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd6c848505a1d1a44a4c7c05a5870eb6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114033340439730472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,7 +167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthGained: 30
-  ActiveTime: 5
+  TimeTilDespawn: 5
+  TimeBeforeDespawnToFlash: 3
   HealthPickedUpSfx: {fileID: 8300000, guid: 39b00185df5fe9e44926a09e7a829d17, type: 3}
 --- !u!212 &212854718758668500
 SpriteRenderer:
