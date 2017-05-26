@@ -84,6 +84,15 @@ public class PlayerUpgrades : MonoBehaviour
             case UpgradeType.Ability:
                 UnlockAbility(upgrade as AbilityUpgradeBase);
                 break;
+            case UpgradeType.WeaponMod:
+                (upgrade as ModUpgradeBase).ApplyMod(secondaryWeapon);
+                break;
+            case UpgradeType.AbilityMod:
+                (upgrade as ModUpgradeBase).ApplyMod(ability);
+                break;
+            case UpgradeType.PlayerMod:
+                (upgrade as ModUpgradeBase).ApplyMod(gameObject);
+                break;
         }
         tree.Unlock(upgrade);
     }
