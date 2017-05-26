@@ -7,15 +7,15 @@ public class UpgradeTree
     private List<UpgradeBase> allUpgrades;
     private List<UpgradeBase> unlocked;
 
-    private UpgradeBase weapon;
-    private UpgradeBase ability;
+    private bool hasWeapon;
+    private bool hasAbility;
 
     public UpgradeTree(UpgradeCollection upgrades)
     {
         allUpgrades = upgrades.Upgrades;
         unlocked = new List<UpgradeBase>();
-        weapon = null;
-        ability = null;
+        hasWeapon = false;
+        hasAbility = false;
     }
 
     public void Unlock(UpgradeBase upgrade)
@@ -23,16 +23,16 @@ public class UpgradeTree
         if (upgrade.Type == UpgradeType.Weapon)
         {
             // do we already have a weapon?
-            if (weapon != null)
+            if (hasWeapon)
                 return;
-            weapon = upgrade;
+            hasWeapon = true;
         }
         else if (upgrade.Type == UpgradeType.Ability)
         {
             // do we already have an ability?
-            if (ability != null)
+            if (hasAbility)
                 return;
-            ability = upgrade;
+            hasAbility = upgrade;
         }
 
         unlocked.Add(upgrade);
@@ -51,13 +51,12 @@ public class UpgradeTree
         switch (upgrade.Type)
         {
             case UpgradeType.Weapon:
-                return weapon == null;
+                return !hasWeapon;
             case UpgradeType.Ability:
-                return ability == null;
+                return !hasAbility;
             case UpgradeType.WeaponMod:
-                return (upgrade as ModUpgradeBase).Dependency.Equals(weapon);
             case UpgradeType.AbilityMod:
-                return (upgrade as ModUpgradeBase).Dependency.Equals(ability);
+                return unlocked.Contains((upgrade as ModUpgradeBase).Dependency);
             case UpgradeType.PlayerMod:
                 return true;
         }
