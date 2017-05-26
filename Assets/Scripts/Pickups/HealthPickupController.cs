@@ -6,6 +6,7 @@ public class HealthPickupController : MonoBehaviour {
 
     public float HealthGained = 30;
     public float ActiveTime = 5;
+    public AudioClip HealthPickedUpSfx;
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class HealthPickupController : MonoBehaviour {
             case "Player":
                 // give player health
                 other.gameObject.GetComponentInChildren<PlayerHealth>().GainHealth(HealthGained);
+                AudioSource.PlayClipAtPoint(HealthPickedUpSfx, transform.position);
                 Disappear();
                 break;
             default:
