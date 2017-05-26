@@ -54,24 +54,24 @@ public abstract class PlayerModUpgrade : ModUpgradeBase
     {
     }
 
-    protected PlayerMovement GetMovement(GameObject obj)
+    protected PlayerMovement GetMovement(GameObject player)
     {
-        return obj.GetComponent<PlayerMovement>();
+        return player.GetComponent<PlayerMovement>();
     }
 
-    protected PlayerUpgrades GetUpgrades(GameObject obj)
+    protected PlayerUpgrades GetUpgrades(GameObject player)
     {
-        return obj.GetComponent<PlayerUpgrades>();
+        return player.GetComponent<PlayerUpgrades>();
     }
 
-    protected PlayerHealth GetHealth(GameObject obj)
+    protected PlayerHealth GetHealth(GameObject player)
     {
-        return obj.GetComponentInChildren<PlayerHealth>();
+        return player.GetComponentInChildren<PlayerHealth>();
     }
 
-    protected PrimaryWeapon GetPrimaryWeapon(GameObject obj)
+    protected PrimaryWeapon GetPrimaryWeapon(GameObject player)
     {
-        return obj.GetComponentInChildren<PrimaryWeapon>();
+        return player.GetComponentInChildren<PrimaryWeapon>();
     }
 
     public sealed override void ApplyMod(object target)
