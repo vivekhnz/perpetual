@@ -61,8 +61,7 @@ public class SplitterBossController : MonoBehaviour
             Time.deltaTime * pointerRotate);
 
         // update animator health stage
-        animator.SetFloat("HealthLevel", controller.HealthPercentage);
-        Debug.Log(controller.HealthPercentage);
+        animator.SetFloat("HealthPercentage", controller.HealthPercentage);
 
         Fire();
     }

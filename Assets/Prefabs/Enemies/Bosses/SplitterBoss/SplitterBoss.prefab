@@ -889,11 +889,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
+  Projectile: {fileID: 114180506699960422, guid: 990809761d84a444bb91a8b0c7b5f6db,
     type: 2}
-  BulletsPerMinute: 400
+  BulletsPerMinute: 800
   Pointer: {fileID: 4249329193271566}
-  BulletsPerBurst: 8
+  BulletsPerBurst: 6
   BodyRotationSpeed: 30
   PointerRotationSpeed: 12
 --- !u!114 &114679732418166628
