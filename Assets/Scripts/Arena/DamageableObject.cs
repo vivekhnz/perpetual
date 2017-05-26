@@ -13,6 +13,8 @@ public class DamageableObject : MonoBehaviour
 
     public float CurrentHealth { get; private set; }
     private HUDController hudController;
+    private AudioSource explosionSound;
+    private GameObject audioListener;
 
     void Start()
     {
@@ -21,6 +23,11 @@ public class DamageableObject : MonoBehaviour
 
         if (!gameObject.CompareTag("Damageable"))
             Debug.LogWarning("This object does not have the 'Damageable' tag. Objects may be unable to damage it.");
+
+        explosionSound = GetComponent<AudioSource>();
+
+        // used so that explosion sound clip sounds louder
+        audioListener = GameObject.Find("Camera");
     }
 
     public void TakeDamage(float damage, float? damageAngle = null)
@@ -61,11 +68,13 @@ public class DamageableObject : MonoBehaviour
         if (Explosion != null)
             Explode(damageAngle);
 
+        PlayExplosionSoundClip();
+
         // recycle the object if it is poolable, destroy it otherwise
         var poolable = Parent.GetComponent<PooledObject>();
         if (poolable == null)
         {
-            Destroy(Parent);
+            Destroy(Parent);        
         }
         else
         {
@@ -100,5 +109,27 @@ public class DamageableObject : MonoBehaviour
     public void SelfDestruct()
     {
         Die(null);
+    }
+
+    public void PlayExplosionSoundClip()
+    {
+        // play explosion sound as an audioClip
+        if (explosionSound != null)
+        {
+            AudioClip explosionSoundClip = explosionSound.clip;
+
+            // the resulting float should be around 0.5f. Higher the health, bigger the boom!
+            float explosionVolume = Mathf.Clamp(InitialHealth / 200, 0, 0.9f);
+
+            // calculate where the explosion sound plays to make it louder or quieter
+            Vector3 PosOfExplosionSound = (audioListener.transform.position - transform.position) * explosionVolume;
+
+            // plays the audio clip even if gameObject is recycled
+            AudioSource.PlayClipAtPoint(explosionSoundClip, PosOfExplosionSound);
+        }
+        else
+        {
+            Debug.LogError("No explosion sound attached!");
+        }
     }
 }
