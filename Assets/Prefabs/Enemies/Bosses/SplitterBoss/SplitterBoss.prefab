@@ -703,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 1000
+  InitialHealth: 1500
   ScoreValue: 1000
   CameraShakeAmount: 5
   Parent: {fileID: 1268236377661152}
@@ -812,23 +812,130 @@ MonoBehaviour:
       time: 0
       value: 1
       inSlope: 0
-      outSlope: -1
-      tangentMode: 0
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.4
+      value: 1
+      inSlope: 0
+      outSlope: -300.00388
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.401
+      value: 0.7
+      inSlope: -300.00388
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.8
+      value: 0.7
+      inSlope: 0
+      outSlope: -300.00385
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.801
+      value: 0.4
+      inSlope: -300.00385
+      outSlope: -0
+      tangentMode: 69
     - serializedVersion: 2
       time: 1
-      value: 0
-      inSlope: -1
+      value: 0.4
+      inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 69
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
-  Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
+    m_RotationOrder: 0
+  RotationSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 30
+      inSlope: 0
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.4
+      value: 30
+      inSlope: 0
+      outSlope: 30000.387
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.401
+      value: 60
+      inSlope: 30000.387
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.8
+      value: 60
+      inSlope: 0
+      outSlope: 40000.516
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.801
+      value: 100
+      inSlope: 40000.516
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 1
+      value: 100
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 69
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  MovementSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.4
+      value: 0
+      inSlope: 0
+      outSlope: 750.00964
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.401
+      value: 0.75
+      inSlope: 750.00964
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.8
+      value: 0.75
+      inSlope: 0
+      outSlope: 750.00964
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 0.801
+      value: 1.5
+      inSlope: 750.00964
+      outSlope: -0
+      tangentMode: 69
+    - serializedVersion: 2
+      time: 1
+      value: 1.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 69
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  Projectile: {fileID: 114180506699960422, guid: 990809761d84a444bb91a8b0c7b5f6db,
     type: 2}
-  BulletsPerMinute: 400
+  BulletsPerMinute: 700
   Pointer: {fileID: 4249329193271566}
-  BulletsPerBurst: 8
-  BodyRotationSpeed: 30
+  BulletsPerBurst: 4
   PointerRotationSpeed: 12
 --- !u!114 &114679732418166628
 MonoBehaviour:

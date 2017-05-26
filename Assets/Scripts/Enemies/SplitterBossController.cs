@@ -11,11 +11,14 @@ public class SplitterBossController : MonoBehaviour
 {
     public AnimationCurve TimeBetweenBursts =
         AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 0.0f);
+    public AnimationCurve RotationSpeed =
+        AnimationCurve.Linear(0.0f, 30.0f, 1.0f, 60.0f);
+    public AnimationCurve MovementSpeed =
+        AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.5f);
     public BossProjectileController Projectile;
     public float BulletsPerMinute = 60.0f;
     public Transform Pointer;
     public int BulletsPerBurst = 6;
-    public float BodyRotationSpeed = 30f;
     public float PointerRotationSpeed = 12f;
 
     private BossController controller;
@@ -42,17 +45,27 @@ public class SplitterBossController : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.Rotate(0.0f, 0.0f, BodyRotationSpeed * Mathf.Deg2Rad);
+        // rotate body
+        transform.Rotate(0.0f, 0.0f,
+            RotationSpeed.Evaluate(1.0f - controller.HealthPercentage) * Mathf.Deg2Rad);
 
-        // find the direction towards the player
-        Vector2 direction = controller.Player.transform.position - Pointer.position;
+        // rotate pointer to face player
+        Vector2 direction = controller.Player.transform.position - transform.position;
         direction.Normalize();
-        Quaternion targetRotation = Quaternion.Euler(0, 0,
+        Pointer.rotation = Quaternion.Euler(0, 0,
             Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
 
-        // rotate slowly towards the player
-        Pointer.rotation = Quaternion.Slerp(Pointer.rotation, targetRotation,
-            Time.deltaTime * PointerRotationSpeed);
+        // update animator health stage
+        animator.SetFloat("HealthPercentage", controller.HealthPercentage);
+
+        // am I active?
+        if (!controller.IsBossActive)
+            return;
+
+        // move towards player
+        var speed = MovementSpeed.Evaluate(1.0f - controller.HealthPercentage);
+        transform.Translate(
+            direction * speed * Time.deltaTime, Space.World);
 
         Fire();
     }
@@ -60,10 +73,6 @@ public class SplitterBossController : MonoBehaviour
     void Fire()
     {
         if (Projectile == null)
-            return;
-
-        // am I active?
-        if (!controller.IsBossActive)
             return;
 
         // can I fire any more bullets in this burst?
