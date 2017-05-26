@@ -73,6 +73,21 @@ public class PlayerHealth : MonoBehaviour
         UpdateHealthUI();
     }
 
+    public void GainHealth(float healthGained)
+    {
+        // regain health without exceeding max hp
+        if ((currentHealth + healthGained) >= InitialHealth)
+        {
+            currentHealth = InitialHealth;
+        }
+        else
+        {
+            currentHealth += healthGained;
+        }
+
+        UpdateHealthUI();
+    }
+
     public void ResetHealth()
     {
         currentHealth = InitialHealth;
