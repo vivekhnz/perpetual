@@ -249,7 +249,7 @@ MonoBehaviour:
     Weight: 1
   BossSpawner: {fileID: 114999065554894730, guid: 927769426a16d0141a1d9e6afd998611,
     type: 2}
-  WavesPerRound: 5
+  WavesPerRound: 4
 --- !u!4 &173740076
 Transform:
   m_ObjectHideFlags: 0
@@ -1409,7 +1409,7 @@ Prefab:
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -80
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
@@ -1419,7 +1419,7 @@ Prefab:
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 120
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
@@ -1449,7 +1449,7 @@ Prefab:
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
@@ -1746,7 +1746,7 @@ Prefab:
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 80
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
@@ -1756,7 +1756,7 @@ Prefab:
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 120
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
@@ -1786,7 +1786,7 @@ Prefab:
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224885155890857516, guid: e09eae8d61e40114eaa1e6191294777f,
         type: 2}

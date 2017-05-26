@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f7392154370b8846b76e1dab4a8ea4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 20
+  Damage: 15
   MaxDamageablesToHit: 1
   LaserDuration: 1
   Cooldown: 7

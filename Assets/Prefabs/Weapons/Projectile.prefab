@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 10
   Damage: 10
+  KnockbackForce: 0
   ProjectileExplosion: {fileID: 114749502084572656, guid: a549c400636aab641b10c93716ba84d9,
     type: 2}
 --- !u!212 &212923374578507178
