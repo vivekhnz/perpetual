@@ -149,3 +149,4 @@ MonoBehaviour:
     type: 2}
   ProjectileSpreadDegrees: 5
   BulletsPerMinute: 1200
+  ProjectileKnockbackForce: 0

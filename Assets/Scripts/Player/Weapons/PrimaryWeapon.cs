@@ -6,6 +6,7 @@ public class PrimaryWeapon : MonoBehaviour
     public ProjectileController Projectile;
     public float ProjectileSpreadDegrees = 10.0f;
     public float BulletsPerMinute = 60.0f;
+    public float ProjectileKnockbackForce = 0.0f;
 
     private float projectileFiredTime = 0.0f;
     private PlayerWeapon weapon;
@@ -66,5 +67,6 @@ public class PrimaryWeapon : MonoBehaviour
         var projectile = Projectile.Fetch<ProjectileController>();
         projectile.Initialize(
             transform.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
+        projectile.KnockbackForce = ProjectileKnockbackForce;
     }
 }
