@@ -249,7 +249,7 @@ MonoBehaviour:
     Weight: 1
   BossSpawner: {fileID: 114999065554894730, guid: 927769426a16d0141a1d9e6afd998611,
     type: 2}
-  WavesPerRound: 0
+  WavesPerRound: 5
 --- !u!4 &173740076
 Transform:
   m_ObjectHideFlags: 0
@@ -4368,7 +4368,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
