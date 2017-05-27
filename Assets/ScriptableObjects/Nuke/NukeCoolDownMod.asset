@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a94d4da932528aa48ae8e9ef7a2f77c7, type: 3}
-  m_Name: NukeCooldownMod
+  m_Name: NukeCoolDownMod
   m_EditorClassIdentifier: 
   Name: Reduced Cooldown
   Type: 3
