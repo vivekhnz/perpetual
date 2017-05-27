@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a94d4da932528aa48ae8e9ef7a2f77c7, type: 3}
-  m_Name: NukeCoolDownMod
+  m_Name: NukeCooldownMod
   m_EditorClassIdentifier: 
-  Name: Nuke Cooldown
+  Name: Reduced Cooldown
   Type: 3
   Icon: {fileID: 21300000, guid: f3ef42a1e66feb14e89d66825c53cea3, type: 3}
   Dependency: {fileID: 11400000, guid: 915bcd0b92aa68646955f522da8d79f2, type: 2}

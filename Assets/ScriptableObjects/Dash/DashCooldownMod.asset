@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4752a540db7cf346ba4a42d53afee44, type: 3}
   m_Name: DashCooldownMod
   m_EditorClassIdentifier: 
-  Name: New Mod
+  Name: Reduced Cooldown
   Type: 3
-  Icon: {fileID: 0}
-  Dependency: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 768d2d2e983e2344f862a92d4d8e1cda, type: 3}
+  Dependency: {fileID: 11400000, guid: ea52afa389cf68847b9ae8d13491d699, type: 2}
   Cooldown: 2
