@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ public class HUDController : MonoBehaviour
 
     private int score;
     private int highscore;
+    private int wave;
+    private int round;
     private bool doShowWave;
     private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
@@ -100,6 +103,9 @@ public class HUDController : MonoBehaviour
         if (GameOverText != null)
             GameOverText.text = "Game Over";
 
+        //Debug.Log(wave + " " + round + " " + score);
+        SendGameOverTelemetry(score, round, wave);
+
         // destroy all enemies and spawners
         var enemyManager = UnityEngine.Object
             .FindObjectOfType<EnemySpawnManager>();
@@ -107,6 +113,17 @@ public class HUDController : MonoBehaviour
 
         // go to start screen
         Invoke("ReturnToStartMenu", 2);
+    }
+
+    private void SendGameOverTelemetry(int score, int round, int wave)
+    {
+        // send telemetry regarding the end results of a game
+        Analytics.CustomEvent("GameOverScores", new Dictionary<string, object>()
+        {
+            { "Score", score },
+            { "Round", round },
+            { "Wave", wave }
+        });
     }
 
     public void AddScore(int score)
@@ -123,6 +140,11 @@ public class HUDController : MonoBehaviour
 
     public void ShowRoundAndWave(int round, int wave)
     {
+        // save round and wave numbers for telemetry
+        this.round = round;
+        this.wave = wave;
+
+        // append the numbers to hud text
         if (MessageText != null)
             MessageText.text = "Wave " + wave;
 
