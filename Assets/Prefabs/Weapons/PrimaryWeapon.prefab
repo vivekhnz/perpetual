@@ -148,5 +148,5 @@ MonoBehaviour:
   Projectile: {fileID: 114904970035565966, guid: e663f6ad43daf114195ff75bd6093677,
     type: 2}
   ProjectileSpreadDegrees: 5
-  BulletsPerMinute: 1200
+  BulletsPerMinute: 1000
   ProjectileKnockbackForce: 0
