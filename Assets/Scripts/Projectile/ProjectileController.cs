@@ -5,17 +5,16 @@ public class ProjectileController : PooledObject
     public float MovementSpeed = 4.0f;
     public float Damage = 10.0f;
     public float KnockbackForce = 1.0f;
+    public float Lifetime = 0.0f;
     public ParticleSystemAutoDestroy ProjectileExplosion;
 
     private float timeFired;
-    private float scatterLife;
 
-    public void Initialize(Vector3 position, Quaternion rotation, float scatterTime)
+    public void Initialize(Vector3 position, Quaternion rotation)
     {
         transform.position = position;
         transform.rotation = rotation;
         timeFired = Time.time;
-        scatterLife = scatterTime;
     }
 
     void FixedUpdate()
@@ -23,10 +22,8 @@ public class ProjectileController : PooledObject
         transform.Translate(
             Vector3.right * Time.deltaTime * MovementSpeed);
 
-        if (scatterLife > 0 && Time.time - timeFired > scatterLife)
-        {
+        if (Lifetime > 0 && Time.time - timeFired > Lifetime)
             Recycle();
-        }
     }
 
     void OnTriggerEnter2D(Collider2D collider)

@@ -4,7 +4,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerWeapon))]
 [RequireComponent(typeof(PlayerSecondaryWeapon))]
-public class ScatterShotWeapon : MonoBehaviour {
+public class ScatterShotWeapon : MonoBehaviour
+{
 
     public float Cooldown = 1.0f;
     public ProjectileController Projectile;
@@ -17,8 +18,9 @@ public class ScatterShotWeapon : MonoBehaviour {
 
     private float startFireTime;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         weapon = GetComponent<PlayerWeapon>();
         if (weapon == null)
             Debug.LogError("Weapon not found!");
@@ -28,15 +30,17 @@ public class ScatterShotWeapon : MonoBehaviour {
             Debug.LogError("Secondary weapon not found!");
 
         startFireTime = Time.time;
-	}
+    }
 
-	void FixedUpdate () {
-		// fire weapon
+    void FixedUpdate()
+    {
+        // fire weapon
         if (Input.GetButton("FireSecondary") && Time.time - startFireTime > Cooldown)
         {
             Fire();
             weapon.IsFiring = true;
-        } else
+        }
+        else
         {
             weapon.IsFiring = false;
 
@@ -45,7 +49,7 @@ public class ScatterShotWeapon : MonoBehaviour {
                 (Time.time - startFireTime) / Cooldown, 0, 1);
             secondaryWeapon.Charge = scatterShotCharge;
         }
-	}
+    }
 
     void Fire()
     {
@@ -62,7 +66,8 @@ public class ScatterShotWeapon : MonoBehaviour {
             // spawn projectile
             var projectile = Projectile.Fetch<ProjectileController>();
             projectile.Initialize(
-                transform.position, Quaternion.Euler(0.0f, 0.0f, projectileDir), ProjectileRange);
+                transform.position, Quaternion.Euler(0.0f, 0.0f, projectileDir));
+            projectile.Lifetime = ProjectileRange;
         }
 
         // reset time

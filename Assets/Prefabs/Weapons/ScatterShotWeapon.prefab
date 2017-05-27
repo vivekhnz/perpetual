@@ -65,12 +65,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de62ec463297512449e160e86be0913f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cooldown: 1
-  Projectile: {fileID: 114904970035565966, guid: e663f6ad43daf114195ff75bd6093677,
+  Cooldown: 2
+  Projectile: {fileID: 114904970035565966, guid: 696bb78c6f2f68f46a63a6b77c7a62ed,
     type: 2}
   ProjectileAmount: 10
   ProjectileSpreadDegrees: 20
-  ProjectileRange: 0.5
+  ProjectileRange: 0.2
 --- !u!114 &114989608400526664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,4 +82,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2502900e5d32577428ba9ef9ed9bfbc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraShakeAmount: 0
+  CameraShakeAmount: 12
