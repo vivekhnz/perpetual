@@ -103,7 +103,6 @@ public class HUDController : MonoBehaviour
         if (GameOverText != null)
             GameOverText.text = "Game Over";
 
-        //Debug.Log(wave + " " + round + " " + score);
         SendGameOverTelemetry(score, round, wave);
 
         // destroy all enemies and spawners
