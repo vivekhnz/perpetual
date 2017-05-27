@@ -213,8 +213,9 @@ MonoBehaviour:
   - Spawner: {fileID: 114999065554894730, guid: 4963c26d21cd64944b7a7f09662d0c1a,
       type: 2}
     Weight: 1
-  BossSpawner: {fileID: 114999065554894730, guid: 927769426a16d0141a1d9e6afd998611,
-    type: 2}
+  BossSpawners:
+  - {fileID: 114999065554894730, guid: e8d8f6f8b1445014c95376b3cf833ef3, type: 2}
+  - {fileID: 114999065554894730, guid: 927769426a16d0141a1d9e6afd998611, type: 2}
   WavesPerRound: 4
 --- !u!4 &173740076
 Transform:
@@ -3932,12 +3933,12 @@ Prefab:
     - target: {fileID: 224021962059162810, guid: 15c8338303c03924c88bb7c35e68feff,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224021962059162810, guid: 15c8338303c03924c88bb7c35e68feff,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114029888964496294, guid: 15c8338303c03924c88bb7c35e68feff,
         type: 2}
