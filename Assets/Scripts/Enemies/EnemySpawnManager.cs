@@ -26,7 +26,7 @@ public class EnemySpawnManager : MonoBehaviour
     private List<EnemySpawner> activeSpawners;
     private int wave;
     private int round;
-    private int bossPos;
+    private int currentBoss;
 
     void Start()
     {
@@ -43,8 +43,8 @@ public class EnemySpawnManager : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerHealth>();
         if (player == null)
             Debug.LogError("No player found.");
-        
-        bossPos = 0;
+
+        currentBoss = 0;
 
         activeSpawners = new List<EnemySpawner>();
         round = 0;
@@ -87,7 +87,7 @@ public class EnemySpawnManager : MonoBehaviour
         {
             // signal the boss fight and create the boss spawner
             hud.SignalBossFight();
-            CreateSpawner(AlternateBoss());
+            CreateSpawner(GetBoss());
         }
         else
         {
@@ -98,15 +98,11 @@ public class EnemySpawnManager : MonoBehaviour
         }
     }
 
-    EnemySpawner AlternateBoss()
+    EnemySpawner GetBoss()
     {
-        bossPos++;
-        Debug.Log(bossPos);
-        if (bossPos > BossSpawners.Count - 1)
-        {
-            bossPos = 0;
-        }
-        return BossSpawners[bossPos];
+        var boss = BossSpawners[currentBoss];
+        currentBoss = (currentBoss + 1) % BossSpawners.Count;
+        return boss;
     }
 
     EnemySpawner PickRandomSpawner()
