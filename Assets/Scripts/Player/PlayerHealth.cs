@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     private CameraShake shaker;
     private DamageEffects damageEffects;
     private Animator animator;
+    private DataProvider data;
 
     private float currentHealth;
     private float damagedTime;
@@ -25,10 +26,10 @@ public class PlayerHealth : MonoBehaviour
         shaker = Camera.main.GetComponent<CameraShake>();
         damageEffects = Camera.main.GetComponent<DamageEffects>();
         animator = GetComponentInParent<Animator>();
+        data = GetComponentInParent<DataProvider>();
 
         currentHealth = InitialHealth;
         isInvincible = false;
-        hudController.UpdateHealth(currentHealth);
     }
 
     void FixedUpdate()
@@ -38,6 +39,21 @@ public class PlayerHealth : MonoBehaviour
         {
             isInvincible = false;
             animator.SetBool("IsInvincible", false);
+        }
+
+        // update UI
+        data.UpdateValue<float>("MaxHealth", InitialHealth);
+        data.UpdateValue<float>("CurrentHealth", currentHealth);
+
+        // am I dead?
+        if (hudController != null && currentHealth <= 0)
+        {
+            // game over
+            hudController.GameOver();
+
+            // remove player object
+            if (Parent != null)
+                Destroy(Parent.gameObject);
         }
     }
 
@@ -70,33 +86,10 @@ public class PlayerHealth : MonoBehaviour
 
         // reduce health
         currentHealth -= damage;
-        UpdateHealthUI();
     }
 
     public void ResetHealth()
     {
         currentHealth = InitialHealth;
-        UpdateHealthUI();
-    }
-
-    private void UpdateHealthUI()
-    {
-        if (hudController != null)
-        {
-            // update HUD
-            hudController.UpdateHealth(currentHealth);
-
-            // am I dead?
-            if (currentHealth <= 0)
-            {
-                // game over
-                hudController.UpdateHealth(0);
-                hudController.GameOver();
-
-                // remove player object
-                if (Parent != null)
-                    Destroy(Parent.gameObject);
-            }
-        }
     }
 }

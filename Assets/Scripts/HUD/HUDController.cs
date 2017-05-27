@@ -9,7 +9,6 @@ using System.Collections.Generic;
 public class HUDController : MonoBehaviour
 {
     public Text GameOverText;
-    public Slider HealthText;
     public Text ScoreText;
     public Text MessageText;
     public float ShowWaveTime;
@@ -108,11 +107,6 @@ public class HUDController : MonoBehaviour
 
         // go to start screen
         Invoke("ReturnToStartMenu", 2);
-    }
-
-    public void UpdateHealth(float health)
-    {
-        HealthText.value = health;
     }
 
     public void AddScore(int score)

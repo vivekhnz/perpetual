@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66432915ecb978f41a1c29c946de2f69, type: 3}
-  m_Name: MaxHealthMod
+  m_Name: MaxHealthModV1
   m_EditorClassIdentifier: 
   Name: Upgrade Health V1
   Type: 4

@@ -56,9 +56,11 @@ public class UpgradeTree
                 return !hasAbility;
             case UpgradeType.WeaponMod:
             case UpgradeType.AbilityMod:
-                return unlocked.Contains((upgrade as ModUpgradeBase).Dependency);
             case UpgradeType.PlayerMod:
-                return true;
+                var mod = upgrade as ModUpgradeBase;
+                if (mod.Dependency == null)
+                    return true;
+                return unlocked.Contains(mod.Dependency);
         }
 
         return false;

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class ProgressBar : MonoBehaviour
 {
     public FloatBinding Value;
+    public FloatBinding MinValue;
+    public FloatBinding MaxValue;
     public BooleanBinding IsEnabled;
 
     void Start()
@@ -15,6 +17,10 @@ public class ProgressBar : MonoBehaviour
 
         Value.Subscribe(
             value => slider.value = value);
+        MinValue.Subscribe(
+            value => slider.minValue = value);
+        MaxValue.Subscribe(
+            value => slider.maxValue = value);
         IsEnabled.Subscribe(
             value =>
             {
