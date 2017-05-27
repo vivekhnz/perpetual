@@ -194,7 +194,7 @@ MonoBehaviour:
   Damage: 15
   MaxDamageablesToHit: 1
   LaserDuration: 1
-  Cooldown: 7
+  Cooldown: 9
   LaserHitEffect: {fileID: 114749502084572656, guid: a549c400636aab641b10c93716ba84d9,
     type: 2}
   LaserBeamEffect: {fileID: 198407403595574014}
