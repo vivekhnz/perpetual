@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class DashAbility : PlayerAbility
+public class DashAbility : PlayerAbility<DashAbilityUpgrade>
 {
     // force of the player's dash
     public float Speed = 0.25f;

@@ -15,6 +15,7 @@ public class PooledObject : MonoBehaviour
 
     public void Recycle()
     {
+        CleanupInstance();
         if (Pool == null)
         {
             Destroy(gameObject);
@@ -25,16 +26,15 @@ public class PooledObject : MonoBehaviour
                 InstanceRecycled(this, EventArgs.Empty);
             Pool.Recycle(this);
         }
-        CleanupInstance();
     }
 
     public T Fetch<T>() where T : PooledObject
     {
         Pool = Pool ?? ObjectPool.GetPool(this);
         var obj = (T)Pool.Fetch();
+        obj.ResetInstance();
         if (obj.InstanceReset != null)
             obj.InstanceReset(obj, EventArgs.Empty);
-        obj.ResetInstance();
         return obj;
     }
 }
