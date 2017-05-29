@@ -15,4 +15,4 @@ MonoBehaviour:
   Type: 2
   Icon: {fileID: 21300000, guid: 927a9511b9ad58b46a24f46b56091d08, type: 3}
   Dependency: {fileID: 11400000, guid: 5fa8143d14e9fe8488e95fb458f5c148, type: 2}
-  Cooldown: 0.5
+  Cooldown: 1.5
