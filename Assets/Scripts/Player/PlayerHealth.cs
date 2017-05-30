@@ -99,34 +99,10 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth += healthGained;
         }
-
-        UpdateHealthUI();
     }
 
     public void ResetHealth()
     {
         currentHealth = InitialHealth;
-        UpdateHealthUI();
-    }
-
-    private void UpdateHealthUI()
-    {
-        if (hudController != null)
-        {
-            // update HUD
-            hudController.UpdateHealth(currentHealth);
-
-            // am I dead?
-            if (currentHealth <= 0)
-            {
-                // game over
-                hudController.UpdateHealth(0);
-                hudController.GameOver();
-
-                // remove player object
-                if (Parent != null)
-                    Destroy(Parent.gameObject);
-            }
-        }
     }
 }

@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthGained: 30
-  TimeTilDespawn: 5
+  TimeTilDespawn: 30
   TimeBeforeDespawnToFlash: 3
   HealthPickedUpSfx: {fileID: 8300000, guid: 39b00185df5fe9e44926a09e7a829d17, type: 3}
 --- !u!212 &212854718758668500

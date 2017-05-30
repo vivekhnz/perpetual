@@ -17,6 +17,7 @@ public class EnemySpawnManager : MonoBehaviour
     public List<EnemySpawn> Spawners;
     public List<EnemySpawner> BossSpawners;
     public int WavesPerRound = 2;
+    public GameObject HealthPickup;
 
     private HUDController hud;
     private DataProvider data;
@@ -43,6 +44,8 @@ public class EnemySpawnManager : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerHealth>();
         if (player == null)
             Debug.LogError("No player found.");
+        if (HealthPickup == null)
+            Debug.LogError("Health Pickup Prefab Not Found!");
 
         currentBoss = 0;
 
@@ -88,6 +91,7 @@ public class EnemySpawnManager : MonoBehaviour
             // signal the boss fight and create the boss spawner
             hud.SignalBossFight();
             CreateSpawner(GetBoss());
+            Instantiate(HealthPickup);
         }
         else
         {
