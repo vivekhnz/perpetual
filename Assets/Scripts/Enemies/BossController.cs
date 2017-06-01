@@ -89,17 +89,12 @@ public class BossController : MonoBehaviour
         spawnManager.StartBossEncounter(
             Controller.DamageableObject.InitialHealth);
         Controller.DamageableObject.ResetHealth();
-        Debug.Log(Controller.DamageableObject.InitialHealth);
 
         transform.position = OffScreenPosition;
 
         if (Initialized != null)
             Initialized(this, EventArgs.Empty);
         BeginTeleport();
-    }
-
-    void SetDifficulty()
-    {
     }
 
     public void BeginTeleport()
