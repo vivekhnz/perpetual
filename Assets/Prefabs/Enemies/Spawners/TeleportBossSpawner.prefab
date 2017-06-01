@@ -55,4 +55,5 @@ MonoBehaviour:
   - Enemy: {fileID: 114842166424473826, guid: d1e0b31ce57c4034fa486b23288a0b09, type: 2}
     EnemiesToSpawn: 1
     EnemiesSpawned: 0
-  SpawnInterval: 2
+  SpawnInterval: 0
+  SpawnDelay: 2
