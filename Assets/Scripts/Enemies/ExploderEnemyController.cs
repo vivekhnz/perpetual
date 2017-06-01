@@ -34,6 +34,13 @@ public class ExploderEnemyController : MonoBehaviour
     public void CreateShockwave()
     {
         var shockwave = Shockwave.Fetch<ShockwaveController>();
+        shockwave.DamageToPlayer = 0;
+        shockwave.transform.position = transform.position;
+    }
+
+    public void CreateDetonation()
+    {
+        var shockwave = Shockwave.Fetch<ShockwaveController>();
         shockwave.transform.position = transform.position;
     }
 }
