@@ -16,9 +16,9 @@ public class SplitterBossController : MonoBehaviour
     public AnimationCurve MovementSpeed =
         AnimationCurve.Linear(0.0f, 0.0f, 1.0f, 1.5f);
     public BossProjectileController Projectile;
-    public float BulletsPerMinute = 60.0f;
+    public AnimationCurve BulletsPerMinute;
     public Transform Pointer;
-    public int BulletsPerBurst = 6;
+    public AnimationCurve BulletsPerBurst;
     public float PointerRotationSpeed = 12f;
 
     private BossController controller;
@@ -75,8 +75,12 @@ public class SplitterBossController : MonoBehaviour
         if (Projectile == null)
             return;
 
+        // get current Bullets per burst/min
+        float currentBulletsPerBurst = BulletsPerBurst.Evaluate(controller.spawnManager.GetRound());
+        float currentBulletsPerMin = BulletsPerMinute.Evaluate(controller.spawnManager.GetRound());
+
         // can I fire any more bullets in this burst?
-        if (bulletsCreated >= BulletsPerBurst)
+        if (bulletsCreated >= currentBulletsPerBurst)
         {
             float healthPercentage = 1.0f - controller.HealthPercentage;
 
@@ -94,7 +98,7 @@ public class SplitterBossController : MonoBehaviour
         }
 
         // can I fire again?
-        float timeBetweenProjectiles = 60.0f / BulletsPerMinute;
+        float timeBetweenProjectiles = 60.0f / currentBulletsPerMin;
         if (Time.time - projectileFiredTime < timeBetweenProjectiles)
             return;
         projectileFiredTime = Time.time;
@@ -109,7 +113,7 @@ public class SplitterBossController : MonoBehaviour
         gunSound.Play();
 
         // was this the last bullet in the burst?
-        if (bulletsCreated >= BulletsPerBurst)
+        if (bulletsCreated >= currentBulletsPerBurst)
             burstFinishedTime = Time.time;
     }
 }

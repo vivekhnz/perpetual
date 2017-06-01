@@ -384,7 +384,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
   BossSpawners:
-  - {fileID: 114999065554894730, guid: e8d8f6f8b1445014c95376b3cf833ef3, type: 2}
   - {fileID: 114999065554894730, guid: 927769426a16d0141a1d9e6afd998611, type: 2}
   WavesPerRound: 4
   HealthPickup: {fileID: 1867421041270404, guid: 0700f74ea1f8c11459e2066fa5accea1,
