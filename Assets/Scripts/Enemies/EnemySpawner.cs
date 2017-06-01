@@ -29,7 +29,7 @@ public class EnemySpawner : PooledObject
     {
         if (Enemies == null || Enemies.Count < 1)
             Debug.LogError("No enemies specified!");
-        
+
         totalEnemiesToSpawn = Enemies.Sum(e => e.EnemiesToSpawn);
     }
 
@@ -97,7 +97,6 @@ public class EnemySpawner : PooledObject
 
         // reset spawn cooldown
         spawnTime = Time.time;
-        Debug.Log(spawnTime);
     }
 
     private void OnEnemyDestroyed(object sender, EventArgs e)

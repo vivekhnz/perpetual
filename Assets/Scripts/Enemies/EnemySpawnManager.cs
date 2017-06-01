@@ -21,9 +21,9 @@ public class EnemySpawnManager : MonoBehaviour
 
     private HUDController hud;
     private DataProvider data;
-    private PlayerHealth player;
 
     private List<Vector3> spawnLocations;
+    private List<Vector3> healthPickupSpawnLocations;
     private List<EnemySpawner> activeSpawners;
     private int wave;
     private int round;
@@ -35,29 +35,31 @@ public class EnemySpawnManager : MonoBehaviour
             Debug.LogError("No enemy spawner specified!");
         if (BossSpawners == null)
             Debug.LogError("No boss spawner specified!");
+        if (HealthPickup == null)
+            Debug.LogError("No health pickup specified!");
         hud = GameObject.FindObjectOfType<HUDController>();
         if (hud == null)
             Debug.LogError("No HUD controller found.");
         data = GetComponent<DataProvider>();
         if (data == null)
             Debug.LogError("No data provider found!");
-        player = GameObject.FindObjectOfType<PlayerHealth>();
-        if (player == null)
-            Debug.LogError("No player found.");
-        if (HealthPickup == null)
-            Debug.LogError("Health Pickup Prefab Not Found!");
-
-        currentBoss = 0;
-
-        activeSpawners = new List<EnemySpawner>();
-        round = 0;
-        StartNewRound();
 
         // find spawn points
         spawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint")
             .Select(obj => obj.transform.position).ToList();
         if (spawnLocations.Count == 0)
             Debug.LogError("No spawn points defined!");
+
+        // find health pickup spawn points
+        healthPickupSpawnLocations = GameObject.FindGameObjectsWithTag("HealthPickupSpawnPoints")
+            .Select(obj => obj.transform.position).ToList();
+        if (healthPickupSpawnLocations.Count == 0)
+            Debug.LogError("No health pickup spawn points defined!");
+
+        activeSpawners = new List<EnemySpawner>();
+        currentBoss = 0;
+        round = 0;
+        StartNewRound();
     }
 
     void FixedUpdate()
@@ -73,8 +75,9 @@ public class EnemySpawnManager : MonoBehaviour
         round++;
         wave = 0;
 
-        // no longer reset health due to implementation of a health pickup
-        //player.ResetHealth();
+        // spawn a health pickup at the beginning of every round except first
+        if (round > 1)
+            SpawnHealthPickup();
     }
 
     void StartNewWave()
@@ -90,10 +93,10 @@ public class EnemySpawnManager : MonoBehaviour
         // have we reached a boss fight?
         if (wave == WavesPerRound + 1)
         {
-            // signal the boss fight and create the boss spawner
+            // spawn a health pickup, signal the boss fight and create the boss spawner
+            SpawnHealthPickup();
             hud.SignalBossFight();
             CreateSpawner(GetBoss());
-            SpawnHealthPickup();
         }
         else
         {
@@ -101,12 +104,6 @@ public class EnemySpawnManager : MonoBehaviour
             var count = Math.Max(((WavesPerRound - 3) * (round - 1)) + wave, 1);
             for (int i = 0; i < count; i++)
                 CreateSpawner(PickRandomSpawner());
-
-            // spawn a health pickup after defeating a boss & selecting an upgrade
-            if (round >= 2 && wave == 1)
-            {
-                SpawnHealthPickup();
-            }
         }
     }
 
@@ -144,13 +141,10 @@ public class EnemySpawnManager : MonoBehaviour
 
     void SpawnHealthPickup()
     {
-        // get possible spawn locations using lambda & LINQ
-        List<Vector3> HealthPickupSpawnPoints = 
-            GameObject.FindGameObjectsWithTag("HealthPickupSpawnPoints")
-            .Select(obj => obj.transform.position).ToList();
         // spawn health pickup randomly from the possible locations
-        Instantiate(HealthPickup, HealthPickupSpawnPoints[Random.Range(0, HealthPickupSpawnPoints.Count)],
-            Quaternion.identity);
+        var position = healthPickupSpawnLocations[
+            Random.Range(0, healthPickupSpawnLocations.Count)];
+        Instantiate(HealthPickup, position, Quaternion.identity);
     }
 
     private void OnSpawnerDestroyed(object sender, EventArgs e)
