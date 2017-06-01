@@ -326,7 +326,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -451,6 +451,7 @@ MonoBehaviour:
   InitialPosition: {x: 0, y: 0, z: 0}
   Shockwave: {fileID: 114189077865079232, guid: 204281f490ad31d42a00562de23308c2,
     type: 2}
+  HealthIncrementPercentage: 10
 --- !u!114 &114069389871616756
 MonoBehaviour:
   m_ObjectHideFlags: 1
