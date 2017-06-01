@@ -1,48 +1,44 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class HealthPickupController : MonoBehaviour {
-
+[RequireComponent(typeof(Animator))]
+public class HealthPickupController : MonoBehaviour
+{
     public float HealthGained = 30;
     public float TimeTilDespawn = 5;
     public float TimeBeforeDespawnToFlash = 3;
-    public AudioClip HealthPickedUpSfx;
+    public AudioClip PickupCollectedSound;
 
     private Animator animator;
+    private float spawnTime;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-
-        // health pickup will disappear after set time
-        Invoke("Disappear", TimeTilDespawn);
-        Invoke("StartFlashing", TimeTilDespawn - TimeBeforeDespawnToFlash);
+        spawnTime = Time.time;
     }
 
-    void Disappear()
+    void Update()
     {
-        Destroy(gameObject);
-    }
-
-    void StartFlashing()
-    {
-        // makes the sprite flash on and off just before despawn
-        animator.SetBool("IsDespawning", true);
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        switch(other.tag)
+        if (Time.time - spawnTime > TimeTilDespawn)
         {
-            case "Player":
-                // give player health
-                other.gameObject.GetComponentInChildren<PlayerHealth>().GainHealth(HealthGained);
-                AudioSource.PlayClipAtPoint(HealthPickedUpSfx, transform.position);
-                Disappear();
-                break;
-            default:
-                break;
+            Destroy(gameObject);
+            return;
         }
+        animator.SetBool("IsDespawning",
+            Time.time - spawnTime > TimeTilDespawn - TimeBeforeDespawnToFlash);
+    }
+
+    public void OnCollected(Collider2D other)
+    {
+        // restore player health
+        var health = other.gameObject.GetComponent<PlayerHealth>();
+        health.RestoreHealth(HealthGained);
+
+        // play sound
+        if (PickupCollectedSound != null)
+            AudioSource.PlayClipAtPoint(PickupCollectedSound, transform.position);
+
+        // disappear
+        Destroy(gameObject);
     }
 }

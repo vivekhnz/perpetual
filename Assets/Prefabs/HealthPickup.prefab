@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114033340439730472}
   - component: {fileID: 82974619273477714}
   - component: {fileID: 95505480414331974}
+  - component: {fileID: 114103529796785516}
   m_Layer: 0
   m_Name: HealthPickup
   m_TagString: Untagged
@@ -169,7 +170,37 @@ MonoBehaviour:
   HealthGained: 30
   TimeTilDespawn: 8
   TimeBeforeDespawnToFlash: 3
-  HealthPickedUpSfx: {fileID: 8300000, guid: 39b00185df5fe9e44926a09e7a829d17, type: 3}
+  PickupCollectedSound: {fileID: 8300000, guid: 39b00185df5fe9e44926a09e7a829d17,
+    type: 3}
+--- !u!114 &114103529796785516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867421041270404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f99202ca722134d84a5316d5cba192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollidesWithTags:
+  - PlayerCollider
+  OnDetected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114033340439730472}
+        m_MethodName: OnCollected
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: TriggerSensor+Collider2DEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!212 &212854718758668500
 SpriteRenderer:
   m_ObjectHideFlags: 1
