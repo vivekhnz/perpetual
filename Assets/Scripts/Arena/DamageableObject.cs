@@ -49,7 +49,9 @@ public class DamageableObject : MonoBehaviour
 
         // raise destroyed event
         if (OnDestroyed != null)
+        {
             OnDestroyed.Invoke();
+        }
 
         // increase score
         if (hudController == null)

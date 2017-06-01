@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114189077865079232}
   - component: {fileID: 95165601976158794}
   m_Layer: 0
-  m_Name: EnemyShockwave
+  m_Name: BossShockwave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,7 +87,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageToEnemies: 0
   DamageToPlayer: 25
-  Force: 10
+  ForceAgainstDamageables: 0
+  ForceAgainstPlayer: 10
 --- !u!212 &212949911115799172
 SpriteRenderer:
   m_ObjectHideFlags: 1

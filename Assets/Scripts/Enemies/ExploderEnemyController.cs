@@ -2,24 +2,38 @@
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(ChasePlayer))]
+[RequireComponent(typeof(EnemyController))]
 public class ExploderEnemyController : MonoBehaviour
 {
     const float MIN_PROXIMITY = 1.0f;
     const float MAX_PROXIMITY = 6.0f;
     const float DETONATION_DISTANCE = 1.5f;
 
-    public ShockwaveController Shockwave;
+    public ShockwaveController SelfDestructShockwave;
+    public ShockwaveController KilledByPlayerShockwave;
 
     private Animator animator;
     private ChasePlayer chaser;
+    private EnemyController controller;
+    private bool detonated;
 
     void Start()
     {
-        if (Shockwave == null)
-            Debug.LogError("No shockwave prefab specified.");
+        if (SelfDestructShockwave == null)
+            Debug.LogError("No self-destruct shockwave prefab specified.");
+
+        if (KilledByPlayerShockwave == null)
+            Debug.LogError("No killed by player shockwave prefab specified.");
 
         animator = GetComponent<Animator>();
         chaser = GetComponent<ChasePlayer>();
+        controller = GetComponent<EnemyController>();
+
+        detonated = false;
+        controller.InstanceReset += (sender, e) =>
+        {
+            detonated = false;
+        };
     }
 
     void FixedUpdate()
@@ -31,9 +45,25 @@ public class ExploderEnemyController : MonoBehaviour
         animator.SetFloat("Proximity", proximity);
     }
 
+    public void Detonate()
+    {
+        // self-destruct
+        detonated = true;
+        controller.DamageableObject.SelfDestruct();
+
+        // spawn a shockwave that damages the player
+        var shockwave = SelfDestructShockwave.Fetch<ShockwaveController>();
+        shockwave.transform.position = transform.position;
+    }
+
     public void CreateShockwave()
     {
-        var shockwave = Shockwave.Fetch<ShockwaveController>();
+        // if we self-destructed, don't spawn a second shockwave
+        if (detonated)
+            return;
+
+        // spawn a shockwave that does not damage the player
+        var shockwave = KilledByPlayerShockwave.Fetch<ShockwaveController>();
         shockwave.transform.position = transform.position;
     }
 }
