@@ -28,8 +28,6 @@ public class DamageableObject : MonoBehaviour
         // reduce health
         CurrentHealth -= damage;
 
-        Debug.Log(CurrentHealth);
-
         // raise damaged event
         if (OnDamaged != null)
             OnDamaged.Invoke();
