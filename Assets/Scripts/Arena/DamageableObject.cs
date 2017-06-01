@@ -10,11 +10,9 @@ public class DamageableObject : MonoBehaviour
     public ParticleSystemAutoDestroy Explosion;
     public UnityEvent OnDamaged;
     public UnityEvent OnDestroyed;
-    public UnityEvent OnDetonate;
 
     public float CurrentHealth { get; private set; }
     private HUDController hudController;
-    private bool selfDestroyed = false;
 
     void Start()
     {
@@ -50,18 +48,9 @@ public class DamageableObject : MonoBehaviour
         CurrentHealth = 0;
 
         // raise destroyed event
-        if (selfDestroyed)
+        if (OnDestroyed != null)
         {
-            if (OnDetonate != null)
-            {
-                OnDetonate.Invoke();
-            }
-        } else
-        {
-            if (OnDestroyed != null)
-            {
-                OnDestroyed.Invoke();
-            }
+            OnDestroyed.Invoke();
         }
 
         // increase score
@@ -112,7 +101,6 @@ public class DamageableObject : MonoBehaviour
 
     public void SelfDestruct()
     {
-        selfDestroyed = true;
         Die(null);
     }
 }

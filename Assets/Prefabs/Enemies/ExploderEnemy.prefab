@@ -90,7 +90,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1541339381053536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.1773953, y: -1.1931517, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4647578873214484}
@@ -329,7 +329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af33b997e1878443a65263d73c129be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Shockwave: {fileID: 114189077865079232, guid: 9f70dde805b62814eb496f383a374f1f,
+  SelfDestructShockwave: {fileID: 114189077865079232, guid: 9f70dde805b62814eb496f383a374f1f,
+    type: 2}
+  KilledByPlayerShockwave: {fileID: 114189077865079232, guid: 5f0e8691a12d0114790c980093691c50,
     type: 2}
 --- !u!114 &114408817090844370
 MonoBehaviour:
@@ -347,8 +349,8 @@ MonoBehaviour:
   OnDetected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114715127447421028}
-        m_MethodName: SelfDestruct
+      - m_Target: {fileID: 114253333160361234}
+        m_MethodName: Detonate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -398,22 +400,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114253333160361234}
         m_MethodName: CreateShockwave
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  OnDetonate:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114253333160361234}
-        m_MethodName: CreateDetonation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
