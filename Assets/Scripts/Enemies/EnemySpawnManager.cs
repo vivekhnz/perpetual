@@ -72,7 +72,9 @@ public class EnemySpawnManager : MonoBehaviour
     {
         round++;
         wave = 0;
-        player.ResetHealth();
+
+        // no longer reset health due to implementation of a health pickup
+        //player.ResetHealth();
     }
 
     void StartNewWave()
@@ -99,6 +101,12 @@ public class EnemySpawnManager : MonoBehaviour
             var count = Math.Max(((WavesPerRound - 3) * (round - 1)) + wave, 1);
             for (int i = 0; i < count; i++)
                 CreateSpawner(PickRandomSpawner());
+
+            // spawn a health pickup after defeating a boss & selecting an upgrade
+            if (round >= 2 && wave == 1)
+            {
+                SpawnHealthPickup();
+            }
         }
     }
 
@@ -136,9 +144,11 @@ public class EnemySpawnManager : MonoBehaviour
 
     void SpawnHealthPickup()
     {
+        // get possible spawn locations using lambda & LINQ
         List<Vector3> HealthPickupSpawnPoints = 
             GameObject.FindGameObjectsWithTag("HealthPickupSpawnPoints")
             .Select(obj => obj.transform.position).ToList();
+        // spawn health pickup randomly from the possible locations
         Instantiate(HealthPickup, HealthPickupSpawnPoints[Random.Range(0, HealthPickupSpawnPoints.Count)],
             Quaternion.identity);
     }

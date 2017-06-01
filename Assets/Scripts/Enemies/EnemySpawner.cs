@@ -36,12 +36,15 @@ public class EnemySpawner : PooledObject
     public void Initialize(Vector3 position)
     {
         transform.position = position;
-        spawnTime = 0;
+        // prev was 0, but now allows 'spawnInterval' to be used as a spawn delay if need be
+        spawnTime = Time.time;
         foreach (var enemy in Enemies)
             enemy.EnemiesSpawned = 0;
         children.Clear();
 
         // spawn the first enemy
+        // this is commented as FixedUpdate takes care of it
+        // also allows 'spawnInterval' to be used as a spawn delay if need be
         //SpawnEnemy();
     }
 
