@@ -89,7 +89,9 @@ public class EnemySpawnManager : MonoBehaviour
         if (wave == WavesPerRound + 1)
         {
             // signal the boss fight and create the boss spawner
-            Invoke("StartBossFight", 5);
+            hud.SignalBossFight();
+            CreateSpawner(GetBoss());
+            SpawnHealthPickup();
         }
         else
         {
@@ -98,13 +100,6 @@ public class EnemySpawnManager : MonoBehaviour
             for (int i = 0; i < count; i++)
                 CreateSpawner(PickRandomSpawner());
         }
-    }
-
-    void StartBossFight()
-    {
-        hud.SignalBossFight();
-        CreateSpawner(GetBoss());
-        Instantiate(HealthPickup);
     }
 
     EnemySpawner GetBoss()
@@ -137,6 +132,15 @@ public class EnemySpawnManager : MonoBehaviour
         // track when the spawner is destroyed
         spawner.InstanceRecycled += OnSpawnerDestroyed;
         activeSpawners.Add(spawner);
+    }
+
+    void SpawnHealthPickup()
+    {
+        List<Vector3> HealthPickupSpawnPoints = 
+            GameObject.FindGameObjectsWithTag("HealthPickupSpawnPoints")
+            .Select(obj => obj.transform.position).ToList();
+        Instantiate(HealthPickup, HealthPickupSpawnPoints[Random.Range(0, HealthPickupSpawnPoints.Count)],
+            Quaternion.identity);
     }
 
     private void OnSpawnerDestroyed(object sender, EventArgs e)

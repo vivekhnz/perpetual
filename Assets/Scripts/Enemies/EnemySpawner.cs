@@ -42,7 +42,7 @@ public class EnemySpawner : PooledObject
         children.Clear();
 
         // spawn the first enemy
-        SpawnEnemy();
+        //SpawnEnemy();
     }
 
     public override void CleanupInstance()
@@ -94,6 +94,7 @@ public class EnemySpawner : PooledObject
 
         // reset spawn cooldown
         spawnTime = Time.time;
+        Debug.Log(spawnTime);
     }
 
     private void OnEnemyDestroyed(object sender, EventArgs e)
