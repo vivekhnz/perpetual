@@ -11,6 +11,8 @@ TagManager:
   - Projectile
   - TeleportPoint
   - Boss
+  - Pickup
+  - HealthPickupSpawnPoints
   layers:
   - Default
   - TransparentFX

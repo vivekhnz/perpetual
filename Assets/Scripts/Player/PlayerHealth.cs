@@ -88,6 +88,12 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
     }
 
+    public void RestoreHealth(float healthGained)
+    {
+        // regain health without exceeding max hp
+        currentHealth = Mathf.Min(currentHealth + healthGained, InitialHealth);
+    }
+
     public void ResetHealth()
     {
         currentHealth = InitialHealth;

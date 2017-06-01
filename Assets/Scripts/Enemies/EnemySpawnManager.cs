@@ -17,12 +17,13 @@ public class EnemySpawnManager : MonoBehaviour
     public List<EnemySpawn> Spawners;
     public List<EnemySpawner> BossSpawners;
     public int WavesPerRound = 2;
+    public GameObject HealthPickup;
 
     private HUDController hud;
     private DataProvider data;
-    private PlayerHealth player;
 
     private List<Vector3> spawnLocations;
+    private List<Vector3> healthPickupSpawnLocations;
     private List<EnemySpawner> activeSpawners;
     private int wave;
     private int round;
@@ -34,27 +35,31 @@ public class EnemySpawnManager : MonoBehaviour
             Debug.LogError("No enemy spawner specified!");
         if (BossSpawners == null)
             Debug.LogError("No boss spawner specified!");
+        if (HealthPickup == null)
+            Debug.LogError("No health pickup specified!");
         hud = GameObject.FindObjectOfType<HUDController>();
         if (hud == null)
             Debug.LogError("No HUD controller found.");
         data = GetComponent<DataProvider>();
         if (data == null)
             Debug.LogError("No data provider found!");
-        player = GameObject.FindObjectOfType<PlayerHealth>();
-        if (player == null)
-            Debug.LogError("No player found.");
-
-        currentBoss = 0;
-
-        activeSpawners = new List<EnemySpawner>();
-        round = 0;
-        StartNewRound();
 
         // find spawn points
         spawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint")
             .Select(obj => obj.transform.position).ToList();
         if (spawnLocations.Count == 0)
             Debug.LogError("No spawn points defined!");
+
+        // find health pickup spawn points
+        healthPickupSpawnLocations = GameObject.FindGameObjectsWithTag("HealthPickupSpawnPoints")
+            .Select(obj => obj.transform.position).ToList();
+        if (healthPickupSpawnLocations.Count == 0)
+            Debug.LogError("No health pickup spawn points defined!");
+
+        activeSpawners = new List<EnemySpawner>();
+        currentBoss = 0;
+        round = 0;
+        StartNewRound();
     }
 
     void FixedUpdate()
@@ -69,7 +74,10 @@ public class EnemySpawnManager : MonoBehaviour
     {
         round++;
         wave = 0;
-        player.ResetHealth();
+
+        // spawn a health pickup at the beginning of every round except first
+        if (round > 1)
+            SpawnHealthPickup();
     }
 
     void StartNewWave()
@@ -85,7 +93,8 @@ public class EnemySpawnManager : MonoBehaviour
         // have we reached a boss fight?
         if (wave == WavesPerRound + 1)
         {
-            // signal the boss fight and create the boss spawner
+            // spawn a health pickup, signal the boss fight and create the boss spawner
+            SpawnHealthPickup();
             hud.SignalBossFight();
             CreateSpawner(GetBoss());
         }
@@ -128,6 +137,14 @@ public class EnemySpawnManager : MonoBehaviour
         // track when the spawner is destroyed
         spawner.InstanceRecycled += OnSpawnerDestroyed;
         activeSpawners.Add(spawner);
+    }
+
+    void SpawnHealthPickup()
+    {
+        // spawn health pickup randomly from the possible locations
+        var position = healthPickupSpawnLocations[
+            Random.Range(0, healthPickupSpawnLocations.Count)];
+        Instantiate(HealthPickup, position, Quaternion.identity);
     }
 
     private void OnSpawnerDestroyed(object sender, EventArgs e)
