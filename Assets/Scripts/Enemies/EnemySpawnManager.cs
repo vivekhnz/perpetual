@@ -11,7 +11,7 @@ public class EnemySpawnManager : MonoBehaviour
     public class EnemySpawn
     {
         public EnemySpawner Spawner;
-        public int Weight;
+        public AnimationCurve Weight = AnimationCurve.Linear(0.0f, 0.0f, 5.0f, 5.0f);
     }
 
     public List<EnemySpawn> Spawners;
@@ -108,10 +108,10 @@ public class EnemySpawnManager : MonoBehaviour
     EnemySpawner PickRandomSpawner()
     {
         // pick a random spawner type
-        int selection = Random.Range(0, Spawners.Sum(s => s.Weight));
+        float selection = Random.Range(0, Spawners.Sum(s => s.Weight.Evaluate(round)));
         foreach (var spawn in Spawners)
         {
-            selection -= spawn.Weight;
+            selection -= spawn.Weight.Evaluate(round);
             if (selection < 0)
                 return spawn.Spawner;
         }
