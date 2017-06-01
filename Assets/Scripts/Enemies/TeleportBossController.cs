@@ -16,10 +16,10 @@ public class TeleportBossController : MonoBehaviour
     public AnimationCurve TeleportSpeed =
         AnimationCurve.Linear(0.0f, 1.0f, 1.0f, 2.0f);
     public BossProjectileController Projectile;
-    public float BulletsPerMinute = 60.0f;
+    public AnimationCurve BulletsPerMinute;
     public Transform LeftWeapon;
     public Transform RightWeapon;
-    public int BulletsPerBurst = 6;
+    public AnimationCurve BulletsPerBurst;
 
     private BossController controller;
     private Animator animator;
@@ -131,8 +131,12 @@ public class TeleportBossController : MonoBehaviour
         if (!controller.IsBossActive)
             return;
 
+        // get current BulletsPer Burst/Min values
+        float currentBulletsPerBurst = BulletsPerBurst.Evaluate(controller.spawnManager.GetRound());
+        float currentBulletsPerMin = BulletsPerMinute.Evaluate(controller.spawnManager.GetRound());
+
         // can I fire any more bullets in this burst?
-        if (bulletsCreated >= BulletsPerBurst)
+        if (bulletsCreated >= currentBulletsPerBurst)
         {
             float healthPercentage = 1.0f - controller.HealthPercentage;
 
@@ -150,7 +154,7 @@ public class TeleportBossController : MonoBehaviour
         }
 
         // can I fire again?
-        float timeBetweenProjectiles = 60.0f / BulletsPerMinute;
+        float timeBetweenProjectiles = 60.0f / currentBulletsPerMin;
         if (Time.time - projectileFiredTime < timeBetweenProjectiles)
             return;
         projectileFiredTime = Time.time;
@@ -175,7 +179,7 @@ public class TeleportBossController : MonoBehaviour
         gunSound.Play();
 
         // was this the last bullet in the burst?
-        if (bulletsCreated >= BulletsPerBurst)
+        if (bulletsCreated >= currentBulletsPerBurst)
             burstFinishedTime = Time.time;
     }
 }

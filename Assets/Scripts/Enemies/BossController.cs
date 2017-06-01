@@ -61,7 +61,7 @@ public class BossController : MonoBehaviour
 
     public float HealthIncrementPercentage = 10;
 
-    private EnemySpawnManager spawnManager;
+    public EnemySpawnManager spawnManager;
     private BossState currentState;
     private Vector3 teleportDestination;
 

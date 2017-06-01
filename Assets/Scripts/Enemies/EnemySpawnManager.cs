@@ -168,4 +168,9 @@ public class EnemySpawnManager : MonoBehaviour
             i--;
         }
     }
+
+    public int GetRound()
+    {
+        return round;
+    }
 }
