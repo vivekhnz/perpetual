@@ -85,8 +85,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a039361d4f0ea8042b6dafeb094896ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 75
-  PlayerDamageModifier: 0.3
+  DamageToEnemies: 75
+  DamageToPlayer: 25
   Force: 8
 --- !u!212 &212949911115799172
 SpriteRenderer:
