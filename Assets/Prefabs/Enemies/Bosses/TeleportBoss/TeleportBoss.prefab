@@ -326,7 +326,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -451,6 +451,8 @@ MonoBehaviour:
   InitialPosition: {x: 0, y: 0, z: 0}
   Shockwave: {fileID: 114189077865079232, guid: 204281f490ad31d42a00562de23308c2,
     type: 2}
+  HealthIncrementPercentage: 10
+  spawnManager: {fileID: 0}
 --- !u!114 &114069389871616756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -603,10 +605,44 @@ MonoBehaviour:
     m_RotationOrder: 0
   Projectile: {fileID: 114180506699960422, guid: c3f98a8bea7430d4ca1176a02d3fee88,
     type: 2}
-  BulletsPerMinute: 400
+  BulletsPerMinute:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 1
+      value: 100
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+    - serializedVersion: 2
+      time: 5
+      value: 400
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   LeftWeapon: {fileID: 4884640279982080}
   RightWeapon: {fileID: 4441567390038468}
-  BulletsPerBurst: 6
+  BulletsPerBurst:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 1
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+    - serializedVersion: 2
+      time: 5
+      value: 6
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114594411564019150
 MonoBehaviour:
   m_ObjectHideFlags: 1
