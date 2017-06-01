@@ -89,9 +89,7 @@ public class EnemySpawnManager : MonoBehaviour
         if (wave == WavesPerRound + 1)
         {
             // signal the boss fight and create the boss spawner
-            hud.SignalBossFight();
-            CreateSpawner(GetBoss());
-            Instantiate(HealthPickup);
+            Invoke("StartBossFight", 5);
         }
         else
         {
@@ -100,6 +98,13 @@ public class EnemySpawnManager : MonoBehaviour
             for (int i = 0; i < count; i++)
                 CreateSpawner(PickRandomSpawner());
         }
+    }
+
+    void StartBossFight()
+    {
+        hud.SignalBossFight();
+        CreateSpawner(GetBoss());
+        Instantiate(HealthPickup);
     }
 
     EnemySpawner GetBoss()
