@@ -36,7 +36,7 @@ public class ScatterShotWeapon : MonoBehaviour
         startFireTime = Time.time;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // fire weapon
         if (Input.GetButton("FireSecondary") && Time.time - startFireTime > Cooldown)

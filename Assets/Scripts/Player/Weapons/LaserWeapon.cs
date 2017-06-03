@@ -46,7 +46,7 @@ public class LaserWeapon : MonoBehaviour
         layerMask = LayerMask.GetMask("Default", "Obstacles");
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // disable laser
         line.enabled = false;
@@ -57,6 +57,7 @@ public class LaserWeapon : MonoBehaviour
             && Time.time - stoppedFiringTime > Cooldown)
             startFireTime = Time.time;
 
+        // is still being fired?
         if (Input.GetButton("FireSecondary")
             && Time.time - startFireTime < LaserDuration)
         {

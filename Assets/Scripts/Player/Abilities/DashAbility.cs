@@ -19,13 +19,15 @@ public class DashAbility : PlayerAbility<DashAbilityUpgrade>
         DashSound = upgrade.DashSound;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // can I dash?
-        if (Input.GetButton("Ability")
-            && Time.time - dashTime > Cooldown)
+        if (Input.GetButton("Ability") && Time.time - dashTime > Cooldown)
             Dash();
+    }
 
+    void FixedUpdate()
+    {
         if (velocity.magnitude < 0.01f)
         {
             // stop moving once we get really slow

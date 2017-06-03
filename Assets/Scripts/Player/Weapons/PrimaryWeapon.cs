@@ -23,7 +23,7 @@ public class PrimaryWeapon : MonoBehaviour
             Debug.LogError("Gun Sound not found!");
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // fire weapon
         if (Input.GetButton("Fire"))
