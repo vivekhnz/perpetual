@@ -3,6 +3,7 @@
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(ChasePlayer))]
 [RequireComponent(typeof(EnemyController))]
+[RequireComponent(typeof(AudioSource))]
 public class ExploderEnemyController : MonoBehaviour
 {
     const float MIN_PROXIMITY = 1.0f;
@@ -15,6 +16,7 @@ public class ExploderEnemyController : MonoBehaviour
     private Animator animator;
     private ChasePlayer chaser;
     private EnemyController controller;
+    private AudioSource blip;
     private bool detonated;
 
     void Start()
@@ -28,6 +30,7 @@ public class ExploderEnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         chaser = GetComponent<ChasePlayer>();
         controller = GetComponent<EnemyController>();
+        blip = GetComponent<AudioSource>();
 
         detonated = false;
         controller.InstanceReset += (sender, e) =>
@@ -65,5 +68,17 @@ public class ExploderEnemyController : MonoBehaviour
         // spawn a shockwave that does not damage the player
         var shockwave = KilledByPlayerShockwave.Fetch<ShockwaveController>();
         shockwave.transform.position = transform.position;
+    }
+
+    public void Blip()
+    {
+        float distance = chaser.GetDistanceToPlayer();
+        if (distance > MAX_PROXIMITY)
+            return;
+
+        float proximity = 1.0f - ((distance - DETONATION_DISTANCE)
+            / (MAX_PROXIMITY - DETONATION_DISTANCE));
+        blip.volume = proximity * 0.7f;
+        blip.Play();
     }
 }
