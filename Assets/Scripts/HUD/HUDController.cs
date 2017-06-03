@@ -60,7 +60,7 @@ public class HUDController : MonoBehaviour
             ScoreText.text = "Score: " + score;
 
         if (MessageText != null)
-            MessageText.text = "Wave 1";
+            MessageText.text = "Get Ready!";
 
         if (WaveText != null)
             WaveText.text = "Wave 1";
@@ -70,9 +70,6 @@ public class HUDController : MonoBehaviour
 
         if (HighScoreText != null)
             HighScoreText.text = "High Score: " + highscore;
-
-        if (ControlHintImage != null)
-            ControlHintImage.enabled = false;
 
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
@@ -190,6 +187,7 @@ public class HUDController : MonoBehaviour
         MessageText.text = string.Empty;
     }
 
+    // displays an image for a set amount of time
     public void ShowControlHintImage(int indexOfSprite, float displayTime)
     {
         ControlHintImage.enabled = true;
