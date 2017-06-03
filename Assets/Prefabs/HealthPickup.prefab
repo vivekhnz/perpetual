@@ -171,8 +171,8 @@ MonoBehaviour:
   HealthGained: 30
   TimeTilDespawn: 8
   TimeBeforeDespawnToFlash: 3
-  PickupCollectedSound: {fileID: 8300000, guid: 39b00185df5fe9e44926a09e7a829d17,
-    type: 3}
+  PickupCollectedSound: {fileID: 82010100963523754, guid: d65966fa2d26d6045b2e0d51e44d6d5d,
+    type: 2}
 --- !u!114 &114103529796785516
 MonoBehaviour:
   m_ObjectHideFlags: 1

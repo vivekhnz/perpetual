@@ -6,7 +6,7 @@ public class HealthPickupController : MonoBehaviour
     public float HealthGained = 30;
     public float TimeTilDespawn = 5;
     public float TimeBeforeDespawnToFlash = 3;
-    public AudioClip PickupCollectedSound;
+    public AudioSource PickupCollectedSound;
 
     private Animator animator;
     private float spawnTime;
@@ -35,8 +35,8 @@ public class HealthPickupController : MonoBehaviour
         health.RestoreHealth(HealthGained);
 
         // play sound
-        if (PickupCollectedSound != null)
-            AudioSource.PlayClipAtPoint(PickupCollectedSound, transform.position);
+        var sound = Instantiate(PickupCollectedSound);
+        Destroy(sound.gameObject, sound.clip.length);
 
         // disappear
         Destroy(gameObject);
