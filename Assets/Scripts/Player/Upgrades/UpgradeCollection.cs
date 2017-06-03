@@ -21,4 +21,5 @@ public abstract class UpgradeBase : ScriptableObject
     public string Name = "New Upgrade";
     public UpgradeType Type;
     public Sprite Icon;
+    public Sprite Tutorial;
 }

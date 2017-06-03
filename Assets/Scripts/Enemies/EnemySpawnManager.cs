@@ -58,12 +58,18 @@ public class EnemySpawnManager : MonoBehaviour
 
         activeSpawners = new List<EnemySpawner>();
         currentBoss = 0;
-        round = 0;
-        StartNewRound();
+        round = 1;
+
+        // show player basic controls before starting first wave
+        hud.ShowControlHintImage(null, 5);
     }
 
     void FixedUpdate()
     {
+        // give player a few seconds to read controls before starting first wave
+        if (Time.time < 5)
+            return;
+
         // start a new wave if no spawners are active and the
         // game has not ended
         if (activeSpawners.Count == 0 && hud.CanProgressToNextWave)

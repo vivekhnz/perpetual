@@ -16,6 +16,7 @@ public class HUDController : MonoBehaviour
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
+    public Image ControlHintImage;
     public List<UpgradeButtonController> UpgradeButtons;
 
     private Animator animator;
@@ -58,7 +59,7 @@ public class HUDController : MonoBehaviour
             ScoreText.text = "Score: " + score;
 
         if (MessageText != null)
-            MessageText.text = "Wave 1";
+            MessageText.text = "Get Ready!";
 
         if (WaveText != null)
             WaveText.text = "Wave 1";
@@ -185,6 +186,20 @@ public class HUDController : MonoBehaviour
         MessageText.text = string.Empty;
     }
 
+    // displays an image for a set amount of time
+    public void ShowControlHintImage(Sprite sprite, float displayTime)
+    {
+        ControlHintImage.enabled = true;
+        if (sprite != null)
+            ControlHintImage.sprite = sprite;
+        Invoke("HideControlHintImage", displayTime);
+    }
+
+    private void HideControlHintImage()
+    {
+        ControlHintImage.enabled = false;
+    }
+
     public void SignalUpgradeUnlocked()
     {
         var choices = upgrades.GetUpgradeChoices(UpgradeButtons.Count);
@@ -223,6 +238,10 @@ public class HUDController : MonoBehaviour
         // close popover
         animator.SetBool("IsPopoverVisible", false);
         isPopoverOpen = false;
+
+        // show control hints
+        if (selectedUpgrade.Tutorial != null)
+            ShowControlHintImage(selectedUpgrade.Tutorial, 5.0f);
     }
 
     private void ReturnToStartMenu()
