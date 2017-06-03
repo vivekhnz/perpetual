@@ -238,6 +238,17 @@ public class HUDController : MonoBehaviour
         // close popover
         animator.SetBool("IsPopoverVisible", false);
         isPopoverOpen = false;
+
+        // show control hints
+        switch (selectedUpgrade.Type)
+        {
+            case UpgradeType.Weapon:
+                ShowControlHintImage(1, 5);
+                break;
+            case UpgradeType.Ability:
+                ShowControlHintImage(2, 5);
+                break;
+        }
     }
 
     private void ReturnToStartMenu()

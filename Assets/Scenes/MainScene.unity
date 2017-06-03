@@ -2994,6 +2994,8 @@ MonoBehaviour:
   - {fileID: 784376706}
   ControlHintSprites:
   - {fileID: 21300000, guid: 5d6081e9afd5a1240b69352aaa7c728e, type: 3}
+  - {fileID: 21300000, guid: 3a343531b6a1fef40bb8d7e8517a262b, type: 3}
+  - {fileID: 21300000, guid: 768d2d2e983e2344f862a92d4d8e1cda, type: 3}
 --- !u!95 &1136098459
 Animator:
   serializedVersion: 3
