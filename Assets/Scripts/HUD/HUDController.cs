@@ -19,6 +19,8 @@ public class HUDController : MonoBehaviour
     public Text YourScoreText;
     public Text YourHighestScoreText;
     public Text SurvivedText;
+    public Button ReturnToMainMenuBtn;
+    public Button RestartGameBtn;
     public List<UpgradeButtonController> UpgradeButtons;
 
     private Animator animator;
@@ -81,6 +83,12 @@ public class HUDController : MonoBehaviour
         if (SurvivedText != null)
             SurvivedText.text = String.Empty;
 
+        if (ReturnToMainMenuBtn != null)
+            ReturnToMainMenuBtn.gameObject.SetActive(false);
+
+        if (RestartGameBtn != null)
+            RestartGameBtn.gameObject.SetActive(false);
+
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
             Debug.LogError("No player upgrade manager found.");
@@ -126,14 +134,20 @@ public class HUDController : MonoBehaviour
         Destroy(enemyManager);
 
         // go to start screen
-        Invoke("ReturnToStartMenu", 5);
+        // not used anymore due to buttons
+        //Invoke("ReturnToStartMenu", 5);
     }
 
     private void DisplayEndGameStatistics()
     {
+        // show important stats
         YourScoreText.text = "Your Score: " + score;
         YourHighestScoreText.text = "Your Highest Score: " + highscore;
         SurvivedText.text = "You Survived To Round: " + round + " Wave: " + wave;
+
+        // show buttons to replay game
+        ReturnToMainMenuBtn.gameObject.SetActive(true);
+        RestartGameBtn.gameObject.SetActive(true);
     }
 
     private void SendGameOverTelemetry(int score, int round, int wave)
@@ -246,6 +260,11 @@ public class HUDController : MonoBehaviour
         // close popover
         animator.SetBool("IsPopoverVisible", false);
         isPopoverOpen = false;
+    }
+
+    public void ChangeSceneUsingIndex(int index)
+    {
+        SceneManager.LoadScene(index);
     }
 
     private void ReturnToStartMenu()
