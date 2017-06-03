@@ -90,6 +90,11 @@ public class EnemySpawnManager : MonoBehaviour
         wave++;
         hud.ShowRoundAndWave(round, wave);
 
+        if (round == 1 && wave == 1)
+        {
+            hud.ShowControlHintImage(0, 5);
+        }
+
         // have we reached a boss fight?
         if (wave == WavesPerRound + 1)
         {

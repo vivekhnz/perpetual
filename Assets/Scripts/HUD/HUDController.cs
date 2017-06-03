@@ -16,7 +16,9 @@ public class HUDController : MonoBehaviour
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
+    public Image ControlHintImage;
     public List<UpgradeButtonController> UpgradeButtons;
+    public List<Sprite> ControlHintSprites;
 
     private Animator animator;
     private PlayerUpgrades upgrades;
@@ -68,6 +70,9 @@ public class HUDController : MonoBehaviour
 
         if (HighScoreText != null)
             HighScoreText.text = "High Score: " + highscore;
+
+        if (ControlHintImage != null)
+            ControlHintImage.enabled = false;
 
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
@@ -183,6 +188,18 @@ public class HUDController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         isFlashing = false;
         MessageText.text = string.Empty;
+    }
+
+    public void ShowControlHintImage(int indexOfSprite, float displayTime)
+    {
+        ControlHintImage.enabled = true;
+        ControlHintImage.sprite = ControlHintSprites[indexOfSprite];
+        Invoke("HideControlHintImage", displayTime);
+    }
+
+    private void HideControlHintImage()
+    {
+        ControlHintImage.enabled = false;
     }
 
     public void SignalUpgradeUnlocked()
