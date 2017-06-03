@@ -286,7 +286,7 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 2
         time: 1
-        value: 0
+        value: 20
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -3416,7 +3416,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4738252953334996, guid: f46c1fc07f268f341800c90eca65a11f, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1492909585027944, guid: f46c1fc07f268f341800c90eca65a11f, type: 2}
       propertyPath: m_Name

@@ -276,7 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 15
   MaxDamageablesToHit: 1
-  LaserDuration: 1
+  LaserDuration: 1.5
   Cooldown: 7
   LaserHitEffect: {fileID: 114749502084572656, guid: a549c400636aab641b10c93716ba84d9,
     type: 2}
