@@ -46,17 +46,25 @@ public class LaserWeapon : MonoBehaviour
         layerMask = LayerMask.GetMask("Default", "Obstacles");
     }
 
+    void Update()
+    {
+        // is the laser being fired?
+        // in Update() to fix misfire bug because player clicked in between frames
+        if (Input.GetButtonDown("FireSecondary")
+            && Time.time - stoppedFiringTime > Cooldown)
+        {
+            startFireTime = Time.time;
+            //Debug.Log("GetButtonDown " + Time.time);
+        }
+    }
+
     void FixedUpdate()
     {
         // disable laser
         line.enabled = false;
         beamEmission.enabled = false;
 
-        // is the laser being fired?
-        if (Input.GetButtonDown("FireSecondary")
-            && Time.time - stoppedFiringTime > Cooldown)
-            startFireTime = Time.time;
-
+        // is still being fired?
         if (Input.GetButton("FireSecondary")
             && Time.time - startFireTime < LaserDuration)
         {
