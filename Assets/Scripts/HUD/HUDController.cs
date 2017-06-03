@@ -16,7 +16,9 @@ public class HUDController : MonoBehaviour
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
+    public Image ControlHintImage;
     public List<UpgradeButtonController> UpgradeButtons;
+    public List<Sprite> ControlHintSprites;
 
     private Animator animator;
     private PlayerUpgrades upgrades;
@@ -58,7 +60,7 @@ public class HUDController : MonoBehaviour
             ScoreText.text = "Score: " + score;
 
         if (MessageText != null)
-            MessageText.text = "Wave 1";
+            MessageText.text = "Get Ready!";
 
         if (WaveText != null)
             WaveText.text = "Wave 1";
@@ -185,6 +187,19 @@ public class HUDController : MonoBehaviour
         MessageText.text = string.Empty;
     }
 
+    // displays an image for a set amount of time
+    public void ShowControlHintImage(int indexOfSprite, float displayTime)
+    {
+        ControlHintImage.enabled = true;
+        ControlHintImage.sprite = ControlHintSprites[indexOfSprite];
+        Invoke("HideControlHintImage", displayTime);
+    }
+
+    private void HideControlHintImage()
+    {
+        ControlHintImage.enabled = false;
+    }
+
     public void SignalUpgradeUnlocked()
     {
         var choices = upgrades.GetUpgradeChoices(UpgradeButtons.Count);
@@ -223,6 +238,25 @@ public class HUDController : MonoBehaviour
         // close popover
         animator.SetBool("IsPopoverVisible", false);
         isPopoverOpen = false;
+
+        // show control hints
+        switch (selectedUpgrade.Type)
+        {
+            case UpgradeType.Weapon:
+                // Show difference instructions for laser & scattershot
+                if (selectedUpgrade.Name.Equals("Laser"))
+                {
+                    ShowControlHintImage(1, 5);
+                }
+                if (selectedUpgrade.Name.Equals("ScatterShot"))
+                {
+                    ShowControlHintImage(2, 5);
+                }
+                break;
+            case UpgradeType.Ability:
+                ShowControlHintImage(3, 5);
+                break;
+        }
     }
 
     private void ReturnToStartMenu()
