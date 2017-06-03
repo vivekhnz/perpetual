@@ -243,10 +243,18 @@ public class HUDController : MonoBehaviour
         switch (selectedUpgrade.Type)
         {
             case UpgradeType.Weapon:
-                ShowControlHintImage(1, 5);
+                // Show difference instructions for laser & scattershot
+                if (selectedUpgrade.Name.Equals("Laser"))
+                {
+                    ShowControlHintImage(1, 5);
+                }
+                if (selectedUpgrade.Name.Equals("ScatterShot"))
+                {
+                    ShowControlHintImage(2, 5);
+                }
                 break;
             case UpgradeType.Ability:
-                ShowControlHintImage(2, 5);
+                ShowControlHintImage(3, 5);
                 break;
         }
     }
