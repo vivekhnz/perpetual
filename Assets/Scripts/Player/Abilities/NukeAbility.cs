@@ -14,7 +14,7 @@ public class NukeAbility : PlayerAbility<NukeAbilityUpgrade>
         NukeShockwave = upgrade.NukeShockwave;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (Input.GetButton("Ability") && Time.time - nukeTime > Cooldown)
             Nuke();
