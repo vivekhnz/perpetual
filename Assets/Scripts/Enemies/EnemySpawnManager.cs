@@ -60,11 +60,8 @@ public class EnemySpawnManager : MonoBehaviour
         currentBoss = 0;
         round = 1;
 
-        // not needed as FixedUpdate handles it
-        //StartNewRound();
-
         // show player basic controls before starting first wave
-        hud.ShowControlHintImage(0, 10);
+        hud.ShowControlHintImage(null, 5);
     }
 
     void FixedUpdate()

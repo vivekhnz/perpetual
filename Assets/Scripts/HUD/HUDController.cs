@@ -18,7 +18,6 @@ public class HUDController : MonoBehaviour
     public Text HighScoreText;
     public Image ControlHintImage;
     public List<UpgradeButtonController> UpgradeButtons;
-    public List<Sprite> ControlHintSprites;
 
     private Animator animator;
     private PlayerUpgrades upgrades;
@@ -188,10 +187,11 @@ public class HUDController : MonoBehaviour
     }
 
     // displays an image for a set amount of time
-    public void ShowControlHintImage(int indexOfSprite, float displayTime)
+    public void ShowControlHintImage(Sprite sprite, float displayTime)
     {
         ControlHintImage.enabled = true;
-        ControlHintImage.sprite = ControlHintSprites[indexOfSprite];
+        if (sprite != null)
+            ControlHintImage.sprite = sprite;
         Invoke("HideControlHintImage", displayTime);
     }
 
@@ -240,23 +240,8 @@ public class HUDController : MonoBehaviour
         isPopoverOpen = false;
 
         // show control hints
-        switch (selectedUpgrade.Type)
-        {
-            case UpgradeType.Weapon:
-                // Show difference instructions for laser & scattershot
-                if (selectedUpgrade.Name.Equals("Laser"))
-                {
-                    ShowControlHintImage(1, 5);
-                }
-                if (selectedUpgrade.Name.Equals("ScatterShot"))
-                {
-                    ShowControlHintImage(2, 5);
-                }
-                break;
-            case UpgradeType.Ability:
-                ShowControlHintImage(3, 5);
-                break;
-        }
+        if (selectedUpgrade.Tutorial != null)
+            ShowControlHintImage(selectedUpgrade.Tutorial, 5.0f);
     }
 
     private void ReturnToStartMenu()
