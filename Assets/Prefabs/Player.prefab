@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58c235e756e5304f87d637ab2354fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 4
+  MovementSpeed: 5
   MovementSpeedWhileFiring: 2.5
 --- !u!114 &114537559253093310
 MonoBehaviour:
@@ -261,17 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d903e2977fb467746b3b0620261175c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SecondaryWeapons:
-  - {fileID: 114614876271724538, guid: 093bcad37d4d4234c93246863b7aa9b0, type: 2}
-  Abilities:
-  - AbilityName: DashAbility
-    Icon: {fileID: 21300000, guid: 768d2d2e983e2344f862a92d4d8e1cda, type: 3}
-    Properties: []
-  - AbilityName: NukeAbility
-    Icon: {fileID: 21300000, guid: f3ef42a1e66feb14e89d66825c53cea3, type: 3}
-    Properties:
-    - Name: NukeShockwave
-      Value: {fileID: 1532199718276376, guid: 46901935a6831884f84717b7a02426e5, type: 2}
   Upgrades: {fileID: 11400000, guid: 346f3e0cd94299f49aa9aceb8903014d, type: 2}
 --- !u!114 &114910131314984590
 MonoBehaviour:
