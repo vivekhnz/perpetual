@@ -14,3 +14,4 @@ MonoBehaviour:
   Name: Dash
   Type: 1
   Icon: {fileID: 21300000, guid: 768d2d2e983e2344f862a92d4d8e1cda, type: 3}
+  DashSound: {fileID: 82010100963523754, guid: 50b676c9f81be894cbb2bc3ed69088ad, type: 2}

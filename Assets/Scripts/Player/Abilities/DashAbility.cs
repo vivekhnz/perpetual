@@ -12,6 +12,12 @@ public class DashAbility : PlayerAbility<DashAbilityUpgrade>
 
     private Vector2 velocity;
     private float dashTime;
+    private AudioSource DashSound;
+
+    public override void ExtractAbilityInfo(DashAbilityUpgrade upgrade)
+    {
+        DashSound = upgrade.DashSound;
+    }
 
     void FixedUpdate()
     {
@@ -47,6 +53,10 @@ public class DashAbility : PlayerAbility<DashAbilityUpgrade>
             return;
 
         velocity += dashDirection * Speed;
+
+        // play sound
+        var sound = Instantiate(DashSound);
+        Destroy(sound.gameObject, sound.clip.length);
 
         // reset cooldown
         dashTime = Time.time;
