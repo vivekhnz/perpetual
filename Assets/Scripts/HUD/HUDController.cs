@@ -9,13 +9,16 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Animator))]
 public class HUDController : MonoBehaviour
 {
+    public float ShowWaveTime;
     public Text GameOverText;
     public Text ScoreText;
     public Text MessageText;
-    public float ShowWaveTime;
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
+    public Text YourScoreText;
+    public Text YourHighestScoreText;
+    public Text SurvivedText;
     public List<UpgradeButtonController> UpgradeButtons;
 
     private Animator animator;
@@ -69,6 +72,15 @@ public class HUDController : MonoBehaviour
         if (HighScoreText != null)
             HighScoreText.text = "High Score: " + highscore;
 
+        if (YourScoreText != null)
+            YourScoreText.text = String.Empty;
+
+        if (YourHighestScoreText != null)
+            YourHighestScoreText.text = String.Empty;
+
+        if (SurvivedText != null)
+            SurvivedText.text = String.Empty;
+
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
             Debug.LogError("No player upgrade manager found.");
@@ -92,15 +104,18 @@ public class HUDController : MonoBehaviour
     {
         isGameOver = true;
 
+        // show player score and highscore before highscore is overwritten
+        DisplayEndGameStatistics();
+
         // did the player beat the highscore?
         if (score > highscore)
         {
             highscore = score;
             PlayerPrefs.SetInt("HighScore", highscore);
+            GameOverText.text = "New High Score!";
         }
-
         // show game over text
-        if (GameOverText != null)
+        else if (GameOverText != null)
             GameOverText.text = "Game Over";
 
         SendGameOverTelemetry(score, round, wave);
@@ -111,7 +126,14 @@ public class HUDController : MonoBehaviour
         Destroy(enemyManager);
 
         // go to start screen
-        Invoke("ReturnToStartMenu", 2);
+        Invoke("ReturnToStartMenu", 5);
+    }
+
+    private void DisplayEndGameStatistics()
+    {
+        YourScoreText.text = "Your Score: " + score;
+        YourHighestScoreText.text = "Your Highest Score: " + highscore;
+        SurvivedText.text = "You Survived To Round: " + round + " Wave: " + wave;
     }
 
     private void SendGameOverTelemetry(int score, int round, int wave)
@@ -130,10 +152,11 @@ public class HUDController : MonoBehaviour
         this.score += score;
 
         // change high score if beaten
-        if (this.score > highscore)
-        {
-            HighScoreText.text = "High Score: " + this.score;
-        }
+        // no longer updates in realtime, only at game over.
+        //if (this.score > highscore)
+        //{
+        //    HighScoreText.text = "High Score: " + this.score;
+        //}
         ScoreText.text = "Score: " + this.score;
     }
 
