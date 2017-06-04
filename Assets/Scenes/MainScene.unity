@@ -3497,9 +3497,8 @@ MonoBehaviour:
   - {fileID: 784376706}
   TimeToScoreMultiply: 1
   ScoreMultiplierText: {fileID: 1601571223}
-  UntouchableAmount: 5
-  UntouchableBonus: 100
-  scoreMultiplier: 1
+  UntouchableAmount: 10
+  UntouchableBonus: 200
 --- !u!95 &1136098459
 Animator:
   serializedVersion: 3

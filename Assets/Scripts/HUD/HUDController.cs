@@ -29,6 +29,7 @@ public class HUDController : MonoBehaviour
 
     private Animator animator;
     private PlayerUpgrades upgrades;
+    private PopupManager popups;
 
     private bool isGameOver;
     private bool isPopoverOpen;
@@ -45,8 +46,8 @@ public class HUDController : MonoBehaviour
     private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
     private float timeSinceScore;
-    public int scoreMultiplier;
-    private int currentUntouched;
+    private int scoreMultiplier;
+    private int streak;
 
     void Start()
     {
@@ -87,11 +88,15 @@ public class HUDController : MonoBehaviour
         if (upgrades == null)
             Debug.LogError("No player upgrade manager found.");
 
+        popups = GameObject.FindObjectOfType<PopupManager>();
+        if (popups == null)
+            Debug.LogError("No popup manager found.");
+
         waveTime = 0;
         doShowWave = true;
         timeSinceScore = Time.time;
         scoreMultiplier = 1;
-        currentUntouched = 0;
+        streak = 0;
     }
 
     void Update()
@@ -152,6 +157,13 @@ public class HUDController : MonoBehaviour
         });
     }
 
+    public void ResetStreak()
+    {
+        scoreMultiplier = 1;
+        ScoreMultiplierText.text = string.Empty;
+        streak = 0;
+    }
+
     public void AddScore(int score)
     {
         // update score multiplier
@@ -167,11 +179,12 @@ public class HUDController : MonoBehaviour
         this.score += score * scoreMultiplier;
         timeSinceScore = Time.time;
 
-        currentUntouched++;
-        if (currentUntouched >= UntouchableAmount)
+        streak++;
+        if (streak % UntouchableAmount == 0)
         {
-            this.score += UntouchableBonus;
-            currentUntouched = 0;
+            var bonusMultiplier = 0.9f + (0.1f * (streak / UntouchableAmount));
+            this.score += (int)(UntouchableBonus * bonusMultiplier);
+            popups.CreatePlayerPopup($"{streak} KILL STREAK", 0.5f, true);
         }
 
         ScoreText.text = "SCORE: " + this.score;

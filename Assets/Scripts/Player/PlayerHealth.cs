@@ -88,8 +88,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
 
         // reset score multiplier
-        hudController.scoreMultiplier = 1;
-        hudController.ScoreMultiplierText.text = "";
+        hudController.ResetStreak();
     }
 
     public void RestoreHealth(float healthGained)
