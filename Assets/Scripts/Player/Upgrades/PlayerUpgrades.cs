@@ -9,8 +9,8 @@ using Random = UnityEngine.Random;
 public class PlayerUpgrades : MonoBehaviour
 {
     public UpgradeCollection Upgrades;
-    public AudioClip WeaponOffCooldownSFX;
-    public AudioClip AbilityOffCooldownSFX;
+    public AudioSource WeaponOffCooldownSFX;
+    public AudioSource AbilityOffCooldownSFX;
 
     private DataProvider data;
     private PlayerWeapon[] weapons;
@@ -64,10 +64,11 @@ public class PlayerUpgrades : MonoBehaviour
             data.UpdateValue<Sprite>("SecondaryWeaponIcon", secondaryWeapon.Icon);
             data.UpdateValue<bool>("HasSecondaryWeapon", true);
 
-            // play a sound when weapon ability is off cooldown
+            // play a sound when weapon is off cooldown
             if (secondaryWeapon.Charge == 1 && !weaponOffCooldownSFXPlayed)
             {
-                AudioSource.PlayClipAtPoint(WeaponOffCooldownSFX, transform.position);
+                var sound = Instantiate(WeaponOffCooldownSFX);
+                Destroy(sound.gameObject, sound.clip.length);
                 weaponOffCooldownSFXPlayed = true;
             }
             else if (secondaryWeapon.Charge < 1 && weaponOffCooldownSFXPlayed)
@@ -87,10 +88,11 @@ public class PlayerUpgrades : MonoBehaviour
             data.UpdateValue<Sprite>("AbilityIcon", ability.Icon);
             data.UpdateValue<bool>("HasAbility", true);
 
-            // play a sound when player ability is off cooldown
+            // play a sound when ability is off cooldown
             if (ability.GetCharge() == 1 && !abilityOffCooldownSFXPlayed)
             {
-                AudioSource.PlayClipAtPoint(AbilityOffCooldownSFX, transform.position);
+                var sound = Instantiate(AbilityOffCooldownSFX);
+                Destroy(sound.gameObject, sound.clip.length);
                 abilityOffCooldownSFXPlayed = true;
             }
             else if (ability.GetCharge() < 1 && abilityOffCooldownSFXPlayed)

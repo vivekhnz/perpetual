@@ -263,10 +263,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Upgrades: {fileID: 11400000, guid: 346f3e0cd94299f49aa9aceb8903014d, type: 2}
-  WeaponOffCooldownSFX: {fileID: 8300000, guid: 39b00185df5fe9e44926a09e7a829d17,
-    type: 3}
-  AbilityOffCooldownSFX: {fileID: 8300000, guid: 233c7a42a9f912646803b107793e5ce3,
-    type: 3}
+  WeaponOffCooldownSFX: {fileID: 82010100963523754, guid: 5349fc1cdd99f1547a7883b3c9bf6d05,
+    type: 2}
+  AbilityOffCooldownSFX: {fileID: 82010100963523754, guid: 4c810297b954f314488b9a85ca9c4582,
+    type: 2}
 --- !u!114 &114910131314984590
 MonoBehaviour:
   m_ObjectHideFlags: 1
