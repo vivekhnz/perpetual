@@ -16,11 +16,15 @@ public class HUDController : MonoBehaviour
     public Text RoundText;
     public Text HighScoreText;
     public Image ControlHintImage;
+
     public GameObject GameOverPanel;
     public Text GameOverScoreText;
     public Text GameOverHighScoreText;
     public Text GameOverRoundText;
     public Text GameOverWaveText;
+    public Text GameOverStreakText;
+    public Text GameOverMultikillText;
+
     public List<UpgradeButtonController> UpgradeButtons;
     public float TimeToScoreMultiply = 1.0f;
     public Text ScoreMultiplierText;
@@ -47,7 +51,9 @@ public class HUDController : MonoBehaviour
     private float waveTime;
     private float timeSinceScore;
     private int scoreMultiplier;
+    private int highestMultikill;
     private int streak;
+    private int longestStreak;
 
     void Start()
     {
@@ -97,6 +103,8 @@ public class HUDController : MonoBehaviour
         timeSinceScore = Time.time;
         scoreMultiplier = 1;
         streak = 0;
+        longestStreak = 0;
+        highestMultikill = 0;
     }
 
     void Update()
@@ -144,6 +152,8 @@ public class HUDController : MonoBehaviour
         GameOverHighScoreText.text = highscore.ToString();
         GameOverRoundText.text = round.ToString();
         GameOverWaveText.text = wave.ToString();
+        GameOverStreakText.text = longestStreak.ToString();
+        GameOverMultikillText.text = highestMultikill.ToString();
     }
 
     private void SendGameOverTelemetry(int score, int round, int wave)
@@ -175,11 +185,13 @@ public class HUDController : MonoBehaviour
         {
             scoreMultiplier = 1;
         }
+        highestMultikill = Math.Max(highestMultikill, scoreMultiplier);
 
         this.score += score * scoreMultiplier;
         timeSinceScore = Time.time;
 
         streak++;
+        longestStreak = Math.Max(longestStreak, streak);
         if (streak % UntouchableAmount == 0)
         {
             var bonusMultiplier = 0.9f + (0.1f * (streak / UntouchableAmount));
