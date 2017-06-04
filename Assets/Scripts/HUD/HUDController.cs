@@ -19,6 +19,7 @@ public class HUDController : MonoBehaviour
     public Image ControlHintImage;
     public List<UpgradeButtonController> UpgradeButtons;
     public float TimeToScoreMultiply = 1.0f;
+    public Text ScoreMultiplierText;
 
     private Animator animator;
     private PlayerUpgrades upgrades;
@@ -38,7 +39,7 @@ public class HUDController : MonoBehaviour
     private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
     private float timeSinceScore;
-    private int scoreMultiplier = 1;
+    public int scoreMultiplier = 1;
 
     void Start()
     {
@@ -73,6 +74,9 @@ public class HUDController : MonoBehaviour
         if (HighScoreText != null)
             HighScoreText.text = "High Score: " + highscore;
 
+        if (ScoreMultiplierText != null)
+            ScoreMultiplierText.text = "";
+
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
             Debug.LogError("No player upgrade manager found.");
@@ -91,6 +95,10 @@ public class HUDController : MonoBehaviour
             doShowWave = false;
             MessageText.text = string.Empty;
         }
+
+        // update score multiplier if reset
+        if (Time.time - timeSinceScore > TimeToScoreMultiply)
+            ScoreMultiplierText.text = "";
     }
 
     public void GameOver()
@@ -132,6 +140,7 @@ public class HUDController : MonoBehaviour
 
     public void AddScore(int score)
     {
+        // update score multiplier
         if (Time.time - timeSinceScore < TimeToScoreMultiply)
         {
             scoreMultiplier++;
@@ -151,6 +160,15 @@ public class HUDController : MonoBehaviour
             HighScoreText.text = "High Score: " + this.score;
         }
         ScoreText.text = "Score: " + this.score;
+
+        if (scoreMultiplier > 1)
+        {
+            ScoreMultiplierText.text = "x" + scoreMultiplier;
+        }
+        else
+        {
+            ScoreMultiplierText.text = "";
+        }
     }
 
     public void ShowRoundAndWave(int round, int wave)
