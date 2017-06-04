@@ -20,6 +20,8 @@ public class HUDController : MonoBehaviour
     public List<UpgradeButtonController> UpgradeButtons;
     public float TimeToScoreMultiply = 1.0f;
     public Text ScoreMultiplierText;
+    public int UntouchableAmount = 5;
+    public int UntouchableBonus = 100;
 
     private Animator animator;
     private PlayerUpgrades upgrades;
@@ -39,7 +41,8 @@ public class HUDController : MonoBehaviour
     private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
     private float timeSinceScore;
-    public int scoreMultiplier = 1;
+    public int scoreMultiplier;
+    private int currentUntouched;
 
     void Start()
     {
@@ -84,6 +87,8 @@ public class HUDController : MonoBehaviour
         waveTime = 0;
         doShowWave = true;
         timeSinceScore = Time.time;
+        scoreMultiplier = 1;
+        currentUntouched = 0;
     }
 
     void Update()
@@ -153,6 +158,13 @@ public class HUDController : MonoBehaviour
         Debug.Log(score * scoreMultiplier);
         timeSinceScore = Time.time;
         Debug.Log(scoreMultiplier);
+
+        currentUntouched++;
+        if (currentUntouched >= UntouchableAmount)
+        {
+            this.score += UntouchableBonus;
+            currentUntouched = 0;
+        }
 
         // change high score if beaten
         if (this.score > highscore)
