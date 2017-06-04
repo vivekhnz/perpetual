@@ -28,6 +28,7 @@ public class HUDController : MonoBehaviour
     public List<UpgradeButtonController> UpgradeButtons;
     public float TimeToScoreMultiply = 1.0f;
     public Text ScoreMultiplierText;
+    public Text MultikillLabel;
     public int UntouchableAmount = 5;
     public int UntouchableBonus = 100;
 
@@ -88,7 +89,10 @@ public class HUDController : MonoBehaviour
             HighScoreText.text = "HIGH SCORE: " + highscore;
 
         if (ScoreMultiplierText != null)
-            ScoreMultiplierText.text = "";
+            ScoreMultiplierText.text = string.Empty;
+
+        if (MultikillLabel != null)
+            MultikillLabel.text = string.Empty;
 
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
@@ -119,7 +123,10 @@ public class HUDController : MonoBehaviour
 
         // update score multiplier if reset
         if (Time.time - timeSinceScore > TimeToScoreMultiply)
-            ScoreMultiplierText.text = "";
+        {
+            ScoreMultiplierText.text = string.Empty;
+            MultikillLabel.text = string.Empty;
+        }
     }
 
     public void GameOver()
@@ -171,6 +178,7 @@ public class HUDController : MonoBehaviour
     {
         scoreMultiplier = 1;
         ScoreMultiplierText.text = string.Empty;
+        MultikillLabel.text = string.Empty;
         streak = 0;
     }
 
@@ -203,11 +211,13 @@ public class HUDController : MonoBehaviour
 
         if (scoreMultiplier > 1)
         {
-            ScoreMultiplierText.text = "x" + scoreMultiplier;
+            ScoreMultiplierText.text = $"x{scoreMultiplier}";
+            MultikillLabel.text = "MULTIKILL";
         }
         else
         {
-            ScoreMultiplierText.text = "";
+            ScoreMultiplierText.text = string.Empty;
+            MultikillLabel.text = string.Empty;
         }
     }
 
