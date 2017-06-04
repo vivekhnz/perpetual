@@ -22,8 +22,6 @@ public class HUDController : MonoBehaviour
     public Text GameOverRoundText;
     public Text GameOverWaveText;
     public List<UpgradeButtonController> UpgradeButtons;
-    public Canvas WorldCanvas;
-    public ScorePopupController ScorePopup;
     public float TimeToScoreMultiply = 1.0f;
     public Text ScoreMultiplierText;
     public int UntouchableAmount = 5;
@@ -292,12 +290,5 @@ public class HUDController : MonoBehaviour
         // show control hints
         if (selectedUpgrade.Tutorial != null)
             ShowControlHintImage(selectedUpgrade.Tutorial, 5.0f);
-    }
-
-    public void CreateScorePopup(int score, Vector3 position, Vector2 velocity)
-    {
-        var popup = Instantiate(ScorePopup);
-        popup.transform.SetParent(WorldCanvas.transform);
-        popup.Initialize(score, position, velocity);
     }
 }
