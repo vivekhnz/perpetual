@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f04212b93caf3ec40b0a99202801cb68, type: 3}
   m_Name: HighCaliberRoundsMod
   m_EditorClassIdentifier: 
-  Name: High Caliber Rounds
+  Name: HIGH CALIBER ROUNDS
   Type: 4
   Icon: {fileID: 21300000, guid: 077f0b5eb316f814e9e1c0c95ff24b08, type: 3}
+  Tutorial: {fileID: 0}
+  Description: Primary weapon bullets knock back enemy targets.
   Dependency: {fileID: 0}
   ProjectileKnockbackForce: 1

@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba26ea4a526dbf4a93ff1eb3d111b90, type: 3}
   m_Name: ScatterShotUpgrade
   m_EditorClassIdentifier: 
-  Name: ScatterShot
+  Name: SCATTERSHOT
   Type: 0
   Icon: {fileID: 21300000, guid: 927a9511b9ad58b46a24f46b56091d08, type: 3}
   Tutorial: {fileID: 21300000, guid: 6f7ee2570cca5c34980e6ee4e63691d7, type: 3}
+  Description: Fires multiple high-damage pellets in cone.
   Prefab: {fileID: 114091245419609600, guid: d35d2b6e6327ffc41b1937554969bf9e, type: 2}

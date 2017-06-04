@@ -787,7 +787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763e60ce7e2035458eb3596e689fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialHealth: 1500
+  InitialHealth: 1000
   ScoreValue: 1000
   CameraShakeAmount: 5
   Parent: {fileID: 1268236377661152}
@@ -986,29 +986,29 @@ MonoBehaviour:
       time: 0.4
       value: 0
       inSlope: 0
-      outSlope: 750.00964
+      outSlope: 1000.0129
       tangentMode: 69
     - serializedVersion: 2
       time: 0.401
-      value: 0.75
-      inSlope: 750.00964
+      value: 1
+      inSlope: 1000.0129
       outSlope: -0
       tangentMode: 69
     - serializedVersion: 2
       time: 0.8
-      value: 0.75
+      value: 1
       inSlope: 0
-      outSlope: 750.00964
+      outSlope: 1000.0129
       tangentMode: 69
     - serializedVersion: 2
       time: 0.801
-      value: 1.5
-      inSlope: 750.00964
+      value: 2
+      inSlope: 1000.0129
       outSlope: -0
       tangentMode: 69
     - serializedVersion: 2
       time: 1
-      value: 1.5
+      value: 2
       inSlope: 0
       outSlope: 0
       tangentMode: 69
