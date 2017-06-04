@@ -9,12 +9,16 @@ using Random = UnityEngine.Random;
 public class PlayerUpgrades : MonoBehaviour
 {
     public UpgradeCollection Upgrades;
+    public AudioSource WeaponOffCooldownSFX;
+    public AudioSource AbilityOffCooldownSFX;
 
     private DataProvider data;
     private PlayerWeapon[] weapons;
     private PlayerSecondaryWeapon secondaryWeapon;
     private PlayerAbilityBase ability;
     private UpgradeTree tree;
+    private bool weaponOffCooldownSFXPlayed = false;
+    private bool abilityOffCooldownSFXPlayed = false;
 
     public bool IsFiring
     {
@@ -59,6 +63,18 @@ public class PlayerUpgrades : MonoBehaviour
             data.UpdateValue<float>("SecondaryWeaponCharge", secondaryWeapon.Charge);
             data.UpdateValue<Sprite>("SecondaryWeaponIcon", secondaryWeapon.Icon);
             data.UpdateValue<bool>("HasSecondaryWeapon", true);
+
+            // play a sound when weapon is off cooldown
+            if (secondaryWeapon.Charge == 1 && !weaponOffCooldownSFXPlayed)
+            {
+                var sound = Instantiate(WeaponOffCooldownSFX);
+                Destroy(sound.gameObject, sound.clip.length);
+                weaponOffCooldownSFXPlayed = true;
+            }
+            else if (secondaryWeapon.Charge < 1 && weaponOffCooldownSFXPlayed)
+            {
+                weaponOffCooldownSFXPlayed = false;
+            }
         }
 
         // update ability
@@ -71,6 +87,18 @@ public class PlayerUpgrades : MonoBehaviour
             data.UpdateValue<float>("AbilityCharge", ability.GetCharge());
             data.UpdateValue<Sprite>("AbilityIcon", ability.Icon);
             data.UpdateValue<bool>("HasAbility", true);
+
+            // play a sound when ability is off cooldown
+            if (ability.GetCharge() == 1 && !abilityOffCooldownSFXPlayed)
+            {
+                var sound = Instantiate(AbilityOffCooldownSFX);
+                Destroy(sound.gameObject, sound.clip.length);
+                abilityOffCooldownSFXPlayed = true;
+            }
+            else if (ability.GetCharge() < 1 && abilityOffCooldownSFXPlayed)
+            {
+                abilityOffCooldownSFXPlayed = false;
+            }
         }
     }
 
