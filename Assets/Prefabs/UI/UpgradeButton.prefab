@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 114300510676601278}
   - component: {fileID: 114250430166315950}
   m_Layer: 5
-  m_Name: UpgradeType
+  m_Name: UpgradeDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,13 +198,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 7
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TYPE
+  m_Text: Description
 --- !u!114 &114422805862809244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UpgradeNameText: {fileID: 114074780001705100}
-  UpgradeTypeText: {fileID: 114300510676601278}
+  UpgradeDescriptionText: {fileID: 114300510676601278}
   UpgradeButtonIcon: {fileID: 114558003556199002}
   OnUpgradeSelected:
     m_PersistentCalls:
@@ -380,7 +380,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_SizeDelta: {x: 0, y: 64}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224652560008262100
 RectTransform:
