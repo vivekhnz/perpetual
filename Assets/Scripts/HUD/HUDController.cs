@@ -22,6 +22,12 @@ public class HUDController : MonoBehaviour
     public Text GameOverRoundText;
     public Text GameOverWaveText;
     public List<UpgradeButtonController> UpgradeButtons;
+    public Canvas WorldCanvas;
+    public ScorePopupController ScorePopup;
+    public float TimeToScoreMultiply = 1.0f;
+    public Text ScoreMultiplierText;
+    public int UntouchableAmount = 5;
+    public int UntouchableBonus = 100;
 
     private Animator animator;
     private PlayerUpgrades upgrades;
@@ -40,6 +46,9 @@ public class HUDController : MonoBehaviour
     private bool doShowWave;
     private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
+    private float timeSinceScore;
+    public int scoreMultiplier;
+    private int currentUntouched;
 
     void Start()
     {
@@ -73,12 +82,18 @@ public class HUDController : MonoBehaviour
         if (HighScoreText != null)
             HighScoreText.text = "HIGH SCORE: " + highscore;
 
+        if (ScoreMultiplierText != null)
+            ScoreMultiplierText.text = "";
+
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
             Debug.LogError("No player upgrade manager found.");
 
         waveTime = 0;
         doShowWave = true;
+        timeSinceScore = Time.time;
+        scoreMultiplier = 1;
+        currentUntouched = 0;
     }
 
     void Update()
@@ -90,6 +105,10 @@ public class HUDController : MonoBehaviour
             doShowWave = false;
             MessageText.text = string.Empty;
         }
+
+        // update score multiplier if reset
+        if (Time.time - timeSinceScore > TimeToScoreMultiply)
+            ScoreMultiplierText.text = "";
     }
 
     public void GameOver()
@@ -137,8 +156,36 @@ public class HUDController : MonoBehaviour
 
     public void AddScore(int score)
     {
-        this.score += score;
+        // update score multiplier
+        if (Time.time - timeSinceScore < TimeToScoreMultiply)
+        {
+            scoreMultiplier++;
+        }
+        else
+        {
+            scoreMultiplier = 1;
+        }
+
+        this.score += score * scoreMultiplier;
+        timeSinceScore = Time.time;
+
+        currentUntouched++;
+        if (currentUntouched >= UntouchableAmount)
+        {
+            this.score += UntouchableBonus;
+            currentUntouched = 0;
+        }
+
         ScoreText.text = "SCORE: " + this.score;
+
+        if (scoreMultiplier > 1)
+        {
+            ScoreMultiplierText.text = "x" + scoreMultiplier;
+        }
+        else
+        {
+            ScoreMultiplierText.text = "";
+        }
     }
 
     public void ShowRoundAndWave(int round, int wave)
@@ -245,5 +292,12 @@ public class HUDController : MonoBehaviour
         // show control hints
         if (selectedUpgrade.Tutorial != null)
             ShowControlHintImage(selectedUpgrade.Tutorial, 5.0f);
+    }
+
+    public void CreateScorePopup(int score, Vector3 position, Vector2 velocity)
+    {
+        var popup = Instantiate(ScorePopup);
+        popup.transform.SetParent(WorldCanvas.transform);
+        popup.Initialize(score, position, velocity);
     }
 }

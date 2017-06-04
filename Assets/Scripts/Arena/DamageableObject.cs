@@ -57,7 +57,17 @@ public class DamageableObject : MonoBehaviour
         if (hudController == null)
             hudController = Object.FindObjectOfType<HUDController>();
         if (hudController != null)
+        {
             hudController.AddScore(ScoreValue);
+
+            // create score popup
+            Vector2 velocity = Vector2.zero;
+            if (damageAngle.HasValue)
+                velocity = new Vector2(
+                    Mathf.Cos(damageAngle.Value * Mathf.Deg2Rad),
+                    Mathf.Sin(damageAngle.Value * Mathf.Deg2Rad)) * 0.1f;
+            hudController.CreateScorePopup(ScoreValue, transform.position, velocity);
+        }
 
         // create explosion
         if (Explosion != null)
