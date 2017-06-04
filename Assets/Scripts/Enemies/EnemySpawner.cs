@@ -88,7 +88,10 @@ public class EnemySpawner : PooledObject
         // spawn a random enemy type
         var enemyType = types[Random.Range(0, types.Count)];
         var enemy = enemyType.Enemy.Fetch<EnemyController>();
-        enemy.Initialize(transform.position);
+
+        // offset spawn position
+        Vector3 spawnPos = new Vector3(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f), 0f);
+        enemy.Initialize(transform.position + spawnPos);
 
         // track when the enemy is destroyed
         enemy.InstanceRecycled += OnEnemyDestroyed;
