@@ -56,19 +56,19 @@ public class HUDController : MonoBehaviour
             GameOverText.text = string.Empty;
 
         if (ScoreText != null)
-            ScoreText.text = "Score: " + score;
+            ScoreText.text = "SCORE: " + score;
 
         if (MessageText != null)
-            MessageText.text = "Get Ready!";
+            MessageText.text = "GET READY!";
 
         if (WaveText != null)
-            WaveText.text = "Wave 1";
+            WaveText.text = "WAVE 1";
 
         if (RoundText != null)
-            RoundText.text = "Round 1";
+            RoundText.text = "ROUND 1";
 
         if (HighScoreText != null)
-            HighScoreText.text = "High Score: " + highscore;
+            HighScoreText.text = "HIGH SCORE: " + highscore;
 
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
@@ -102,7 +102,7 @@ public class HUDController : MonoBehaviour
 
         // show game over text
         if (GameOverText != null)
-            GameOverText.text = "Game Over";
+            GameOverText.text = "GAME OVER";
 
         SendGameOverTelemetry(score, round, wave);
 
@@ -133,9 +133,9 @@ public class HUDController : MonoBehaviour
         // change high score if beaten
         if (this.score > highscore)
         {
-            HighScoreText.text = "High Score: " + this.score;
+            HighScoreText.text = "HIGH SCORE: " + this.score;
         }
-        ScoreText.text = "Score: " + this.score;
+        ScoreText.text = "SCORE: " + this.score;
     }
 
     public void ShowRoundAndWave(int round, int wave)
@@ -146,13 +146,13 @@ public class HUDController : MonoBehaviour
 
         // append the numbers to hud text
         if (MessageText != null)
-            MessageText.text = "Wave " + wave;
+            MessageText.text = "WAVE " + wave;
 
         if (WaveText != null)
-            WaveText.text = "Wave " + wave;
+            WaveText.text = "WAVE " + wave;
 
         if (RoundText != null)
-            RoundText.text = "Round " + round;
+            RoundText.text = "ROUND " + round;
 
         doShowWave = true;
         waveTime = Time.time;
@@ -161,7 +161,7 @@ public class HUDController : MonoBehaviour
     public void SignalBossFight()
     {
         if (WaveText != null)
-            WaveText.text = "Boss Fight";
+            WaveText.text = "BOSS FIGHT";
 
         StartCoroutine(FlashWaveText("BOSS FIGHT!"));
         StartCoroutine(StopBlinking(ShowWaveTime));
