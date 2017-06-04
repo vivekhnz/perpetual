@@ -13,6 +13,7 @@ public class DamageableObject : MonoBehaviour
 
     public float CurrentHealth { get; private set; }
     private HUDController hudController;
+    private PopupManager popups;
 
     void Start()
     {
@@ -57,7 +58,19 @@ public class DamageableObject : MonoBehaviour
         if (hudController == null)
             hudController = Object.FindObjectOfType<HUDController>();
         if (hudController != null)
+        {
             hudController.AddScore(ScoreValue);
+
+            // create score popup
+            if (popups == null)
+                popups = Object.FindObjectOfType<PopupManager>();
+            Vector2 direction = Vector2.zero;
+            if (damageAngle.HasValue)
+                direction = new Vector2(
+                    Mathf.Cos(damageAngle.Value * Mathf.Deg2Rad),
+                    Mathf.Sin(damageAngle.Value * Mathf.Deg2Rad));
+            popups.CreatePopup($"+{ScoreValue}", transform.position, direction);
+        }
 
         // create explosion
         if (Explosion != null)

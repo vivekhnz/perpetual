@@ -16,15 +16,24 @@ public class HUDController : MonoBehaviour
     public Text RoundText;
     public Text HighScoreText;
     public Image ControlHintImage;
+
     public GameObject GameOverPanel;
     public Text GameOverScoreText;
     public Text GameOverHighScoreText;
     public Text GameOverRoundText;
     public Text GameOverWaveText;
+    public Text GameOverStreakText;
+    public Text GameOverMultikillText;
+
     public List<UpgradeButtonController> UpgradeButtons;
+    public float TimeToScoreMultiply = 1.0f;
+    public Text ScoreMultiplierText;
+    public int UntouchableAmount = 5;
+    public int UntouchableBonus = 100;
 
     private Animator animator;
     private PlayerUpgrades upgrades;
+    private PopupManager popups;
 
     private bool isGameOver;
     private bool isPopoverOpen;
@@ -40,6 +49,11 @@ public class HUDController : MonoBehaviour
     private bool doShowWave;
     private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
+    private float timeSinceScore;
+    private int scoreMultiplier;
+    private int highestMultikill;
+    private int streak;
+    private int longestStreak;
 
     void Start()
     {
@@ -73,12 +87,24 @@ public class HUDController : MonoBehaviour
         if (HighScoreText != null)
             HighScoreText.text = "HIGH SCORE: " + highscore;
 
+        if (ScoreMultiplierText != null)
+            ScoreMultiplierText.text = "";
+
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
             Debug.LogError("No player upgrade manager found.");
 
+        popups = GameObject.FindObjectOfType<PopupManager>();
+        if (popups == null)
+            Debug.LogError("No popup manager found.");
+
         waveTime = 0;
         doShowWave = true;
+        timeSinceScore = Time.time;
+        scoreMultiplier = 1;
+        streak = 0;
+        longestStreak = 0;
+        highestMultikill = 0;
     }
 
     void Update()
@@ -90,6 +116,10 @@ public class HUDController : MonoBehaviour
             doShowWave = false;
             MessageText.text = string.Empty;
         }
+
+        // update score multiplier if reset
+        if (Time.time - timeSinceScore > TimeToScoreMultiply)
+            ScoreMultiplierText.text = "";
     }
 
     public void GameOver()
@@ -122,6 +152,8 @@ public class HUDController : MonoBehaviour
         GameOverHighScoreText.text = highscore.ToString();
         GameOverRoundText.text = round.ToString();
         GameOverWaveText.text = wave.ToString();
+        GameOverStreakText.text = longestStreak.ToString();
+        GameOverMultikillText.text = highestMultikill.ToString();
     }
 
     private void SendGameOverTelemetry(int score, int round, int wave)
@@ -135,10 +167,48 @@ public class HUDController : MonoBehaviour
         });
     }
 
+    public void ResetStreak()
+    {
+        scoreMultiplier = 1;
+        ScoreMultiplierText.text = string.Empty;
+        streak = 0;
+    }
+
     public void AddScore(int score)
     {
-        this.score += score;
+        // update score multiplier
+        if (Time.time - timeSinceScore < TimeToScoreMultiply)
+        {
+            scoreMultiplier++;
+        }
+        else
+        {
+            scoreMultiplier = 1;
+        }
+        highestMultikill = Math.Max(highestMultikill, scoreMultiplier);
+
+        this.score += score * scoreMultiplier;
+        timeSinceScore = Time.time;
+
+        streak++;
+        longestStreak = Math.Max(longestStreak, streak);
+        if (streak % UntouchableAmount == 0)
+        {
+            var bonusMultiplier = 0.9f + (0.1f * (streak / UntouchableAmount));
+            this.score += (int)(UntouchableBonus * bonusMultiplier);
+            popups.CreatePlayerPopup($"{streak} KILL STREAK", 0.5f, true);
+        }
+
         ScoreText.text = "SCORE: " + this.score;
+
+        if (scoreMultiplier > 1)
+        {
+            ScoreMultiplierText.text = "x" + scoreMultiplier;
+        }
+        else
+        {
+            ScoreMultiplierText.text = "";
+        }
     }
 
     public void ShowRoundAndWave(int round, int wave)
