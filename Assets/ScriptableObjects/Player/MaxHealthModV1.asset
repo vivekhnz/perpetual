@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66432915ecb978f41a1c29c946de2f69, type: 3}
   m_Name: MaxHealthModV1
   m_EditorClassIdentifier: 
-  Name: Upgrade Health V1
+  Name: UPGRADE HEALTH V1
   Type: 4
   Icon: {fileID: 21300000, guid: 5a1933892f7e62f4d86fc501570d722a, type: 3}
+  Tutorial: {fileID: 0}
+  Description: Increases your maximum health.
   Dependency: {fileID: 0}
   MaximumHealth: 150
