@@ -9,12 +9,16 @@ using Random = UnityEngine.Random;
 public class PlayerUpgrades : MonoBehaviour
 {
     public UpgradeCollection Upgrades;
+    public AudioClip WeaponOffCooldownSFX;
+    public AudioClip AbilityOffCooldownSFX;
 
     private DataProvider data;
     private PlayerWeapon[] weapons;
     private PlayerSecondaryWeapon secondaryWeapon;
     private PlayerAbilityBase ability;
     private UpgradeTree tree;
+    private bool weaponOffCooldownSFXPlayed = false;
+    private bool abilityOffCooldownSFXPlayed = false;
 
     public bool IsFiring
     {
@@ -59,6 +63,17 @@ public class PlayerUpgrades : MonoBehaviour
             data.UpdateValue<float>("SecondaryWeaponCharge", secondaryWeapon.Charge);
             data.UpdateValue<Sprite>("SecondaryWeaponIcon", secondaryWeapon.Icon);
             data.UpdateValue<bool>("HasSecondaryWeapon", true);
+
+            // play a sound when weapon ability is off cooldown
+            if (secondaryWeapon.Charge == 1 && !weaponOffCooldownSFXPlayed)
+            {
+                AudioSource.PlayClipAtPoint(WeaponOffCooldownSFX, transform.position);
+                weaponOffCooldownSFXPlayed = true;
+            }
+            else if (secondaryWeapon.Charge < 1 && weaponOffCooldownSFXPlayed)
+            {
+                weaponOffCooldownSFXPlayed = false;
+            }
         }
 
         // update ability
@@ -71,6 +86,17 @@ public class PlayerUpgrades : MonoBehaviour
             data.UpdateValue<float>("AbilityCharge", ability.GetCharge());
             data.UpdateValue<Sprite>("AbilityIcon", ability.Icon);
             data.UpdateValue<bool>("HasAbility", true);
+
+            // play a sound when player ability is off cooldown
+            if (ability.GetCharge() == 1 && !abilityOffCooldownSFXPlayed)
+            {
+                AudioSource.PlayClipAtPoint(AbilityOffCooldownSFX, transform.position);
+                abilityOffCooldownSFXPlayed = true;
+            }
+            else if (ability.GetCharge() < 1 && abilityOffCooldownSFXPlayed)
+            {
+                abilityOffCooldownSFXPlayed = false;
+            }
         }
     }
 
