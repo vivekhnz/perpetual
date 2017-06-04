@@ -21,8 +21,6 @@ public class HUDController : MonoBehaviour
     public Text GameOverHighScoreText;
     public Text GameOverRoundText;
     public Text GameOverWaveText;
-    public Button ReturnToMainMenuBtn;
-    public Button RestartGameBtn;
     public List<UpgradeButtonController> UpgradeButtons;
 
     private Animator animator;
@@ -247,15 +245,5 @@ public class HUDController : MonoBehaviour
         // show control hints
         if (selectedUpgrade.Tutorial != null)
             ShowControlHintImage(selectedUpgrade.Tutorial, 5.0f);
-    }
-
-    public void ChangeSceneUsingIndex(int index)
-    {
-        SceneManager.LoadScene(index);
-    }
-
-    private void ReturnToStartMenu()
-    {
-        SceneManager.LoadScene("TitleScene");
     }
 }
