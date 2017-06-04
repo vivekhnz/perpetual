@@ -9,14 +9,18 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Animator))]
 public class HUDController : MonoBehaviour
 {
-    public Text GameOverText;
+    public float ShowWaveTime;
     public Text ScoreText;
     public Text MessageText;
-    public float ShowWaveTime;
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
     public Image ControlHintImage;
+    public GameObject GameOverPanel;
+    public Text GameOverScoreText;
+    public Text GameOverHighScoreText;
+    public Text GameOverRoundText;
+    public Text GameOverWaveText;
     public List<UpgradeButtonController> UpgradeButtons;
 
     private Animator animator;
@@ -52,8 +56,7 @@ public class HUDController : MonoBehaviour
         isPopoverOpen = false;
         animator.SetBool("IsPopoverVisible", false);
 
-        if (GameOverText != null)
-            GameOverText.text = string.Empty;
+        GameOverPanel.SetActive(false);
 
         if (ScoreText != null)
             ScoreText.text = "SCORE: " + score;
@@ -93,6 +96,9 @@ public class HUDController : MonoBehaviour
     {
         isGameOver = true;
 
+        // show player score and highscore before highscore is overwritten
+        DisplayEndGameStatistics();
+
         // did the player beat the highscore?
         if (score > highscore)
         {
@@ -100,19 +106,22 @@ public class HUDController : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", highscore);
         }
 
-        // show game over text
-        if (GameOverText != null)
-            GameOverText.text = "GAME OVER";
-
+        GameOverPanel.SetActive(true);
         SendGameOverTelemetry(score, round, wave);
 
         // destroy all enemies and spawners
         var enemyManager = UnityEngine.Object
             .FindObjectOfType<EnemySpawnManager>();
         Destroy(enemyManager);
+    }
 
-        // go to start screen
-        Invoke("ReturnToStartMenu", 2);
+    private void DisplayEndGameStatistics()
+    {
+        // show important stats
+        GameOverScoreText.text = score.ToString();
+        GameOverHighScoreText.text = highscore.ToString();
+        GameOverRoundText.text = round.ToString();
+        GameOverWaveText.text = wave.ToString();
     }
 
     private void SendGameOverTelemetry(int score, int round, int wave)
@@ -129,12 +138,6 @@ public class HUDController : MonoBehaviour
     public void AddScore(int score)
     {
         this.score += score;
-
-        // change high score if beaten
-        if (this.score > highscore)
-        {
-            HighScoreText.text = "HIGH SCORE: " + this.score;
-        }
         ScoreText.text = "SCORE: " + this.score;
     }
 
@@ -242,10 +245,5 @@ public class HUDController : MonoBehaviour
         // show control hints
         if (selectedUpgrade.Tutorial != null)
             ShowControlHintImage(selectedUpgrade.Tutorial, 5.0f);
-    }
-
-    private void ReturnToStartMenu()
-    {
-        SceneManager.LoadScene("TitleScene");
     }
 }
