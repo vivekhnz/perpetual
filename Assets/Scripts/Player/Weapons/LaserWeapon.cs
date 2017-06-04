@@ -15,13 +15,13 @@ public class LaserWeapon : MonoBehaviour
     public float Cooldown = 3.0f;
     public ParticleSystemAutoDestroy LaserHitEffect;
     public ParticleSystem LaserBeamEffect;
+    public AudioSource BeamLoopSound;
+    public AudioSource InitialFireSound;
 
     PlayerWeapon weapon;
     PlayerSecondaryWeapon secondaryWeapon;
     LineRenderer line;
     ParticleSystem.EmissionModule beamEmission;
-    AudioSource gunSound;
-
     int layerMask;
     float startFireTime;
     float stoppedFiringTime;
@@ -41,14 +41,12 @@ public class LaserWeapon : MonoBehaviour
             Debug.LogError("No line renderer found!");
         line.sortingLayerName = "Effects";
 
-        gunSound = GetComponent<AudioSource>();
-
         beamEmission = LaserBeamEffect.emission;
 
         layerMask = LayerMask.GetMask("Default", "Obstacles");
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // disable laser
         line.enabled = false;
@@ -59,22 +57,19 @@ public class LaserWeapon : MonoBehaviour
             && Time.time - stoppedFiringTime > Cooldown)
             startFireTime = Time.time;
 
+        // is still being fired?
         if (Input.GetButton("FireSecondary")
             && Time.time - startFireTime < LaserDuration)
         {
+            // did we just start firing?
+            if (!weapon.IsFiring)
+            {
+                BeamLoopSound.Play();
+                InitialFireSound.Play();
+            }
+
             FireLaser();
             weapon.IsFiring = true;
-
-            // play gun sound at a rate slower than actual RoF
-            if (!gunSound.isPlaying)
-            {
-                gunSound.Play();
-            }
-            // 0.28f is a sweet spot from experimentation. Change at your own risk!
-            if (gunSound.time > 0.28f)
-            {
-                gunSound.Play();
-            }
 
             // show time remaining until laser runs out
             float laserCharge = Mathf.Clamp(
@@ -88,6 +83,7 @@ public class LaserWeapon : MonoBehaviour
                 stoppedFiringTime = Time.time;
 
             weapon.IsFiring = false;
+            BeamLoopSound.Stop();
 
             // show time remaining until laser is available
             float laserCharge = Mathf.Clamp(

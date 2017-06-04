@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b15688bee6a7ff4488b28db752f48ac, type: 3}
   m_Name: LaserOverpenetrationV2
   m_EditorClassIdentifier: 
-  Name: Overpenetrate V2
+  Name: OVERPENETRATE V2
   Type: 2
   Icon: {fileID: 21300000, guid: 3a343531b6a1fef40bb8d7e8517a262b, type: 3}
+  Tutorial: {fileID: 0}
+  Description: LASER penetrates through two targets.
   Dependency: {fileID: 11400000, guid: c9b0cc071366b6b46b40b2c6a36f1302, type: 2}
   MaxDamageablesToHit: 3

@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 114795217862693978}
   - component: {fileID: 95125455190508830}
   - component: {fileID: 114253333160361234}
+  - component: {fileID: 82566744403580762}
   m_Layer: 10
   m_Name: ExploderEnemy
   m_TagString: Untagged
@@ -260,6 +261,87 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!82 &82566744403580762
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1541339381053536}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 243093370882575324, guid: 95d2bd9b80f7db7499fb601572a1fa2f,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: a7f7a99dbdbaf5b498ae0358a31184cf, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
     m_RotationOrder: 4
   reverbZoneMixCustomCurve:
     serializedVersion: 2
@@ -329,7 +411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af33b997e1878443a65263d73c129be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Shockwave: {fileID: 114189077865079232, guid: 9f70dde805b62814eb496f383a374f1f,
+  SelfDestructShockwave: {fileID: 114189077865079232, guid: 9f70dde805b62814eb496f383a374f1f,
+    type: 2}
+  KilledByPlayerShockwave: {fileID: 114189077865079232, guid: 5f0e8691a12d0114790c980093691c50,
     type: 2}
 --- !u!114 &114408817090844370
 MonoBehaviour:
@@ -347,8 +431,8 @@ MonoBehaviour:
   OnDetected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114715127447421028}
-        m_MethodName: SelfDestruct
+      - m_Target: {fileID: 114253333160361234}
+        m_MethodName: Detonate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

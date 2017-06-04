@@ -19,9 +19,11 @@ public class EnemySpawner : PooledObject
 
     public List<EnemySpawn> Enemies;
     public float SpawnInterval = 3f;
+    public float SpawnDelay = 0f;
 
     private int totalEnemiesToSpawn;
     private float spawnTime;
+    private float createdTime;
     private List<EnemyController> children
         = new List<EnemyController>();
 
@@ -29,7 +31,7 @@ public class EnemySpawner : PooledObject
     {
         if (Enemies == null || Enemies.Count < 1)
             Debug.LogError("No enemies specified!");
-        
+
         totalEnemiesToSpawn = Enemies.Sum(e => e.EnemiesToSpawn);
     }
 
@@ -37,12 +39,10 @@ public class EnemySpawner : PooledObject
     {
         transform.position = position;
         spawnTime = 0;
+        createdTime = Time.time;
         foreach (var enemy in Enemies)
             enemy.EnemiesSpawned = 0;
         children.Clear();
-
-        // spawn the first enemy
-        SpawnEnemy();
     }
 
     public override void CleanupInstance()
@@ -59,6 +59,9 @@ public class EnemySpawner : PooledObject
 
     void FixedUpdate()
     {
+        if (Time.time - createdTime < SpawnDelay)
+            return;
+
         // do I still have enemies to spawn?
         var totalEnemiesSpawned = Enemies.Sum(e => e.EnemiesSpawned);
         if (totalEnemiesSpawned < totalEnemiesToSpawn)
@@ -85,7 +88,10 @@ public class EnemySpawner : PooledObject
         // spawn a random enemy type
         var enemyType = types[Random.Range(0, types.Count)];
         var enemy = enemyType.Enemy.Fetch<EnemyController>();
-        enemy.Initialize(transform.position);
+
+        // offset spawn position
+        Vector3 spawnPos = new Vector3(Random.Range(0f, 0.5f), Random.Range(0f, 0.5f), 0f);
+        enemy.Initialize(transform.position + spawnPos);
 
         // track when the enemy is destroyed
         enemy.InstanceRecycled += OnEnemyDestroyed;

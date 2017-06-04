@@ -12,14 +12,22 @@ public class DashAbility : PlayerAbility<DashAbilityUpgrade>
 
     private Vector2 velocity;
     private float dashTime;
+    private AudioSource DashSound;
+
+    public override void ExtractAbilityInfo(DashAbilityUpgrade upgrade)
+    {
+        DashSound = upgrade.DashSound;
+    }
+
+    void Update()
+    {
+        // can I dash?
+        if (Input.GetButton("Ability") && Time.time - dashTime > Cooldown)
+            Dash();
+    }
 
     void FixedUpdate()
     {
-        // can I dash?
-        if (Input.GetButton("Ability")
-            && Time.time - dashTime > Cooldown)
-            Dash();
-
         if (velocity.magnitude < 0.01f)
         {
             // stop moving once we get really slow
@@ -47,6 +55,10 @@ public class DashAbility : PlayerAbility<DashAbilityUpgrade>
             return;
 
         velocity += dashDirection * Speed;
+
+        // play sound
+        var sound = Instantiate(DashSound);
+        Destroy(sound.gameObject, sound.clip.length);
 
         // reset cooldown
         dashTime = Time.time;

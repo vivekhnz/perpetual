@@ -9,17 +9,32 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Animator))]
 public class HUDController : MonoBehaviour
 {
-    public Text GameOverText;
+    public float ShowWaveTime;
     public Text ScoreText;
     public Text MessageText;
-    public float ShowWaveTime;
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
+    public Image ControlHintImage;
+
+    public GameObject GameOverPanel;
+    public Text GameOverScoreText;
+    public Text GameOverHighScoreText;
+    public Text GameOverRoundText;
+    public Text GameOverWaveText;
+    public Text GameOverStreakText;
+    public Text GameOverMultikillText;
+
     public List<UpgradeButtonController> UpgradeButtons;
+    public float TimeToScoreMultiply = 1.0f;
+    public Text ScoreMultiplierText;
+    public Text MultikillLabel;
+    public int UntouchableAmount = 5;
+    public int UntouchableBonus = 100;
 
     private Animator animator;
     private PlayerUpgrades upgrades;
+    private PopupManager popups;
 
     private bool isGameOver;
     private bool isPopoverOpen;
@@ -35,6 +50,11 @@ public class HUDController : MonoBehaviour
     private bool doShowWave;
     private bool isFlashing = false; // Used for checking whether to blink WaveText.
     private float waveTime;
+    private float timeSinceScore;
+    private int scoreMultiplier;
+    private int highestMultikill;
+    private int streak;
+    private int longestStreak;
 
     void Start()
     {
@@ -51,30 +71,44 @@ public class HUDController : MonoBehaviour
         isPopoverOpen = false;
         animator.SetBool("IsPopoverVisible", false);
 
-        if (GameOverText != null)
-            GameOverText.text = string.Empty;
+        GameOverPanel.SetActive(false);
 
         if (ScoreText != null)
-            ScoreText.text = "Score: " + score;
+            ScoreText.text = "SCORE: " + score;
 
         if (MessageText != null)
-            MessageText.text = "Wave 1";
+            MessageText.text = "GET READY!";
 
         if (WaveText != null)
-            WaveText.text = "Wave 1";
+            WaveText.text = "WAVE 1";
 
         if (RoundText != null)
-            RoundText.text = "Round 1";
+            RoundText.text = "ROUND 1";
 
         if (HighScoreText != null)
-            HighScoreText.text = "High Score: " + highscore;
+            HighScoreText.text = "HIGH SCORE: " + highscore;
+
+        if (ScoreMultiplierText != null)
+            ScoreMultiplierText.text = string.Empty;
+
+        if (MultikillLabel != null)
+            MultikillLabel.text = string.Empty;
 
         upgrades = GameObject.FindObjectOfType<PlayerUpgrades>();
         if (upgrades == null)
             Debug.LogError("No player upgrade manager found.");
 
+        popups = GameObject.FindObjectOfType<PopupManager>();
+        if (popups == null)
+            Debug.LogError("No popup manager found.");
+
         waveTime = 0;
         doShowWave = true;
+        timeSinceScore = Time.time;
+        scoreMultiplier = 1;
+        streak = 0;
+        longestStreak = 0;
+        highestMultikill = 0;
     }
 
     void Update()
@@ -86,11 +120,21 @@ public class HUDController : MonoBehaviour
             doShowWave = false;
             MessageText.text = string.Empty;
         }
+
+        // update score multiplier if reset
+        if (Time.time - timeSinceScore > TimeToScoreMultiply)
+        {
+            ScoreMultiplierText.text = string.Empty;
+            MultikillLabel.text = string.Empty;
+        }
     }
 
     public void GameOver()
     {
         isGameOver = true;
+
+        // show player score and highscore before highscore is overwritten
+        DisplayEndGameStatistics();
 
         // did the player beat the highscore?
         if (score > highscore)
@@ -99,19 +143,24 @@ public class HUDController : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", highscore);
         }
 
-        // show game over text
-        if (GameOverText != null)
-            GameOverText.text = "Game Over";
-
+        GameOverPanel.SetActive(true);
         SendGameOverTelemetry(score, round, wave);
 
         // destroy all enemies and spawners
         var enemyManager = UnityEngine.Object
             .FindObjectOfType<EnemySpawnManager>();
         Destroy(enemyManager);
+    }
 
-        // go to start screen
-        Invoke("ReturnToStartMenu", 2);
+    private void DisplayEndGameStatistics()
+    {
+        // show important stats
+        GameOverScoreText.text = score.ToString();
+        GameOverHighScoreText.text = highscore.ToString();
+        GameOverRoundText.text = round.ToString();
+        GameOverWaveText.text = wave.ToString();
+        GameOverStreakText.text = longestStreak.ToString();
+        GameOverMultikillText.text = highestMultikill.ToString();
     }
 
     private void SendGameOverTelemetry(int score, int round, int wave)
@@ -125,16 +174,51 @@ public class HUDController : MonoBehaviour
         });
     }
 
+    public void ResetStreak()
+    {
+        scoreMultiplier = 1;
+        ScoreMultiplierText.text = string.Empty;
+        MultikillLabel.text = string.Empty;
+        streak = 0;
+    }
+
     public void AddScore(int score)
     {
-        this.score += score;
-
-        // change high score if beaten
-        if (this.score > highscore)
+        // update score multiplier
+        if (Time.time - timeSinceScore < TimeToScoreMultiply)
         {
-            HighScoreText.text = "High Score: " + this.score;
+            scoreMultiplier++;
         }
-        ScoreText.text = "Score: " + this.score;
+        else
+        {
+            scoreMultiplier = 1;
+        }
+        highestMultikill = Math.Max(highestMultikill, scoreMultiplier);
+
+        this.score += score * scoreMultiplier;
+        timeSinceScore = Time.time;
+
+        streak++;
+        longestStreak = Math.Max(longestStreak, streak);
+        if (streak % UntouchableAmount == 0)
+        {
+            var bonusMultiplier = 0.9f + (0.1f * (streak / UntouchableAmount));
+            this.score += (int)(UntouchableBonus * bonusMultiplier);
+            popups.CreatePlayerPopup($"{streak} KILL STREAK", 0.5f, true);
+        }
+
+        ScoreText.text = "SCORE: " + this.score;
+
+        if (scoreMultiplier > 1)
+        {
+            ScoreMultiplierText.text = $"x{scoreMultiplier}";
+            MultikillLabel.text = "MULTIKILL";
+        }
+        else
+        {
+            ScoreMultiplierText.text = string.Empty;
+            MultikillLabel.text = string.Empty;
+        }
     }
 
     public void ShowRoundAndWave(int round, int wave)
@@ -145,13 +229,13 @@ public class HUDController : MonoBehaviour
 
         // append the numbers to hud text
         if (MessageText != null)
-            MessageText.text = "Wave " + wave;
+            MessageText.text = "WAVE " + wave;
 
         if (WaveText != null)
-            WaveText.text = "Wave " + wave;
+            WaveText.text = "WAVE " + wave;
 
         if (RoundText != null)
-            RoundText.text = "Round " + round;
+            RoundText.text = "ROUND " + round;
 
         doShowWave = true;
         waveTime = Time.time;
@@ -160,7 +244,7 @@ public class HUDController : MonoBehaviour
     public void SignalBossFight()
     {
         if (WaveText != null)
-            WaveText.text = "Boss Fight";
+            WaveText.text = "BOSS FIGHT";
 
         StartCoroutine(FlashWaveText("BOSS FIGHT!"));
         StartCoroutine(StopBlinking(ShowWaveTime));
@@ -183,6 +267,20 @@ public class HUDController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         isFlashing = false;
         MessageText.text = string.Empty;
+    }
+
+    // displays an image for a set amount of time
+    public void ShowControlHintImage(Sprite sprite, float displayTime)
+    {
+        ControlHintImage.enabled = true;
+        if (sprite != null)
+            ControlHintImage.sprite = sprite;
+        Invoke("HideControlHintImage", displayTime);
+    }
+
+    private void HideControlHintImage()
+    {
+        ControlHintImage.enabled = false;
     }
 
     public void SignalUpgradeUnlocked()
@@ -223,10 +321,9 @@ public class HUDController : MonoBehaviour
         // close popover
         animator.SetBool("IsPopoverVisible", false);
         isPopoverOpen = false;
-    }
 
-    private void ReturnToStartMenu()
-    {
-        SceneManager.LoadScene("TitleScene");
+        // show control hints
+        if (selectedUpgrade.Tutorial != null)
+            ShowControlHintImage(selectedUpgrade.Tutorial, 5.0f);
     }
 }

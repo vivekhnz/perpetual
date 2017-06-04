@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87cb4574a6d880d42b042a4b0cbd6f92, type: 3}
   m_Name: LaserCooldownMod
   m_EditorClassIdentifier: 
-  Name: Reduced Cooldown
+  Name: REDUCED COOLDOWN
   Type: 2
   Icon: {fileID: 21300000, guid: 3a343531b6a1fef40bb8d7e8517a262b, type: 3}
+  Tutorial: {fileID: 0}
+  Description: Reduces the time LASER takes to charge.
   Dependency: {fileID: 11400000, guid: f9d968bff227ce74b9dd787462610147, type: 2}
-  Cooldown: 5
+  Cooldown: 4

@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa1ec36d12566945abc3aedf725fda2, type: 3}
   m_Name: FireRateMod
   m_EditorClassIdentifier: 
-  Name: Increased Rate of Fire
+  Name: INCREASED RATE OF FIRE
   Type: 4
   Icon: {fileID: 21300000, guid: 1c5a37463ec54ea448f6376e01804d53, type: 3}
+  Tutorial: {fileID: 0}
+  Description: Your primary weapon fires faster.
   Dependency: {fileID: 0}
   BulletsPerMinute: 1500

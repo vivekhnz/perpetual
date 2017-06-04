@@ -11,6 +11,8 @@ TagManager:
   - Projectile
   - TeleportPoint
   - Boss
+  - Pickup
+  - HealthPickupSpawnPoints
   layers:
   - Default
   - TransparentFX
@@ -53,4 +55,7 @@ TagManager:
     locked: 0
   - name: Walls
     uniqueID: 4086507199
+    locked: 0
+  - name: Spawns
+    uniqueID: 129427311
     locked: 0

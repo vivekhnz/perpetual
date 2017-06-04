@@ -9,7 +9,7 @@ public class UpgradeButtonController : MonoBehaviour
     public class UpgradeSelectedEvent : UnityEvent<UpgradeBase> { }
 
     public Text UpgradeNameText;
-    public Text UpgradeTypeText;
+    public Text UpgradeDescriptionText;
     public Image UpgradeButtonIcon;
     public UpgradeSelectedEvent OnUpgradeSelected;
 
@@ -18,7 +18,7 @@ public class UpgradeButtonController : MonoBehaviour
     public void SetUpgrade(UpgradeBase upgrade)
     {
         UpgradeNameText.text = upgrade.Name;
-        UpgradeTypeText.text = upgrade.Type.ToString();
+        UpgradeDescriptionText.text = upgrade.Description;
         UpgradeButtonIcon.sprite = upgrade.Icon;
         this.upgrade = upgrade;
     }

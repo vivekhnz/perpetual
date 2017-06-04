@@ -6,13 +6,13 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerSecondaryWeapon))]
 public class ScatterShotWeapon : MonoBehaviour
 {
-
     public float Cooldown = 1.0f;
     public ProjectileController Projectile;
     public int ProjectileAmount = 10;
     public float ProjectileSpreadDegrees = 45.0f;
     public float ProjectileRange = 0.5f;
 
+    AudioSource weaponSound;
     PlayerWeapon weapon;
     PlayerSecondaryWeapon secondaryWeapon;
 
@@ -29,10 +29,14 @@ public class ScatterShotWeapon : MonoBehaviour
         if (secondaryWeapon == null)
             Debug.LogError("Secondary weapon not found!");
 
+        weaponSound = GetComponent<AudioSource>();
+        if (weaponSound == null)
+            Debug.LogError("Audio source not found!");
+
         startFireTime = Time.time;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // fire weapon
         if (Input.GetButton("FireSecondary") && Time.time - startFireTime > Cooldown)
@@ -55,6 +59,8 @@ public class ScatterShotWeapon : MonoBehaviour
     {
         if (Projectile == null)
             return;
+
+        weaponSound.Play();
 
         // create projectiles
         for (int i = 0; i < ProjectileAmount; i++)

@@ -39,8 +39,7 @@ public class PlayerMovement : MonoBehaviour
             ? MovementSpeedWhileFiring
             : MovementSpeed;
         Vector2 movement = new Vector2(
-            Input.GetAxis("Horizontal"),
-            Input.GetAxis("Vertical"))
+            Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"))
             * Time.deltaTime * speed;
         transform.Translate(
             movement.x, movement.y, 0, Space.World);
