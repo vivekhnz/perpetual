@@ -38,9 +38,9 @@ public class DamageableObject : MonoBehaviour
             Die(damageAngle);
     }
 
-    public void ResetHealth()
+    public void ResetHealth(float? health = null)
     {
-        CurrentHealth = InitialHealth;
+        CurrentHealth = health ?? InitialHealth;
     }
 
     private void Die(float? damageAngle)
