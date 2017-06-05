@@ -44,8 +44,7 @@ public class BossController : MonoBehaviour
     {
         get
         {
-            return Controller.DamageableObject.CurrentHealth
-                / Controller.DamageableObject.InitialHealth;
+            return Controller.DamageableObject.CurrentHealth / initialHealth;
         }
     }
     public bool IsBossActive
@@ -59,11 +58,10 @@ public class BossController : MonoBehaviour
     public event EventHandler Teleported;
     public event EventHandler Activated;
 
-    public float HealthIncrementPercentage = 10;
-
     public EnemySpawnManager spawnManager;
     private BossState currentState;
     private Vector3 teleportDestination;
+    private float initialHealth;
 
     void Start()
     {
@@ -83,12 +81,15 @@ public class BossController : MonoBehaviour
             Debug.LogError("No spawn manager found!");
 
         // add more health
-        Controller.DamageableObject.InitialHealth +=
-            Controller.DamageableObject.InitialHealth * (HealthIncrementPercentage / 100);
+        float a = 0.889f;
+        float b = 1.1f;
+        float c = 0.01676f;
+        float multiplier = (a * Mathf.Pow(b, spawnManager.GetRound())) + c;
+        initialHealth = (int)(
+            Controller.DamageableObject.InitialHealth * multiplier);
 
-        spawnManager.StartBossEncounter(
-            Controller.DamageableObject.InitialHealth);
-        Controller.DamageableObject.ResetHealth();
+        spawnManager.StartBossEncounter(initialHealth);
+        Controller.DamageableObject.ResetHealth(initialHealth);
 
         transform.position = OffScreenPosition;
 

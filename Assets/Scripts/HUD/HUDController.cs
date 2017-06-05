@@ -35,6 +35,7 @@ public class HUDController : MonoBehaviour
     private Animator animator;
     private PlayerUpgrades upgrades;
     private PopupManager popups;
+    private ReticleController reticle;
 
     private bool isGameOver;
     private bool isPopoverOpen;
@@ -102,6 +103,10 @@ public class HUDController : MonoBehaviour
         if (popups == null)
             Debug.LogError("No popup manager found.");
 
+        reticle = GameObject.FindObjectOfType<ReticleController>();
+        if (reticle == null)
+            Debug.LogError("No reticle found.");
+
         waveTime = 0;
         doShowWave = true;
         timeSinceScore = Time.time;
@@ -142,6 +147,9 @@ public class HUDController : MonoBehaviour
             highscore = score;
             PlayerPrefs.SetInt("HighScore", highscore);
         }
+
+        // go back to regular cursor
+        reticle.ShowCursor();
 
         GameOverPanel.SetActive(true);
         SendGameOverTelemetry(score, round, wave);
@@ -290,6 +298,9 @@ public class HUDController : MonoBehaviour
         if (choices.Count == 0)
             return;
 
+        // go back to regular cursor
+        reticle.ShowCursor();
+
         // show upgrade buttons
         for (int i = 0; i < UpgradeButtons.Count; i++)
         {
@@ -321,6 +332,9 @@ public class HUDController : MonoBehaviour
         // close popover
         animator.SetBool("IsPopoverVisible", false);
         isPopoverOpen = false;
+
+        // go back to reticle
+        reticle.ShowReticle();
 
         // show control hints
         if (selectedUpgrade.Tutorial != null)
