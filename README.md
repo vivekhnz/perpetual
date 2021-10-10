@@ -1,12 +1,12 @@
 # Perpetual
-A top-down shooter game built in Unity for a university group assignment.
+An endless top-down shooter game built in Unity for a university group assignment.
+
+![Gameplay](gameplay.gif)
 
 Created by:
-- Vivek Hari ([@vivekhnz](https://github.com/vivekhnz))
-- Guanyan Du ([@platinumgamer](https://github.com/platinumgamer))
-- Nathaniel Tan ([@naanta](https://github.com/naanta))
-
-![Perpetual Screenshot](screenshot.jpg)
+- [Vivek Hari](https://vivekh.nz)
+- [Guanyan Du](https://github.com/platinumgamer)
+- [Nathaniel Tan](https://github.com/naanta)
 
 ## Music
 - **Star Commander1 - DL Sounds**
