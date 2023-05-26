@@ -5,13 +5,18 @@ using System.Collections.Generic;
 public class ObjectPool : MonoBehaviour
 {
     PooledObject prefab;
-    List<PooledObject> availableObjects = new List<PooledObject>();
+    List<PooledObject> availableObjects;
 
     public PooledObject Fetch()
     {
+        if (availableObjects == null)
+        {
+            availableObjects = new List<PooledObject>();
+        }
+
         PooledObject obj = null;
 
-		// are any objects available?
+        // are any objects available?
         int lastAvailableIndex = availableObjects.Count - 1;
         if (lastAvailableIndex >= 0)
         {
@@ -50,13 +55,13 @@ public class ObjectPool : MonoBehaviour
         if (Application.isEditor)
         {
             // if we are running in the editor, look for an existing instance
-			// of the pool before creating a new one
+            // of the pool before creating a new one
             obj = GameObject.Find(prefab.name + " Pool");
             if (obj != null)
             {
                 pool = obj.GetComponent<ObjectPool>();
                 if (pool != null)
-					return pool;
+                    return pool;
             }
         }
 
