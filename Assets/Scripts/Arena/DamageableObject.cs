@@ -15,10 +15,13 @@ public class DamageableObject : MonoBehaviour
     private HUDController hudController;
     private PopupManager popups;
 
+    private bool isDying;
+
     void Start()
     {
         Parent = Parent ?? gameObject;
         CurrentHealth = InitialHealth;
+        isDying = false;
 
         if (!gameObject.CompareTag("Damageable"))
             Debug.LogWarning("This object does not have the 'Damageable' tag. Objects may be unable to damage it.");
@@ -41,10 +44,15 @@ public class DamageableObject : MonoBehaviour
     public void ResetHealth(float? health = null)
     {
         CurrentHealth = health ?? InitialHealth;
+        isDying = false;
     }
 
     private void Die(float? damageAngle)
     {
+        if (isDying) return;
+
+        isDying = true;
+
         // ensure we have zero health
         CurrentHealth = 0;
 
