@@ -3,6 +3,8 @@ An endless top-down shooter game built in Unity for a university group assignmen
 
 ![Gameplay](gameplay.gif)
 
+[Play on itch.io](https://vivekhnz.itch.io/perpetual)
+
 Created by:
 - [Vivek Hari](https://vivekh.nz)
 - [Guanyan Du](https://github.com/platinumgamer)
