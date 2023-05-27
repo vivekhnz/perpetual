@@ -2174,6 +2174,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -65
       objectReference: {fileID: 0}
+    - target: {fileID: 1078523613449857472, guid: e09eae8d61e40114eaa1e6191294777f,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078523613449857472, guid: e09eae8d61e40114eaa1e6191294777f,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 1509949439
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363582168688907019, guid: e09eae8d61e40114eaa1e6191294777f,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363582168688907019, guid: e09eae8d61e40114eaa1e6191294777f,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 2986344447
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e09eae8d61e40114eaa1e6191294777f, type: 3}
 --- !u!1001 &585627907
@@ -2795,6 +2815,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078523613449857472, guid: e09eae8d61e40114eaa1e6191294777f,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078523613449857472, guid: e09eae8d61e40114eaa1e6191294777f,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 1509949439
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363582168688907019, guid: e09eae8d61e40114eaa1e6191294777f,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363582168688907019, guid: e09eae8d61e40114eaa1e6191294777f,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 2986344447
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e09eae8d61e40114eaa1e6191294777f, type: 3}
@@ -3437,7 +3477,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &941390745
 Canvas:
   m_ObjectHideFlags: 0

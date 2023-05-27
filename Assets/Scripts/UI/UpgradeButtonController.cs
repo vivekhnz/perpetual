@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,8 +9,8 @@ public class UpgradeButtonController : MonoBehaviour
     [Serializable]
     public class UpgradeSelectedEvent : UnityEvent<UpgradeBase> { }
 
-    public Text UpgradeNameText;
-    public Text UpgradeDescriptionText;
+    public TextMeshProUGUI UpgradeNameText;
+    public TextMeshProUGUI UpgradeDescriptionText;
     public Image UpgradeButtonIcon;
     public UpgradeSelectedEvent OnUpgradeSelected;
 
