@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine.Analytics;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using TMPro;
 
 [RequireComponent(typeof(Animator))]
 public class HUDController : MonoBehaviour
 {
     public float ShowWaveTime;
     public Text ScoreText;
-    public Text MessageText;
+    public TextMeshProUGUI MessageText;
     public Text WaveText;
     public Text RoundText;
     public Text HighScoreText;
