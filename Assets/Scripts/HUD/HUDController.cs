@@ -28,7 +28,7 @@ public class HUDController : MonoBehaviour
     public List<UpgradeButtonController> UpgradeButtons;
     public float TimeToScoreMultiply = 1.0f;
     public Text ScoreMultiplierText;
-    public Text MultikillLabel;
+    public TextMeshProUGUI MultikillLabel;
     public int UntouchableAmount = 5;
     public int UntouchableBonus = 100;
 
