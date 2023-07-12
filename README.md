@@ -7,7 +7,7 @@ An endless top-down shooter game built in Unity for a university group assignmen
 
 Created by:
 - [Vivek Hari](https://vivekh.nz)
-- [Guanyan Du](https://github.com/platinumgamer)
+- [Guanyan Du](https://github.com/itsguan)
 - [Nathaniel Tan](https://github.com/naanta)
 
 ## Music
